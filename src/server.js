@@ -8,6 +8,14 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
+// Rota leve para acordar/testar a API
+app.get("/health", (req, res) => {
+  return res.status(200).json({
+    sucesso: true,
+    status: "ok",
+    mensagem: "API acordada"
+  });
+});
 
 app.post("/agente", async (req, res) => {
   try {
@@ -31,6 +39,7 @@ app.post("/agente", async (req, res) => {
         }
       ]
     });
+
     return res.json({
       sucesso: true,
       resposta: response.output_text
@@ -46,6 +55,8 @@ app.post("/agente", async (req, res) => {
   }
 });
 
-app.listen(process.env.PORT || 3000, () => {
-  console.log(`Servidor rodando na porta ${process.env.PORT || 3000}`);
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
 });

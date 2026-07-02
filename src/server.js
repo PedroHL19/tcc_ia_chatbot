@@ -1,60 +1,51 @@
 import express from "express";
 import dotenv from "dotenv";
-
-import { gemini } from "./geminiClient.js";
-import { carregarBase } from "./knowledgeBase.js";
+import { AGENT_PROMPT } from "./prompt.js";
+import { openai } from "./openaiClient.js";
 
 dotenv.config();
 
 const app = express();
-
 app.use(express.json());
+
 
 app.post("/agente", async (req, res) => {
   try {
     const { mensagem } = req.body;
 
-    const base = carregarBase();
+    if (!mensagem) {
+      return res.status(400).json({
+        sucesso: false,
+        erro: "Campo 'mensagem' é obrigatório."
+      });
+    }
 
-    const prompt = `
-Você é um assistente especializado em assuntos acadêmicos.
-
-Responda SOMENTE utilizando a base de conhecimento abaixo.
-
-Se não encontrar a informação, responda:
-"Não encontrei essa informação na base de conhecimento."
-
-BASE:
-
-${JSON.stringify(base, null, 2)}
-
-PERGUNTA:
-
-${mensagem}
-`;
-
-    const response = await gemini.models.generateContent({
-      model: "gemini-2.5-flash",
-      contents: prompt
+    const response = await openai.responses.create({
+      model: "gpt-4.1-mini",
+      instructions: AGENT_PROMPT,
+      input: mensagem,
+      tools: [
+        {
+          type: "file_search",
+          vector_store_ids: [process.env.VECTOR_STORE_ID]
+        }
+      ]
     });
-
-    res.json({
+    return res.json({
       sucesso: true,
-      resposta: response.text
+      resposta: response.output_text
     });
 
   } catch (error) {
     console.error(error);
 
-    res.status(500).json({
+    return res.status(500).json({
       sucesso: false,
-      erro: error.message
+      erro: "Erro ao consultar agente."
     });
   }
 });
 
 app.listen(process.env.PORT || 3000, () => {
-  console.log(
-    `Servidor rodando na porta ${process.env.PORT || 3000}`
-  );
+  console.log(`Servidor rodando na porta ${process.env.PORT || 3000}`);
 });

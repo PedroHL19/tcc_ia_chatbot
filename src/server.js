@@ -8,7 +8,6 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
-// Rota leve para acordar/testar a API
 app.get("/health", (req, res) => {
   return res.status(200).json({
     sucesso: true,

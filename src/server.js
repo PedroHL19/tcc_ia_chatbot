@@ -1,55 +1,87 @@
 import express from "express";
 import dotenv from "dotenv";
-import { AGENT_PROMPT } from "./prompt.js";
-import { openai } from "./openaiClient.js";
+import { SYSTEM_PROMPT, buildUserPromptWithContext } from "./prompt.js";
+import { generateEmbedding, generateChat, LLM_MODEL, EMBEDDING_MODEL } from "./ollamaClient.js";
+import { searchSimilar, COLLECTION_NAME } from "./qdrantClient.js";
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 
+// Endpoint de verificação de saúde da API
 app.get("/health", (req, res) => {
   return res.status(200).json({
     sucesso: true,
     status: "ok",
-    mensagem: "API acordada"
+    mensagem: "API RAG (IFMG Sabará) ativa e operando",
+    config: {
+      llm: LLM_MODEL,
+      embeddings: EMBEDDING_MODEL,
+      colecao: COLLECTION_NAME
+    }
   });
 });
 
+// Endpoint principal consultado pelo Blip ou frontend
 app.post("/agente", async (req, res) => {
   try {
-    const { mensagem } = req.body;
+    // Suporta { mensagem: "..." } ou variações comuns do Blip
+    const pergunta =
+      req.body.mensagem || req.body.message || req.body.text || req.body.content;
 
-    if (!mensagem) {
+    if (!pergunta || typeof pergunta !== "string" || pergunta.trim().length === 0) {
       return res.status(400).json({
         sucesso: false,
-        erro: "Campo 'mensagem' é obrigatório."
+        erro: "Campo 'mensagem' é obrigatório e não pode ser vazio."
       });
     }
 
-    const response = await openai.responses.create({
-      model: "gpt-4.1-mini",
-      instructions: AGENT_PROMPT,
-      input: mensagem,
-      tools: [
-        {
-          type: "file_search",
-          vector_store_ids: [process.env.VECTOR_STORE_ID]
-        }
-      ]
+    console.log(`\n[${new Date().toLocaleTimeString()}] Nova pergunta recebida: "${pergunta}"`);
+
+    // 1. Gera embedding da pergunta com o BGE-M3 (1024 dimensões)
+    const queryVector = await generateEmbedding(pergunta.trim());
+
+    // 2. Busca os Top-5 chunks mais relevantes no Qdrant (similaridade Cosseno)
+    const searchResults = await searchSimilar(queryVector, 5);
+
+    const contextChunks = searchResults.map((result) => ({
+      text: result.payload?.text || "",
+      source: result.payload?.source || "Oficial",
+      score: result.score
+    }));
+
+    console.log(`Recuperados ${contextChunks.length} trechos do Qdrant:`);
+    contextChunks.forEach((c, idx) => {
+      console.log(`  [Trecho ${idx + 1}] Score: ${(c.score * 100).toFixed(1)}% | Fonte: ${c.source}`);
     });
+
+    // 3. Monta o prompt contextualizado
+    const userPrompt = buildUserPromptWithContext(contextChunks, pergunta.trim());
+
+    const messages = [
+      { role: "system", content: SYSTEM_PROMPT },
+      { role: "user", content: userPrompt }
+    ];
+
+    // 4. Executa a inferência local no Llama 3.1 8B
+    const resposta = await generateChat(messages);
 
     return res.json({
       sucesso: true,
-      resposta: response.output_text
+      resposta,
+      fontes: contextChunks.map((c) => ({
+        documento: c.source,
+        score: c.score
+      }))
     });
-
   } catch (error) {
-    console.error(error);
+    console.error("Erro ao processar consulta no agente RAG:", error);
 
     return res.status(500).json({
       sucesso: false,
-      erro: "Erro ao consultar agente."
+      erro: "Erro interno ao processar a consulta.",
+      detalhes: error.message
     });
   }
 });
@@ -57,5 +89,9 @@ app.post("/agente", async (req, res) => {
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
+  console.log(`\n======================================================`);
+  console.log(`Servidor RAG rodando na porta ${PORT}`);
+  console.log(`Coleção Qdrant: ${COLLECTION_NAME}`);
+  console.log(`Modelo LLM: ${LLM_MODEL} | Embeddings: ${EMBEDDING_MODEL}`);
+  console.log(`======================================================\n`);
 });

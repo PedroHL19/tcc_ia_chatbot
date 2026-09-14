@@ -9,6 +9,21 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
+// Middleware de autenticação
+const authMiddleware = (req, res, next) => {
+  const token = req.headers.authorization;
+  // O token esperado pode vir do .env, usando um valor padrão por segurança temporária
+  const expectedToken = process.env.API_TOKEN || "MEU_TOKEN_SECRETO";
+  
+  if (!token || token !== `Bearer ${expectedToken}`) {
+    return res.status(401).json({ 
+      sucesso: false, 
+      erro: "Acesso negado. Token inválido ou ausente." 
+    });
+  }
+  next();
+};
+
 // Endpoint de verificação de saúde da API
 app.get("/health", (req, res) => {
   return res.status(200).json({
@@ -24,7 +39,7 @@ app.get("/health", (req, res) => {
 });
 
 // Endpoint principal consultado pelo Blip ou frontend
-app.post("/agente", async (req, res) => {
+app.post("/agente", authMiddleware, async (req, res) => {
   try {
     // Suporta { mensagem: "..." } ou variações comuns do Blip
     const pergunta =
@@ -69,11 +84,7 @@ app.post("/agente", async (req, res) => {
 
     return res.json({
       sucesso: true,
-      resposta,
-      fontes: contextChunks.map((c) => ({
-        documento: c.source,
-        score: c.score
-      }))
+      resposta
     });
   } catch (error) {
     console.error("Erro ao processar consulta no agente RAG:", error);

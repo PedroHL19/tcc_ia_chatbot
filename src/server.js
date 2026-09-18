@@ -15,7 +15,13 @@ const authMiddleware = (req, res, next) => {
   // O token esperado pode vir do .env, usando um valor padrão por segurança temporária
   const expectedToken = process.env.API_TOKEN || "MEU_TOKEN_SECRETO";
   
-  if (!token || token !== `Bearer ${expectedToken}`) {
+  // Suporta o formato "Key <token>" (padrão Blip), "Bearer <token>" ou o token direto
+  const isValid =
+    token === `Key ${expectedToken}` ||
+    token === `Bearer ${expectedToken}` ||
+    token === expectedToken;
+
+  if (!token || !isValid) {
     return res.status(401).json({ 
       sucesso: false, 
       erro: "Acesso negado. Token inválido ou ausente." 
@@ -54,11 +60,15 @@ app.post("/agente", authMiddleware, async (req, res) => {
 
     console.log(`\n[${new Date().toLocaleTimeString()}] Nova pergunta recebida: "${pergunta}"`);
 
+    console.time("[Tempo] 1. Embedding");
     // 1. Gera embedding da pergunta com o BGE-M3 (1024 dimensões)
     const queryVector = await generateEmbedding(pergunta.trim());
+    console.timeEnd("[Tempo] 1. Embedding");
 
+    console.time("[Tempo] 2. Qdrant Search");
     // 2. Busca os Top-5 chunks mais relevantes no Qdrant (similaridade Cosseno)
     const searchResults = await searchSimilar(queryVector, 5);
+    console.timeEnd("[Tempo] 2. Qdrant Search");
 
     const contextChunks = searchResults.map((result) => ({
       text: result.payload?.text || "",
@@ -79,8 +89,10 @@ app.post("/agente", authMiddleware, async (req, res) => {
       { role: "user", content: userPrompt }
     ];
 
+    console.time("[Tempo] 3. LLM Generate");
     // 4. Executa a inferência local no Llama 3.1 8B
     const resposta = await generateChat(messages);
+    console.timeEnd("[Tempo] 3. LLM Generate");
 
     return res.json({
       sucesso: true,

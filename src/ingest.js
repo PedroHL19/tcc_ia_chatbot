@@ -3,13 +3,15 @@ import path from "path";
 import crypto from "crypto";
 import dotenv from "dotenv";
 import { PDFParse } from "pdf-parse";
-import { ensureCollection, upsertPoints, COLLECTION_NAME } from "./qdrantClient.js";
+import { recreateCollection, upsertPoints, COLLECTION_NAME } from "./qdrantClient.js";
 import { generateEmbedding, EMBEDDING_MODEL } from "./ollamaClient.js";
 import { splitIntoChunks } from "./chunker.js";
 
 dotenv.config();
 
-const DOCS_DIR = "./docs";
+const DOCS_DIR = fs.existsSync("./docs/base_conhecimento")
+  ? "./docs/base_conhecimento"
+  : "./docs";
 
 /**
  * Lê o texto de um arquivo (.md ou .pdf)
@@ -60,8 +62,8 @@ async function runIngestion() {
 
   console.log(`Encontrados ${files.length} documento(s): ${files.join(", ")}`);
 
-  // 1. Garante que a coleção exista no Qdrant
-  await ensureCollection();
+  // 1. Recria a coleção no Qdrant limpando versões antigas/duplicadas
+  await recreateCollection();
 
   const allPoints = [];
 

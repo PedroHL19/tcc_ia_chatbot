@@ -35,6 +35,22 @@ export async function ensureCollection() {
 }
 
 /**
+ * Recria a coleção do zero para evitar acúmulo e duplicação de dados antigos
+ */
+export async function recreateCollection() {
+  const result = await qdrant.getCollections();
+  const exists = result.collections.some((c) => c.name === COLLECTION_NAME);
+
+  if (exists) {
+    console.log(`Limpando coleção existente '${COLLECTION_NAME}' para evitar duplicados...`);
+    await qdrant.deleteCollection(COLLECTION_NAME);
+    console.log(`Coleção '${COLLECTION_NAME}' removida.`);
+  }
+
+  await ensureCollection();
+}
+
+/**
  * Insere ou atualiza pontos (chunks vetorizados) no Qdrant
  * @param {Array<{id: string | number, vector: number[], payload: object}>} points
  */

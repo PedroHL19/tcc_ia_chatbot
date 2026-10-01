@@ -66,8 +66,8 @@ app.post("/agente", authMiddleware, async (req, res) => {
     console.timeEnd("[Tempo] 1. Embedding");
 
     console.time("[Tempo] 2. Qdrant Search");
-    // 2. Busca os Top-5 chunks mais relevantes no Qdrant (similaridade Cosseno)
-    const searchResults = await searchSimilar(queryVector, 5);
+    // 2. Busca os Top-3 chunks mais relevantes no Qdrant (similaridade Cosseno)
+    const searchResults = await searchSimilar(queryVector, 3);
     console.timeEnd("[Tempo] 2. Qdrant Search");
 
     const contextChunks = searchResults.map((result) => ({

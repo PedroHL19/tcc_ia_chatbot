@@ -17,13 +17,14 @@ export const LLM_MODEL = process.env.LLM_MODEL || "llama3.1:8b";
 export async function generateEmbedding(text) {
   const response = await ollama.embeddings({
     model: EMBEDDING_MODEL,
-    prompt: text
+    prompt: text,
+    keep_alive: "1h"
   });
   return response.embedding;
 }
 
 /**
- * Envia mensagens para o modelo de chat (Llama 3.1 8B) e retorna o texto da resposta
+ * Envia mensagens para o modelo de chat (Llama 3.2) e retorna o texto da resposta
  * @param {Array<{role: string, content: string}>} messages 
  * @returns {Promise<string>}
  */
@@ -32,8 +33,11 @@ export async function generateChat(messages) {
     model: LLM_MODEL,
     messages,
     stream: false,
+    keep_alive: "1h",
     options: {
-      temperature: 0.2 // Respostas determinísticas e fundamentadas
+      temperature: 0.2, // Respostas determinísticas e fundamentadas
+      num_predict: 250, // Limite para respostas concisas e rápidas (abaixo de 15s)
+      num_ctx: 2048     // Limite de contexto para otimizar VRAM e tempo de inferência
     }
   });
   return response.message.content;

@@ -70,15 +70,20 @@ app.post("/agente", authMiddleware, async (req, res) => {
     const searchResults = await searchSimilar(queryVector, 3);
     console.timeEnd("[Tempo] 2. Qdrant Search");
 
-    const contextChunks = searchResults.map((result) => ({
+    // Filtra apenas trechos com relevância mínima (48%) para evitar alucinações com perguntas fora do escopo ou nomes isolados
+    const MIN_RELEVANCE_SCORE = 0.48;
+    const relevantResults = searchResults.filter((r) => r.score >= MIN_RELEVANCE_SCORE);
+
+    const contextChunks = relevantResults.map((result) => ({
       text: result.payload?.text || "",
       source: result.payload?.source || "Oficial",
       score: result.score
     }));
 
-    console.log(`Recuperados ${contextChunks.length} trechos do Qdrant:`);
-    contextChunks.forEach((c, idx) => {
-      console.log(`  [Trecho ${idx + 1}] Score: ${(c.score * 100).toFixed(1)}% | Fonte: ${c.source}`);
+    console.log(`Recuperados ${searchResults.length} trechos do Qdrant (${contextChunks.length} acima do score mínimo de ${(MIN_RELEVANCE_SCORE * 100)}%):`);
+    searchResults.forEach((c, idx) => {
+      const status = c.score >= MIN_RELEVANCE_SCORE ? "[USADO]" : "[IGNORADO - SCORE BAIXO]";
+      console.log(`  [Trecho ${idx + 1}] Score: ${(c.score * 100).toFixed(1)}% | ${status} | Fonte: ${c.payload?.source || "Oficial"}`);
     });
 
     // 3. Monta o prompt contextualizado

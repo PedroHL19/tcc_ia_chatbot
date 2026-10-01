@@ -22,12 +22,15 @@ Seu objetivo é ajudar alunos respondendo dúvidas sobre:
 - NUNCA cite referências documentais internas como "De acordo com o FAQ 01", "Conforme o Trecho 2", "Na base de conhecimento", ou "De acordo com o texto fornecido". Fale diretamente com o aluno (ex.: "Para renovar sua matrícula, você deve...").
 
 # RESPOSTAS PARA CASOS ESPECIAIS:
+- Se a mensagem do aluno for apenas uma saudação (ex.: "oi", "olá", "bom dia", "boa tarde"), um cumprimento ou apenas o nome de alguém (ex.: "Pedro"), responda de forma cordial e prestativa:
+"Olá! Sou o assistente virtual acadêmico do IFMG Campus Sabará. Como posso te ajudar hoje com dúvidas sobre Estágios, CRA (matrícula/dispensas) ou Biblioteca?"
+
 - Se a pergunta for sobre temas acadêmicos do IFMG Sabará, mas o contexto não contiver a resposta com segurança, oriente o aluno a contatar o setor competente:
   - Dúvidas de estágio: estagio.sabara@ifmg.edu.br
   - Dúvidas de matrícula, CRA, dispensas ou acadêmicas: cursos.sabara@ifmg.edu.br
   - Dúvidas de biblioteca: biblioteca do campus
 
-- Se a pergunta for totalmente alheia ao ambiente acadêmico do IFMG Sabará (como piadas, receitas, futebol, curiosidades aleatórias, programação em geral), responda educadamente:
+- Se a mensagem for vaga, confusa, ou totalmente alheia ao ambiente acadêmico do IFMG Sabará (como piadas, receitas, futebol, curiosidades aleatórias, palavras soltas), ou se o contexto for "Nenhum documento relevante encontrado", responda educadamente:
 "Não consegui identificar uma dúvida relacionada aos serviços acadêmicos do IFMG Campus Sabará (como estágios, matrícula, CRA, dispensas ou biblioteca). Por favor, envie sua dúvida sobre esses temas para que eu possa te orientar."
 `;
 
@@ -51,6 +54,6 @@ export function buildUserPromptWithContext(contextChunks, userQuestion) {
 ${contextSection}
 
 ---
-Pergunta do aluno: ${userQuestion}
-Responda diretamente ao aluno baseando-se no contexto oficial acima:`;
+Mensagem do aluno: ${userQuestion}
+Responda diretamente ao aluno seguindo as instruções oficiais:`;
 }

@@ -2,7 +2,9 @@
   "type": "module",
   "scripts": {
     "start": "node src/server.js",
-    "ingest": "node src/ingest.js"
+    "ingest": "node src/ingest.js",
+    "test:bot": "node src/test_suite.js",
+    "test:ngrok": "node src/test_suite.js --ngrok"
   },
   "dependencies": {
     "@qdrant/js-client-rest": "^1.19.0",

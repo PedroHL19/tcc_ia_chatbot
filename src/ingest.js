@@ -41,6 +41,90 @@ async function extractTextFromFile(filePath) {
   return "";
 }
 
+/**
+ * Coleta recursivamente arquivos (.md, .pdf, .txt)
+ * @param {string} dir
+ * @returns {string[]}
+ */
+function getAllFilesRecursively(dir) {
+  let results = [];
+  if (!fs.existsSync(dir)) return results;
+  const list = fs.readdirSync(dir);
+  for (const item of list) {
+    const fullPath = path.join(dir, item);
+    const stat = fs.statSync(fullPath);
+    if (stat && stat.isDirectory()) {
+      results = results.concat(getAllFilesRecursively(fullPath));
+    } else {
+      const ext = path.extname(item).toLowerCase();
+      if ([".md", ".pdf", ".txt"].includes(ext)) {
+        results.push(fullPath);
+      }
+    }
+  }
+  return results;
+}
+
+/**
+ * Extrai metadados de Curso e Ano de forma inteligente:
+ * 1. Frontmatter/cabeçalho no arquivo (ex.: curso: BSI, ano: 2023)
+ * 2. Nomes de subpastas (ex.: docs/base_conhecimento/BSI/2023/)
+ * 3. Convenção no nome do arquivo (ex.: bsi_matriz_curricular_nova.md, ppc_logistica_2022.pdf)
+ * 4. Padrão "TODOS" para documentos institucionais gerais
+ * @param {string} filePath
+ * @param {string} fileContent
+ * @returns {{ curso: string, ano: string }}
+ */
+function extractDocumentMetadata(filePath, fileContent) {
+  let curso = "TODOS";
+  let ano = "TODOS";
+
+  const normPath = filePath.replace(/\\/g, "/");
+  const fileName = path.basename(filePath).toLowerCase();
+
+  // 1. Tenta extrair de Frontmatter ou comentários no início do texto
+  const frontmatterMatch = fileContent.match(/^(?:---|\/\*|<!--)([\s\S]*?)(?:---|\*\/|-->)/);
+  if (frontmatterMatch) {
+    const header = frontmatterMatch[1];
+    const cursoMatch = header.match(/curso\s*:\s*([^\r\n,]+)/i);
+    const anoMatch = header.match(/ano\s*:\s*([^\r\n,]+)/i);
+    if (cursoMatch) curso = cursoMatch[1].trim().toUpperCase();
+    if (anoMatch) ano = anoMatch[1].trim();
+  }
+
+  // 2. Extração por subpastas (ex: /BSI/2023/)
+  const pathParts = normPath.split("/");
+  for (let i = 0; i < pathParts.length - 1; i++) {
+    const part = pathParts[i].toUpperCase();
+    if (["BSI", "LOGISTICA", "ADMINISTRACAO", "PEDAGOGIA"].includes(part)) {
+      curso = part;
+    }
+    if (/^(19|20)\d{2}$/.test(part)) {
+      ano = part;
+    }
+  }
+
+  // 3. Fallback inteligente por nome do arquivo se ainda for TODOS
+  if (curso === "TODOS") {
+    if (fileName.includes("bsi")) {
+      curso = "BSI";
+    } else if (fileName.includes("logistica") || fileName.includes("log_")) {
+      curso = "LOGISTICA";
+    } else if (fileName.includes("admin") || fileName.includes("adm_")) {
+      curso = "ADMINISTRACAO";
+    }
+  }
+
+  if (ano === "TODOS") {
+    const yearMatch = fileName.match(/(19|20\d{2})/);
+    if (yearMatch) {
+      ano = yearMatch[0];
+    }
+  }
+
+  return { curso, ano };
+}
+
 async function runIngestion() {
   console.log("=== INICIANDO INGESTÃO DE DOCUMENTOS PARA O QDRANT ===");
   console.log(`Modelo de embeddings: ${EMBEDDING_MODEL}`);
@@ -51,16 +135,14 @@ async function runIngestion() {
     return;
   }
 
-  const files = fs
-    .readdirSync(DOCS_DIR)
-    .filter((file) => [".md", ".pdf", ".txt"].includes(path.extname(file).toLowerCase()));
+  const files = getAllFilesRecursively(DOCS_DIR);
 
   if (files.length === 0) {
     console.log(`Nenhum documento (.md, .pdf, .txt) encontrado na pasta ${DOCS_DIR}.`);
     return;
   }
 
-  console.log(`Encontrados ${files.length} documento(s): ${files.join(", ")}`);
+  console.log(`Encontrados ${files.length} documento(s) para indexação.`);
 
   // 1. Recria a coleção no Qdrant limpando versões antigas/duplicadas
   await recreateCollection();
@@ -68,24 +150,27 @@ async function runIngestion() {
   const allPoints = [];
 
   // 2. Processa cada documento
-  for (const fileName of files) {
-    const filePath = path.join(DOCS_DIR, fileName);
-    console.log(`\nLendo documento: ${fileName}...`);
+  for (const filePath of files) {
+    const relativeName = path.relative(DOCS_DIR, filePath);
+    console.log(`\nLendo documento: ${relativeName}...`);
     
     const text = await extractTextFromFile(filePath);
     if (!text || text.trim().length === 0) {
-      console.log(`Arquivo vazio ou sem texto extraível: ${fileName}`);
+      console.log(`Arquivo vazio ou sem texto extraível: ${relativeName}`);
       continue;
     }
 
+    const { curso, ano } = extractDocumentMetadata(filePath, text);
+    console.log(`  -> Metadados atribuídos: [Curso: ${curso}] | [Ano: ${ano}]`);
+
     // 3. Divide em chunks (500 tokens / 100 overlap)
     const chunks = splitIntoChunks(text, 500, 100);
-    console.log(`Gerados ${chunks.length} chunks para ${fileName}.`);
+    console.log(`  -> Gerados ${chunks.length} chunks.`);
 
     // 4. Gera embeddings para cada chunk
     for (let i = 0; i < chunks.length; i++) {
       const chunk = chunks[i];
-      process.stdout.write(`Vetorizando chunk ${i + 1}/${chunks.length}...\r`);
+      process.stdout.write(`  Vetorizando chunk ${i + 1}/${chunks.length}...\r`);
       
       const vector = await generateEmbedding(chunk);
 
@@ -94,13 +179,15 @@ async function runIngestion() {
         vector,
         payload: {
           text: chunk,
-          source: fileName,
+          source: relativeName,
+          curso,
+          ano,
           chunkIndex: i,
           totalChunks: chunks.length
         }
       });
     }
-    console.log(`\nConcluído processamento de ${fileName}.`);
+    console.log(`\n  Concluído processamento de ${relativeName}.`);
   }
 
   // 5. Salva os pontos no Qdrant

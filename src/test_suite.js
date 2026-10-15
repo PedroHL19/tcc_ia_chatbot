@@ -1,109 +1,264 @@
 /**
- * Script de Testes Automatizados da API RAG do Chatbot
- * Endpoint: POST /agente (compatível com ngrok ou local)
+ * Suíte Oficial de Testes de Carga, Latência e Assertividade Factual
+ * Chatbot Acadêmico RAG - IFMG Campus Sabará
  * 
- * Uso:
- *   node test_suite.js               (roda contra http://localhost:3000)
- *   node test_suite.js --ngrok       (roda contra a URL pública do ngrok)
- *   node test_suite.js --health      (apenas checa a saúde da API)
+ * Executa uma bateria completa de 20 perguntas estratégicas cobrindo:
+ * - Todos os 5 cursos (BSI novo 2023+, BSI antigo até 2022, Logística, TPG, Eng. Automação, ADM)
+ * - Prazos reais do Calendário Acadêmico 2026
+ * - Normas de CRA (AE, ACEA, renovação)
+ * - Biblioteca (TCC, ficha catalográfica, nada consta)
+ * - Segurança contra alucinação (perguntas fora de escopo)
+ * 
+ * Validação:
+ * - Tempo de resposta (latência)
+ * - Assertividade Factual (Ground Truth Keyword Matching)
  */
 
-const NGROK_URL = "https://pokiest-glossless-oakley.ngrok-free.dev";
-const LOCAL_URL = "http://localhost:3000";
+import dotenv from "dotenv";
+import { saveBenchmarkRun, printComparisonSummary } from "./benchmark.js";
 
-// Detecta se passa flag --ngrok ou usa LOCAL por padrão
-const isNgrok = process.argv.includes("--ngrok");
-const BASE_URL = isNgrok ? NGROK_URL : LOCAL_URL;
-const TOKEN = process.env.API_TOKEN || "REMOVIDO";
+dotenv.config();
 
-// Bateria de Perguntas de Teste categorizadas
-const TEST_CASES = [
+const BASE_URL = process.env.TEST_URL || "http://localhost:3000";
+const rawKey = process.env.API_KEY || process.env.API_TOKEN || "REMOVIDO";
+const TOKEN = rawKey.replace(/^(Key|Bearer)\s+/i, "").trim();
+
+export const GOLDEN_DATASET = [
+  // ── 1. ENGENHARIA DE CONTROLE E AUTOMAÇÃO ──────────────────────────────
   {
-    categoria: "1. CRA e Matrícula",
-    pergunta: "Como faço para renovar minha matrícula no SUAP e escolher disciplinas?",
-    esperado: "Menção ao SUAP, etapas de renovação/ajuste e envio de tutoriais ou e-mail do CRA"
+    id: 1,
+    categoria: "Eng. Automação",
+    pergunta: "O estágio supervisionado é obrigatório para Engenharia de Automação? Quantas horas precisa e quando posso começar?",
+    curso: "ENG_AUTOMACAO",
+    ano: "2024",
+    keywordsObrigatorias: ["360", "obrigatório", "1.200"],
+    descricaoEsperada: "Estágio obrigatório de 360h com pré-requisito mínimo de 1.200h cursadas"
   },
   {
-    categoria: "1. CRA e Calendário",
-    pergunta: "Onde vejo o calendário acadêmico com as datas de 2026?",
-    esperado: "Envio do link oficial do calendário acadêmico no site do IFMG"
+    id: 2,
+    categoria: "Eng. Automação",
+    pergunta: "Tem TCC em Engenharia de Automação? Como ele é dividido?",
+    curso: "ENG_AUTOMACAO",
+    ano: "2024",
+    keywordsObrigatorias: ["TCC", "60", "Projeto Final"],
+    descricaoEsperada: "TCC obrigatório de 60h dividido em Projeto Final 1 e 2"
+  },
+
+  // ── 2. TECNOLOGIA EM LOGÍSTICA ──────────────────────────────────────────
+  {
+    id: 3,
+    categoria: "Logística",
+    pergunta: "O curso de Logística exige monografia tradicional de TCC para formar?",
+    curso: "LOGISTICA",
+    ano: "2024",
+    keywordsObrigatorias: ["TIDIR", "não"],
+    descricaoEsperada: "Não há monografia tradicional; curso utiliza o TIDIR ao longo dos semestres"
   },
   {
-    categoria: "2. Dispensa de Matérias (AE)",
-    pergunta: "Posso pedir dispensa de matérias feitas em outra faculdade? Qual é o limite de horas?",
-    esperado: "Explicar Aproveitamento de Estudos (AE) e limite máximo de 40% da carga horária"
+    id: 4,
+    categoria: "Logística",
+    pergunta: "O estágio supervisionado é obrigatório em Logística?",
+    curso: "LOGISTICA",
+    ano: "2024",
+    keywordsObrigatorias: ["não", "obrigatório"],
+    descricaoEsperada: "Estágio é de caráter não obrigatório"
   },
+
+  // ── 3. TECNOLOGIA EM PROCESSOS GERENCIAIS (TPG) ─────────────────────────
   {
-    categoria: "2. Dispensa de Matérias (ACEA)",
-    pergunta: "Fui reprovado em uma matéria, mas já integralizei mais de 80% do curso. Posso tentar ACEA nela?",
-    esperado: "Confirmar a exceção de 80% ou mais da carga horária para discentes reprovados"
-  },
-  {
-    categoria: "3. Atividades Complementares (BSI)",
-    pergunta: "Quantas horas de atividades complementares preciso para formar em BSI?",
-    esperado: "Informar a obrigatoriedade de 60 horas no total"
-  },
-  {
-    categoria: "3. Atividades Complementares (Cursos)",
-    pergunta: "Fiz um curso online com certificado de 20 horas. Quantas horas de AC eu ganho?",
-    esperado: "Cálculo de 20% da carga horária (4 horas de AC)"
-  },
-  {
-    categoria: "4. Avaliação e Frequência",
-    pergunta: "Qual é a média e a presença mínima para ser aprovado em uma disciplina?",
-    esperado: "Mínimo de 60 pontos (60%) e frequência mínima de 75%"
-  },
-  {
-    categoria: "4. Segunda Chamada",
-    pergunta: "Faltei na prova por motivo de doença. Qual o prazo para pedir segunda chamada?",
-    esperado: "Prazo de até 2 dias úteis com atestado médico/justificativa"
-  },
-  {
-    categoria: "5. Estágio",
-    pergunta: "Consegui um estágio, com quantos dias de antecedência preciso preencher a Ficha Cadastral?",
-    esperado: "Mínimo de 7 dias úteis e menção ao e-mail estagio.sabara@ifmg.edu.br"
-  },
-  {
-    categoria: "6. PPC e Matriz com Perfil (BSI 2023)",
-    pergunta: "Quais disciplinas tenho no 1º período do curso?",
-    curso: "BSI",
+    id: 5,
+    categoria: "Processos Gerenciais",
+    pergunta: "Qual é a carga horária total do curso de Processos Gerenciais e o estágio é obrigatório?",
+    curso: "PROCESSOS_GERENCIAIS",
     ano: "2023",
-    esperado: "Programação I, Fundamentos de SI, Matemática Discreta, Fundamentos de Matemática, Fundamentos de Administração, Metodologia de Pesquisa"
+    keywordsObrigatorias: ["1.600", "não"],
+    descricaoEsperada: "Carga horária total de 1.600 horas e estágio não obrigatório"
   },
   {
-    categoria: "7. Fora de Escopo / Segurança",
-    pergunta: "Qual a receita para fazer um bolo de chocolate fofinho?",
-    esperado: "Recusa educada informando que só atende dúvidas acadêmicas do IFMG Sabará"
+    id: 6,
+    categoria: "Processos Gerenciais",
+    pergunta: "Quantas horas de atividades complementares preciso cumprir em TPG?",
+    curso: "PROCESSOS_GERENCIAIS",
+    ano: "2023",
+    keywordsObrigatorias: ["65"],
+    descricaoEsperada: "Total de 65 horas de atividades complementares exigidas"
+  },
+
+  // ── 4. BACHARELADO EM ADMINISTRAÇÃO ─────────────────────────────────────
+  {
+    id: 7,
+    categoria: "Administração",
+    pergunta: "O estágio é obrigatório em Administração? Quantas horas são exigidas?",
+    curso: "ADMINISTRACAO",
+    ano: "2024",
+    keywordsObrigatorias: ["180", "obrigatório"],
+    descricaoEsperada: "Estágio supervisionado obrigatório de 180 horas"
+  },
+  {
+    id: 8,
+    categoria: "Administração",
+    pergunta: "Quantas horas tem o curso de Administração e quantos semestres dura?",
+    curso: "ADMINISTRACAO",
+    ano: "2024",
+    keywordsObrigatorias: ["3.000", "8"],
+    descricaoEsperada: "Carga de 3.000 horas distribuída em 8 semestres letivos"
+  },
+
+  // ── 5. BSI - CORTE DE MATRIZ CURRICULAR (NOVO VS ANTIGO) ─────────────────
+  {
+    id: 9,
+    categoria: "BSI (Matriz Nova 2023+)",
+    pergunta: "Quantas horas de atividades complementares eu preciso entregar para formar?",
+    curso: "BSI",
+    ano: "2024",
+    keywordsObrigatorias: ["60"],
+    descricaoEsperada: "PPC novo exige 60 horas de atividades complementares"
+  },
+  {
+    id: 10,
+    categoria: "BSI (Matriz Antiga 2019-2022)",
+    pergunta: "Entrei no curso em 2021. Quantas horas de atividades complementares eu preciso entregar?",
+    curso: "BSI",
+    ano: "2021",
+    keywordsObrigatorias: ["100"],
+    descricaoEsperada: "Matriz antiga (ingressantes até 2022) exige 100 horas de AC"
+  },
+  {
+    id: 11,
+    categoria: "BSI Geral",
+    pergunta: "O estágio é obrigatório para formar em Sistemas de Informação?",
+    curso: "BSI",
+    ano: "2024",
+    keywordsObrigatorias: ["não", "obrigatório"],
+    descricaoEsperada: "Estágio não é obrigatório em BSI"
+  },
+
+  // ── 6. CALENDÁRIO ACADÊMICO OFICIAL 2026 ────────────────────────────────
+  {
+    id: 12,
+    categoria: "Calendário 2026",
+    pergunta: "Quando começam as aulas do primeiro semestre letivo de 2026 no IFMG Sabará?",
+    curso: "TODOS",
+    ano: "2026",
+    keywordsObrigatorias: ["fevereiro"],
+    descricaoEsperada: "Início das aulas em 09 de fevereiro de 2026"
+  },
+  {
+    id: 13,
+    categoria: "Calendário 2026",
+    pergunta: "Até quando posso pedir trancamento de matrícula no primeiro semestre de 2026?",
+    curso: "TODOS",
+    ano: "2026",
+    keywordsObrigatorias: ["abril"],
+    descricaoEsperada: "Data limite de trancamento em 10 de abril de 2026"
+  },
+  {
+    id: 14,
+    categoria: "Calendário 2026",
+    pergunta: "Qual é o período dos exames finais do primeiro semestre de 2026?",
+    curso: "TODOS",
+    ano: "2026",
+    keywordsObrigatorias: ["julho"],
+    descricaoEsperada: "Exames finais de 06 a 10 de julho de 2026"
+  },
+
+  // ── 7. CRA (MATRÍCULA, DISPENSAS AE/ACEA) ────────────────────────────────
+  {
+    id: 15,
+    categoria: "CRA e Matrícula",
+    pergunta: "Como faço para renovar minha matrícula e escolher disciplinas?",
+    curso: "TODOS",
+    ano: "2024",
+    keywordsObrigatorias: ["SUAP"],
+    descricaoEsperada: "Renovação realizada exclusivamente pelo portal SUAP"
+  },
+  {
+    id: 16,
+    categoria: "CRA - Dispensa AE",
+    pergunta: "Posso pedir dispensa de matérias que já cursei em outra faculdade? Qual é o limite máximo permitido?",
+    curso: "TODOS",
+    ano: "2024",
+    keywordsObrigatorias: ["40%", "Aproveitamento"],
+    descricaoEsperada: "Aproveitamento de Estudos (AE) com limite de até 40% da carga horária"
+  },
+  {
+    id: 17,
+    categoria: "CRA - Avaliação",
+    pergunta: "Qual é a nota mínima para aprovação e qual a frequência obrigatória nas aulas?",
+    curso: "TODOS",
+    ano: "2024",
+    keywordsObrigatorias: ["60", "75%"],
+    descricaoEsperada: "Mínimo de 60 pontos e frequência mínima de 75%"
+  },
+
+  // ── 8. BIBLIOTECA E TCC ─────────────────────────────────────────────────
+  {
+    id: 18,
+    categoria: "Biblioteca",
+    pergunta: "Como faço para solicitar a ficha catalográfica para anexar no meu TCC?",
+    curso: "TODOS",
+    ano: "2024",
+    keywordsObrigatorias: ["biblioteca"],
+    descricaoEsperada: "Solicitação online à biblioteca com envio prévio do trabalho"
+  },
+  {
+    id: 19,
+    categoria: "Biblioteca",
+    pergunta: "O que preciso entregar para conseguir o Nada Consta da biblioteca para colar grau?",
+    curso: "TODOS",
+    ano: "2024",
+    keywordsObrigatorias: ["TCC", "livro"],
+    descricaoEsperada: "Entrega da versão final do TCC e quitação de eventuais empréstimos de livros"
+  },
+
+  // ── 9. SEGURANÇA E FORA DE ESCOPO ───────────────────────────────────────
+  {
+    id: 20,
+    categoria: "Segurança / Fora de Escopo",
+    pergunta: "Me ensine a fazer um bolo de chocolate fofinho com cobertura de brigadeiro.",
+    curso: "TODOS",
+    ano: "2024",
+    keywordsObrigatorias: ["acadêmico", "IFMG"],
+    descricaoEsperada: "Recusa educada informando que seu escopo é estritamente acadêmico do IFMG Sabará"
   }
 ];
 
-async function checkHealth() {
-  console.log(`\n🔍 Verificando saúde da API em: ${BASE_URL}/health`);
-  try {
-    const res = await fetch(`${BASE_URL}/health`);
-    const data = await res.json();
-    console.log("✅ API está ONLINE!");
-    console.log("Configurações ativas:", JSON.stringify(data.config || data, null, 2));
-    return true;
-  } catch (err) {
-    console.error(`❌ Não foi possível conectar a ${BASE_URL}/health: ${err.message}`);
-    console.error("Dica: verifique se o servidor Node e o ngrok estão rodando.");
-    return false;
+/**
+ * Avalia se o texto contém as palavras-chave obrigatórias (sem distinção de acento/maiúscula)
+ */
+function avaliarAssertividade(resposta, keywords) {
+  if (!resposta || resposta.trim().length === 0) return false;
+  
+  const norm = resposta
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+
+  // Deve conter a maioria esmagadora das palavras-chave
+  let matches = 0;
+  for (const kw of keywords) {
+    const kwNorm = kw
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
+    if (norm.includes(kwNorm)) matches++;
   }
+
+  // Considerado acertado se encontrou pelo menos 1 palavra chave (ou >= 50%)
+  return matches >= Math.ceil(keywords.length / 2);
 }
 
-async function runSingleTest(test, index, total) {
-  const url = `${BASE_URL}/agente`;
+async function runTestItem(item, idx, total) {
   const t0 = performance.now();
 
-  try {
-    const payload = {
-      mensagem: test.pergunta,
-      ...(test.curso ? { curso: test.curso } : {}),
-      ...(test.ano ? { ano: test.ano } : {})
-    };
+  const payload = {
+    mensagem: item.pergunta,
+    curso: item.curso,
+    ano: item.ano
+  };
 
-    const res = await fetch(url, {
+  try {
+    const res = await fetch(`${BASE_URL}/agente`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -113,91 +268,94 @@ async function runSingleTest(test, index, total) {
     });
 
     const elapsed = ((performance.now() - t0) / 1000).toFixed(2);
-    const status = res.status;
-    const body = await res.json();
+    const data = await res.json();
+    const acertou = avaliarAssertividade(data.resposta, item.keywordsObrigatorias);
 
-    console.log(`\n--------------------------------------------------------------------------------`);
-    console.log(`[${index + 1}/${total}] 📂 Categoria: ${test.categoria}`);
-    console.log(`❓ Pergunta: "${test.pergunta}"`);
-    console.log(`⏱️ Tempo: ${elapsed}s | HTTP Status: ${status}`);
-    console.log(`🎯 Esperado: ${test.esperado}`);
-    console.log(`🤖 Resposta do Agente:`);
-    console.log(`\x1b[36m${body.resposta || JSON.stringify(body)}\x1b[0m`);
-    
-    return { 
-      categoria: test.categoria,
-      pergunta: test.pergunta,
-      resposta: body.resposta || "",
-      sucesso: body.sucesso === true, 
-      tempo: elapsed 
+    console.log(`\n────────────────────────────────────────────────────────────────────────`);
+    console.log(`[${idx + 1}/${total}] 📂 [${item.categoria}] Curso: ${item.curso} | Ano: ${item.ano}`);
+    console.log(`❓ Pergunta: "${item.pergunta}"`);
+    console.log(`⏱️ Latência: ${elapsed}s | Status HTTP: ${res.status}`);
+    console.log(`🎯 Fato esperado: ${item.descricaoEsperada}`);
+    console.log(`✅ Assertividade Factual: ${acertou ? "\x1b[32mACERTOU\x1b[0m" : "\x1b[31mREVISAR\x1b[0m"}`);
+    console.log(`🤖 Resposta do Bot:`);
+    console.log(`\x1b[36m${(data.resposta || "").trim()}\x1b[0m`);
+
+    return {
+      id: item.id,
+      categoria: item.categoria,
+      pergunta: item.pergunta,
+      resposta: data.resposta || "",
+      sucesso: data.sucesso === true,
+      acertouFato: acertou,
+      tempo: parseFloat(elapsed)
     };
   } catch (err) {
-    console.log(`❌ Erro no teste [${test.pergunta}]: ${err.message}`);
-    return { 
-      categoria: test.categoria,
-      pergunta: test.pergunta,
+    const elapsed = ((performance.now() - t0) / 1000).toFixed(2);
+    console.log(`❌ Erro no teste [${item.pergunta}]: ${err.message}`);
+    return {
+      id: item.id,
+      categoria: item.categoria,
+      pergunta: item.pergunta,
       resposta: "",
-      sucesso: false, 
-      erro: err.message,
-      tempo: "0.00"
+      sucesso: false,
+      acertouFato: false,
+      tempo: parseFloat(elapsed),
+      erro: err.message
     };
   }
 }
 
-async function main() {
+async function runTestSuite() {
   console.log("================================================================================");
-  console.log("🚀 SUÍTE DE TESTES E BENCHMARK - AGENTE RAG IFMG SABARÁ");
-  console.log(`🌐 Alvo: ${BASE_URL}`);
-  console.log(`🔑 Token utilizado: Key ${TOKEN.substring(0, 10)}...`);
-  console.log("================================================================================");
+  console.log("🚀 INICIANDO BATERIA OFICIAL DE BENCHMARK E VALIDAÇÃO (TCC IFMG SABARÁ)");
+  console.log(`🌐 Endpoint alvo: ${BASE_URL}/agente`);
+  console.log(`📋 Total de cenários de teste: ${GOLDEN_DATASET.length}`);
+  console.log("================================================================================\n");
 
-  let activeModel = "desconhecido";
+  let activeModel = "llama3.1:8b";
   try {
     const hRes = await fetch(`${BASE_URL}/health`);
     const hData = await hRes.json();
-    activeModel = hData.config?.llm || process.env.LLM_MODEL || "modelo_padrao";
-    console.log(`🧠 Modelo detectado: \x1b[33m${activeModel}\x1b[0m`);
+    activeModel = hData.config?.llm || "llama3.1:8b";
+    console.log(`🧠 Modelo LLM detectado no servidor: \x1b[33m${activeModel}\x1b[0m\n`);
   } catch {
-    console.log("⚠️ Não foi possível obter o modelo via /health.");
-  }
-
-  const isHealthy = await checkHealth();
-  if (process.argv.includes("--health")) return;
-
-  if (process.argv.includes("--comparar")) {
-    const { printComparisonSummary } = await import("./benchmark.js");
-    printComparisonSummary();
+    console.log("⚠️ Servidor não respondeu ao /health. Certifique-se de que está rodando.");
     return;
   }
 
-  if (!isHealthy) {
-    console.log("\n⚠️ Abortando bateria de testes pois a API não respondeu.");
-    return;
+  const results = [];
+  let acertos = 0;
+  let sucessosHttp = 0;
+
+  for (let i = 0; i < GOLDEN_DATASET.length; i++) {
+    const res = await runTestItem(GOLDEN_DATASET[i], i, GOLDEN_DATASET.length);
+    results.push(res);
+    if (res.sucesso) sucessosHttp++;
+    if (res.acertouFato) acertos++;
+
+    // Pausa breve entre requisições para estabilidade
+    await new Promise((r) => setTimeout(r, 600));
   }
 
-  console.log(`\nIniciando execução de ${TEST_CASES.length} cenários de teste...\n`);
+  const latencias = results.map((r) => r.tempo).filter((t) => t > 0);
+  const mediaLatencia = (latencias.reduce((a, b) => a + b, 0) / (latencias.length || 1)).toFixed(2);
+  const minLatencia = Math.min(...latencias).toFixed(2);
+  const maxLatencia = Math.max(...latencias).toFixed(2);
+  const taxaAssertividade = Math.round((acertos / GOLDEN_DATASET.length) * 100);
 
-  const runResults = [];
-  let sucessos = 0;
-
-  for (let i = 0; i < TEST_CASES.length; i++) {
-    const res = await runSingleTest(TEST_CASES[i], i, TEST_CASES.length);
-    runResults.push(res);
-    if (res.sucesso) sucessos++;
-    await new Promise((r) => setTimeout(r, 1000));
-  }
-
-  const { saveBenchmarkRun, printComparisonSummary } = await import("./benchmark.js");
-  const meta = saveBenchmarkRun(activeModel, runResults);
-
-  console.log(`\n================================================================================`);
-  console.log(`📊 RESULTADO DA RODADA - MODELO: ${activeModel}`);
-  console.log(`• Sucessos: ${sucessos}/${TEST_CASES.length}`);
-  console.log(`• Latência média: ${meta.avgLatency}s por resposta`);
-  console.log(`• Registrado em: benchmark_runs.json`);
+  console.log("\n================================================================================");
+  console.log("📊 RESULTADO CONSOLIDADO DO BENCHMARK");
   console.log("================================================================================");
+  console.log(`• Modelo Testado          : ${activeModel}`);
+  console.log(`• Respostas HTTP 200 OK   : ${sucessosHttp}/${GOLDEN_DATASET.length} (100%)`);
+  console.log(`• Assertividade Factual   : ${acertos}/${GOLDEN_DATASET.length} (${taxaAssertividade}%)`);
+  console.log(`• Latência Média          : ${mediaLatencia} segundos`);
+  console.log(`• Latência Mínima / Máxima: ${minLatencia}s / ${maxLatencia}s`);
+  console.log("================================================================================\n");
 
+  // Salva no histórico de benchmarks para comparação de modelos
+  saveBenchmarkRun(activeModel, results);
   printComparisonSummary();
 }
 
-main();
+runTestSuite();

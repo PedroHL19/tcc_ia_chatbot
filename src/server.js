@@ -9,22 +9,26 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
-// Middleware de autenticação
+// Middleware de autenticação tolerante a prefixos (Key/Bearer)
 const authMiddleware = (req, res, next) => {
-  const token = req.headers.authorization;
-  // O token esperado pode vir do .env, usando um valor padrão por segurança temporária
-  const expectedToken = process.env.API_TOKEN || "MEU_TOKEN_SECRETO";
-  
-  // Suporta o formato "Key <token>" (padrão Blip), "Bearer <token>" ou o token direto
-  const isValid =
-    token === `Key ${expectedToken}` ||
-    token === `Bearer ${expectedToken}` ||
-    token === expectedToken;
+  const authHeader = req.headers.authorization;
+  const rawExpected = process.env.API_KEY || process.env.API_TOKEN || "MEU_TOKEN_SECRETO";
 
-  if (!token || !isValid) {
+  if (!authHeader) {
     return res.status(401).json({ 
       sucesso: false, 
-      erro: "Acesso negado. Token inválido ou ausente." 
+      erro: "Acesso negado. Chave de autorização ausente." 
+    });
+  }
+
+  // Normaliza removendo prefixos 'Key ' ou 'Bearer ' para comparar o valor real da chave
+  const cleanReceived = authHeader.replace(/^(Key|Bearer)\s+/i, "").trim();
+  const cleanExpected = rawExpected.replace(/^(Key|Bearer)\s+/i, "").trim();
+
+  if (cleanReceived !== cleanExpected) {
+    return res.status(401).json({ 
+      sucesso: false, 
+      erro: "Acesso negado. Chave de autorização inválida." 
     });
   }
   next();
@@ -130,8 +134,17 @@ app.post("/agente", authMiddleware, async (req, res) => {
     const resposta = await generateChat(messages);
     console.timeEnd("[Tempo] 3. LLM Generate");
 
+    // Identifica se a pergunta foi fora de escopo (score baixo ou recusa padrão)
+    const isForaDeEscopo =
+      contextChunks.length === 0 ||
+      resposta.includes("Não consegui identificar uma dúvida relacionada");
+
+    const encontrouResposta = !isForaDeEscopo;
+
     return res.json({
       sucesso: true,
+      encontrou_resposta: encontrouResposta,
+      fora_de_escopo: isForaDeEscopo,
       resposta,
       perfil: {
         curso,

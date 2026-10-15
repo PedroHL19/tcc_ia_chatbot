@@ -146,6 +146,15 @@ app.post("/agente", authMiddleware, async (req, res) => {
       .replace(/^\s*\*{0,2}[^\n\r]*resposta[^\n\r]*\*{0,2}\s*\r?\n+/i, "")
       .trim();
 
+    // Se o usuário fez uma pergunta real (não apenas saudação), remove saudações e apresentações repetitivas
+    const isApenasSaudacao = /^(oi|ol[aá]|bom dia|boa tarde|boa noite|e ai|e a[ií]|opa)[\s!.,?]*$/i.test(pergunta.trim());
+    if (!isApenasSaudacao) {
+      resposta = resposta
+        .replace(/^\s*(?:ol[aá]|bom dia|boa tarde|boa noite)!?\s*(?:Sou\s+o\s+assistente\s+virtual\s+acadêmico\s+(?:do\s+IFMG\s+Campus\s+Sabará|do\s+IFMG)?\.?)?\s*/i, "")
+        .replace(/^\s*Sou\s+o\s+assistente\s+virtual\s+acadêmico\s+(?:do\s+IFMG\s+Campus\s+Sabará|do\s+IFMG)?\.?\s*/i, "")
+        .trim();
+    }
+
     // Identifica se a pergunta foi fora de escopo (score baixo ou recusa padrão)
     const isForaDeEscopo =
       contextChunks.length === 0 ||

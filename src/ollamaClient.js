@@ -36,8 +36,8 @@ export async function generateChat(messages) {
     keep_alive: "1h",
     options: {
       temperature: 0.2, // Respostas determinísticas e fundamentadas
-      num_predict: 250, // Limite para respostas concisas e rápidas (abaixo de 15s)
-      num_ctx: 2048     // Limite de contexto para otimizar VRAM e tempo de inferência
+      num_predict: 350, // Limite para respostas concisas e completas
+      num_ctx: 4096     // Contexto expandido para comportar todos os chunks sem truncar instruções
     }
   });
   return response.message.content;

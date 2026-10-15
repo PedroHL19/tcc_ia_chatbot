@@ -62,14 +62,20 @@ app.post("/agente", authMiddleware, async (req, res) => {
       });
     }
 
-    // Parâmetros opcionais de perfil do aluno (curso e ano de ingresso/matriz)
-    const rawCurso = req.body.curso || req.body.course || null;
-    const rawAno = req.body.ano || req.body.year || req.body.ano_ingresso || null;
+    let rawCurso = req.body.curso || req.body.course || null;
+    let rawAno = req.body.ano || req.body.year || req.body.ano_ingresso || null;
 
-    const curso = rawCurso && typeof rawCurso === "string" && rawCurso.trim().length > 0
+    let curso = rawCurso && typeof rawCurso === "string" && rawCurso.trim().length > 0
       ? rawCurso.trim()
       : null;
-    const ano = rawAno ? String(rawAno).trim() : null;
+    let ano = rawAno ? String(rawAno).trim() : null;
+
+    // Se o usuário inverter curso e ano no payload (ex: curso="2023", ano="BSI"), corrige automaticamente
+    if (curso && /^\d{4}$/.test(curso) && ano && isNaN(parseInt(ano, 10))) {
+      const temp = curso;
+      curso = ano;
+      ano = temp;
+    }
 
     const perfilLog = [
       curso ? `Curso: ${curso}` : null,
@@ -136,7 +142,7 @@ app.post("/agente", authMiddleware, async (req, res) => {
 
     // Higienização: remove qualquer prefixo residual de prompt/documento
     resposta = (resposta || "")
-      .replace(/^\s*\*{0,2}Resposta(?:\s+oficial)?(?:\s+preparada\s+para\s+IA)?\*{0,2}\s*:\s*/i, "")
+      .replace(/^\s*\*{0,2}(?:A\s+)?resposta(?:\s+final)?(?:\s+oficial)?(?:\s+preparada\s+para\s+IA)?\*{0,2}\s*(?:é|:)?\s*/i, "")
       .replace(/^\s*\*{0,2}Resposta\*{0,2}\s*:\s*/i, "")
       .trim();
 

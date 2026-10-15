@@ -140,10 +140,10 @@ app.post("/agente", authMiddleware, async (req, res) => {
     let resposta = await generateChat(messages);
     console.timeEnd("[Tempo] 3. LLM Generate");
 
-    // Higienização: remove qualquer prefixo residual de prompt/documento
-    resposta = (resposta || "")
-      .replace(/^\s*\*{0,2}(?:A\s+)?resposta(?:\s+final)?(?:\s+oficial)?(?:\s+preparada\s+para\s+IA)?\*{0,2}\s*(?:é|:)?\s*/i, "")
-      .replace(/^\s*\*{0,2}Resposta\*{0,2}\s*:\s*/i, "")
+    // Higienização robusta: remove qualquer prefixo residual de prompt ou cabeçalho de resposta
+    resposta = (resposta || "").trim()
+      .replace(/^\s*(?:#+\s*)?\*{0,2}(?:A\s+)?resposta[^\n\r:]*[:\-–—]?\*{0,2}\s*(?:é\s*:?)?\s*/i, "")
+      .replace(/^\s*\*{0,2}[^\n\r]*resposta[^\n\r]*\*{0,2}\s*\r?\n+/i, "")
       .trim();
 
     // Identifica se a pergunta foi fora de escopo (score baixo ou recusa padrão)

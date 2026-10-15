@@ -131,8 +131,14 @@ app.post("/agente", authMiddleware, async (req, res) => {
 
     console.time("[Tempo] 3. LLM Generate");
     // 4. Executa a inferência local no Llama
-    const resposta = await generateChat(messages);
+    let resposta = await generateChat(messages);
     console.timeEnd("[Tempo] 3. LLM Generate");
+
+    // Higienização: remove qualquer prefixo residual de prompt/documento
+    resposta = (resposta || "")
+      .replace(/^\s*\*{0,2}Resposta(?:\s+oficial)?(?:\s+preparada\s+para\s+IA)?\*{0,2}\s*:\s*/i, "")
+      .replace(/^\s*\*{0,2}Resposta\*{0,2}\s*:\s*/i, "")
+      .trim();
 
     // Identifica se a pergunta foi fora de escopo (score baixo ou recusa padrão)
     const isForaDeEscopo =

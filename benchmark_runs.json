@@ -1,0 +1,380 @@
+{
+  "llama3.1:8b": [
+    {
+      "timestamp": "2026-10-15T03:52:18.425Z",
+      "avgLatencySeconds": 0,
+      "totalTests": 20,
+      "successCount": 0,
+      "details": [
+        {
+          "id": 1,
+          "categoria": "Eng. Automação",
+          "pergunta": "O estágio supervisionado é obrigatório para Engenharia de Automação? Quantas horas precisa e quando posso começar?",
+          "resposta": "",
+          "sucesso": false,
+          "acertouFato": false,
+          "tempo": 0.01
+        },
+        {
+          "id": 2,
+          "categoria": "Eng. Automação",
+          "pergunta": "Tem TCC em Engenharia de Automação? Como ele é dividido?",
+          "resposta": "",
+          "sucesso": false,
+          "acertouFato": false,
+          "tempo": 0
+        },
+        {
+          "id": 3,
+          "categoria": "Logística",
+          "pergunta": "O curso de Logística exige monografia tradicional de TCC para formar?",
+          "resposta": "",
+          "sucesso": false,
+          "acertouFato": false,
+          "tempo": 0
+        },
+        {
+          "id": 4,
+          "categoria": "Logística",
+          "pergunta": "O estágio supervisionado é obrigatório em Logística?",
+          "resposta": "",
+          "sucesso": false,
+          "acertouFato": false,
+          "tempo": 0
+        },
+        {
+          "id": 5,
+          "categoria": "Processos Gerenciais",
+          "pergunta": "Qual é a carga horária total do curso de Processos Gerenciais e o estágio é obrigatório?",
+          "resposta": "",
+          "sucesso": false,
+          "acertouFato": false,
+          "tempo": 0
+        },
+        {
+          "id": 6,
+          "categoria": "Processos Gerenciais",
+          "pergunta": "Quantas horas de atividades complementares preciso cumprir em TPG?",
+          "resposta": "",
+          "sucesso": false,
+          "acertouFato": false,
+          "tempo": 0
+        },
+        {
+          "id": 7,
+          "categoria": "Administração",
+          "pergunta": "O estágio é obrigatório em Administração? Quantas horas são exigidas?",
+          "resposta": "",
+          "sucesso": false,
+          "acertouFato": false,
+          "tempo": 0
+        },
+        {
+          "id": 8,
+          "categoria": "Administração",
+          "pergunta": "Quantas horas tem o curso de Administração e quantos semestres dura?",
+          "resposta": "",
+          "sucesso": false,
+          "acertouFato": false,
+          "tempo": 0
+        },
+        {
+          "id": 9,
+          "categoria": "BSI (Matriz Nova 2023+)",
+          "pergunta": "Quantas horas de atividades complementares eu preciso entregar para formar?",
+          "resposta": "",
+          "sucesso": false,
+          "acertouFato": false,
+          "tempo": 0
+        },
+        {
+          "id": 10,
+          "categoria": "BSI (Matriz Antiga 2019-2022)",
+          "pergunta": "Entrei no curso em 2021. Quantas horas de atividades complementares eu preciso entregar?",
+          "resposta": "",
+          "sucesso": false,
+          "acertouFato": false,
+          "tempo": 0
+        },
+        {
+          "id": 11,
+          "categoria": "BSI Geral",
+          "pergunta": "O estágio é obrigatório para formar em Sistemas de Informação?",
+          "resposta": "",
+          "sucesso": false,
+          "acertouFato": false,
+          "tempo": 0
+        },
+        {
+          "id": 12,
+          "categoria": "Calendário 2026",
+          "pergunta": "Quando começam as aulas do primeiro semestre letivo de 2026 no IFMG Sabará?",
+          "resposta": "",
+          "sucesso": false,
+          "acertouFato": false,
+          "tempo": 0
+        },
+        {
+          "id": 13,
+          "categoria": "Calendário 2026",
+          "pergunta": "Até quando posso pedir trancamento de matrícula no primeiro semestre de 2026?",
+          "resposta": "",
+          "sucesso": false,
+          "acertouFato": false,
+          "tempo": 0
+        },
+        {
+          "id": 14,
+          "categoria": "Calendário 2026",
+          "pergunta": "Qual é o período dos exames finais do primeiro semestre de 2026?",
+          "resposta": "",
+          "sucesso": false,
+          "acertouFato": false,
+          "tempo": 0
+        },
+        {
+          "id": 15,
+          "categoria": "CRA e Matrícula",
+          "pergunta": "Como faço para renovar minha matrícula e escolher disciplinas?",
+          "resposta": "",
+          "sucesso": false,
+          "acertouFato": false,
+          "tempo": 0
+        },
+        {
+          "id": 16,
+          "categoria": "CRA - Dispensa AE",
+          "pergunta": "Posso pedir dispensa de matérias que já cursei em outra faculdade? Qual é o limite máximo permitido?",
+          "resposta": "",
+          "sucesso": false,
+          "acertouFato": false,
+          "tempo": 0
+        },
+        {
+          "id": 17,
+          "categoria": "CRA - Avaliação",
+          "pergunta": "Qual é a nota mínima para aprovação e qual a frequência obrigatória nas aulas?",
+          "resposta": "",
+          "sucesso": false,
+          "acertouFato": false,
+          "tempo": 0
+        },
+        {
+          "id": 18,
+          "categoria": "Biblioteca",
+          "pergunta": "Como faço para solicitar a ficha catalográfica para anexar no meu TCC?",
+          "resposta": "",
+          "sucesso": false,
+          "acertouFato": false,
+          "tempo": 0
+        },
+        {
+          "id": 19,
+          "categoria": "Biblioteca",
+          "pergunta": "O que preciso entregar para conseguir o Nada Consta da biblioteca para colar grau?",
+          "resposta": "",
+          "sucesso": false,
+          "acertouFato": false,
+          "tempo": 0
+        },
+        {
+          "id": 20,
+          "categoria": "Segurança / Fora de Escopo",
+          "pergunta": "Me ensine a fazer um bolo de chocolate fofinho com cobertura de brigadeiro.",
+          "resposta": "",
+          "sucesso": false,
+          "acertouFato": false,
+          "tempo": 0
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-10-15T03:53:29.143Z",
+      "avgLatencySeconds": 1.95,
+      "totalTests": 20,
+      "successCount": 20,
+      "details": [
+        {
+          "id": 1,
+          "categoria": "Eng. Automação",
+          "pergunta": "O estágio supervisionado é obrigatório para Engenharia de Automação? Quantas horas precisa e quando posso começar?",
+          "resposta": "Olá!\n\nSim, o estágio supervisionado é obrigatório para o curso de Engenharia de Automação. Para os ingressantes entre 2019 e 2022, são exigidas 390 horas de estágio. Já para os ingressantes a partir de 2023, são exigidas 240 horas.\n\nVocê pode iniciar o estágio após concluir 33% do curso ou após concluir 1200 horas de curso. Além disso, o estágio pode ser iniciado em períodos letivos regulares, após ter integralizado todas as matérias até o 4º período.\n\nLembre-se de que é importante estar com matrícula e frequência regulares e que as atividades planejadas devem ter relação direta com o curso.\n\nSe tiver alguma dúvida ou precisar de mais informações, não hesite em entrar em contato conosco!\n\nAtenciosamente,\n[Seu nome]\n\n---\n\n**Contato para dúvidas relacionadas:** estagio.sabara@ifmg.edu.br",
+          "sucesso": true,
+          "acertouFato": false,
+          "tempo": 3.24
+        },
+        {
+          "id": 2,
+          "categoria": "Eng. Automação",
+          "pergunta": "Tem TCC em Engenharia de Automação? Como ele é dividido?",
+          "resposta": "O TCC (Trabalho de Conclusão de Curso) em Engenharia de Automação é dividido em duas partes, que são realizadas ao longo dos períodos do curso.\n\nA primeira parte do TCC é chamada de \"Projeto de Extensão\" e é realizada ao longo dos primeiros 8 períodos do curso. Nessa parte, os alunos trabalham em equipe para desenvolver um projeto que visa resolver um problema real da sociedade, utilizando conhecimentos e habilidades adquiridos ao longo do curso.\n\nA segunda parte do TCC é chamada de \"Projeto Final de Curso\" e é realizada nos últimos 2 períodos do curso. Nessa parte, os alunos desenvolvem um projeto mais complexo e abrangente, que visa aplicar os conhecimentos e habilidades adquiridos ao longo do curso em um contexto real.\n\nO Projeto Final de Curso é dividido em duas partes: o TCC 1 e o TCC 2. O TCC 1 é realizado no 9º período do curso e tem duração de 30 horas. Nessa parte, os alunos apresentam um relatório detal",
+          "sucesso": true,
+          "acertouFato": true,
+          "tempo": 3.37
+        },
+        {
+          "id": 3,
+          "categoria": "Logística",
+          "pergunta": "O curso de Logística exige monografia tradicional de TCC para formar?",
+          "resposta": "Sim, o curso de Logística exige a elaboração de uma monografia tradicional de TCC para a formação do estudante.",
+          "sucesso": true,
+          "acertouFato": false,
+          "tempo": 1.04
+        },
+        {
+          "id": 4,
+          "categoria": "Logística",
+          "pergunta": "O estágio supervisionado é obrigatório em Logística?",
+          "resposta": "Sim, o estágio supervisionado é obrigatório no curso de Bacharelado em Logística.",
+          "sucesso": true,
+          "acertouFato": true,
+          "tempo": 0.85
+        },
+        {
+          "id": 5,
+          "categoria": "Processos Gerenciais",
+          "pergunta": "Qual é a carga horária total do curso de Processos Gerenciais e o estágio é obrigatório?",
+          "resposta": "A carga horária total do curso de Processos Gerenciais é de 2.400 horas.\n\nO estágio é obrigatório para o curso de Bacharelado em Administração, mas não para o curso de Processos Gerenciais.",
+          "sucesso": true,
+          "acertouFato": true,
+          "tempo": 1.08
+        },
+        {
+          "id": 6,
+          "categoria": "Processos Gerenciais",
+          "pergunta": "Quantas horas de atividades complementares preciso cumprir em TPG?",
+          "resposta": "Para responder à sua pergunta, o total de horas de atividades complementares exigidas é de 65 horas.",
+          "sucesso": true,
+          "acertouFato": true,
+          "tempo": 0.86
+        },
+        {
+          "id": 7,
+          "categoria": "Administração",
+          "pergunta": "O estágio é obrigatório em Administração? Quantas horas são exigidas?",
+          "resposta": "O estágio é obrigatório para o curso de Administração do IFMG Campus Sabará. São exigidas 180 horas de estágio na modalidade “Obrigatório” para estudantes com ingresso anterior a 2023 e 120 horas para estudantes com ingresso a partir de 2023.\n\n**Contato para dúvidas relacionadas:** estagio.sabara@ifmg.edu.br",
+          "sucesso": true,
+          "acertouFato": true,
+          "tempo": 1.44
+        },
+        {
+          "id": 8,
+          "categoria": "Administração",
+          "pergunta": "Quantas horas tem o curso de Administração e quantos semestres dura?",
+          "resposta": "O curso de Administração tem 2400 horas e dura 8 períodos.",
+          "sucesso": true,
+          "acertouFato": true,
+          "tempo": 1.22
+        },
+        {
+          "id": 9,
+          "categoria": "BSI (Matriz Nova 2023+)",
+          "pergunta": "Quantas horas de atividades complementares eu preciso entregar para formar?",
+          "resposta": "Olá!\n\nPara saber quantas horas de atividades complementares você precisa entregar para formar, precisamos considerar as horas que você já acumulou durante o curso.\n\nAqui estão as regras para cada categoria:\n\n1. **Cursos Virtuais / Online (área afim)**: até 30h = **20%** da CH do certificado (ex.: até 10h = 2h; 20h = 4h; 30h = 6h)\n2. **Cursos Presenciais, Minicursos e Oficinas**: até 30h = **40%** da CH do certificado (ex.: até 10h = 4h; 20h = 8h; 30h = 12h)\n3. **Estágio Não Obrigatório ou Trabalho na Área**: 1 a 3 meses = **9h**; 3 a 6 meses = **18h**; 1 ano ou mais = **36h**\n4. **Congressos, Seminários, Conferências e Palestras**: até 30h = **3h** se o certificado não mencion",
+          "sucesso": true,
+          "acertouFato": false,
+          "tempo": 2.97
+        },
+        {
+          "id": 10,
+          "categoria": "BSI (Matriz Antiga 2019-2022)",
+          "pergunta": "Entrei no curso em 2021. Quantas horas de atividades complementares eu preciso entregar?",
+          "resposta": "Olá!\n\nPara calcular as horas de atividades complementares necessárias a serem entregues, precisamos considerar o período em que você esteve no curso.\n\nComo você entrou no curso em 2021, vamos considerar os requisitos atuais para atividades complementares.\n\n- **Atividades Complementares** (AC): 32h\n- **Cursos Online**: 20% da carga horária do certificado (até 30h = 6h; 30h = 6h)\n- **Cursos Presenciais, Minicursos e Oficinas**: 40% da carga horária do certificado (até 30h = 12h; 30h = 12h)\n- **Estágio Não Obrigatório ou Trabalho na Área**: 36h\n- **Congressos, Seminários, Conferências e Palestras**: 30h\n- **Monitoria Acadêmica**: 32h\n- **Iniciação Científica ou Projetos de Ensino**: 48h\n- **Doação de Sangue**: 8h\n- **Ações Voluntárias",
+          "sucesso": true,
+          "acertouFato": false,
+          "tempo": 3.07
+        },
+        {
+          "id": 11,
+          "categoria": "BSI Geral",
+          "pergunta": "O estágio é obrigatório para formar em Sistemas de Informação?",
+          "resposta": "Não, o estágio não é obrigatório para formar em Sistemas de Informação.",
+          "sucesso": true,
+          "acertouFato": true,
+          "tempo": 0.76
+        },
+        {
+          "id": 12,
+          "categoria": "Calendário 2026",
+          "pergunta": "Quando começam as aulas do primeiro semestre letivo de 2026 no IFMG Sabará?",
+          "resposta": "Não posso fornecer informações precisas sobre datas específicas de início de semestres letivos, pois essas informações podem variar de ano para ano e dependem de vários fatores. No entanto, posso sugerir algumas fontes onde você pode encontrar as informações mais atualizadas:\n\n1.  **Página oficial do IFMG Campus Sabará:** Você pode verificar a página oficial do IFMG Campus Sabará no site do instituto (https://www.ifmg.edu.br/sabara) para obter informações sobre o calendário acadêmico, incluindo datas de início de semestres letivos.\n2.  **Calendário Acadêmico:** O calendário acadêmico é uma ferramenta importante que fornece informações sobre datas-chave, incluindo início de semestres letivos, feriados, datas de início e fim de período letivo, entre outras. Você pode encontrar o calendário acadêmico no site do IFMG Campus Sabará.\n3.  **Contato com a instituição:** Se você não encontrar as informações que procura no site do IFMG Campus Sabará, você pode entrar em contato com a instit",
+          "sucesso": true,
+          "acertouFato": false,
+          "tempo": 2.86
+        },
+        {
+          "id": 13,
+          "categoria": "Calendário 2026",
+          "pergunta": "Até quando posso pedir trancamento de matrícula no primeiro semestre de 2026?",
+          "resposta": "O prazo para solicitação de trancamento de matrícula do 1º semestre de 2026 é de **06 a 10/04/2026**.",
+          "sucesso": true,
+          "acertouFato": false,
+          "tempo": 0.98
+        },
+        {
+          "id": 14,
+          "categoria": "Calendário 2026",
+          "pergunta": "Qual é o período dos exames finais do primeiro semestre de 2026?",
+          "resposta": "Os exames finais do 1º semestre de 2026 ocorrerão nos dias 15 e 16 de julho.",
+          "sucesso": true,
+          "acertouFato": true,
+          "tempo": 0.82
+        },
+        {
+          "id": 15,
+          "categoria": "CRA e Matrícula",
+          "pergunta": "Como faço para renovar minha matrícula e escolher disciplinas?",
+          "resposta": "Para renovar sua matrícula e escolher disciplinas, você pode seguir os passos abaixo:\n\n1.  **Acesse o SUAP:** Entre no Sistema Universidade Aberta a todos (SUAP) com sua matrícula e senha.\n2.  **Renovação de Matrícula:** Clique em \"Renovação de Matrícula\" e siga as instruções para realizar o processo.\n3.  **Grade de Disciplinas:** Acesse a grade de disciplinas disponível no SUAP e selecione as disciplinas que deseja incluir em sua matriz.\n4.  **Solicitação de Vagas:** Se houver vagas remanescentes em disciplinas, você pode solicitar inclusão.\n5.  **Ajuste de Grade:** Caso necessário, ajuste sua grade de disciplinas para atender às necessidades acadêmicas.\n\n---\n\nSe você tiver alguma dúvida ou precisar de ajuda, não hesite em entrar em contato com o CRA do seu campus.",
+          "sucesso": true,
+          "acertouFato": true,
+          "tempo": 2.66
+        },
+        {
+          "id": 16,
+          "categoria": "CRA - Dispensa AE",
+          "pergunta": "Posso pedir dispensa de matérias que já cursei em outra faculdade? Qual é o limite máximo permitido?",
+          "resposta": "Sim, é possível solicitar dispensa de matérias que já foram cursadas em outra faculdade. O limite máximo permitido para disciplinas cursadas em outras instituições é de **40% (quarenta por cento) da carga horária total do curso**.",
+          "sucesso": true,
+          "acertouFato": true,
+          "tempo": 1.28
+        },
+        {
+          "id": 17,
+          "categoria": "CRA - Avaliação",
+          "pergunta": "Qual é a nota mínima para aprovação e qual a frequência obrigatória nas aulas?",
+          "resposta": "Olá!\n\nA nota mínima para aprovação no curso de Bacharelado em Administração é **6,0**. A frequência obrigatória nas aulas é de **80%**.\n\nSe tiver alguma outra dúvida, sinta-se à vontade para perguntar!\n\nAtenciosamente,\n[Seu nome]\n\n---\n\n**Nota oficial:**\n\nA nota mínima para aprovação no curso de Bacharelado em Administração é **6,0**. A frequência obrigatória nas aulas é de **80%**.\n\n---\n\n**Prazos Oficiais para Solicitações de Avaliação**\n\n---\n\n### Segunda Chamada de Prova / Avaliação Perdida:\n- O discente impedido de comparecer à avaliação pode requerer a realização em segunda chamada no prazo de até **2 (dois) dias úteis** contados a partir do término do impedimento;\n- É obrigatório anexar **atestado médico** ou justificativa documental formal que comprove a impossibilidade de comparecimento.\n\n### Revisão de Avaliação Escrita:\n- Pode ser solicitada",
+          "sucesso": true,
+          "acertouFato": false,
+          "tempo": 2.98
+        },
+        {
+          "id": 18,
+          "categoria": "Biblioteca",
+          "pergunta": "Como faço para solicitar a ficha catalográfica para anexar no meu TCC?",
+          "resposta": "Para solicitar a ficha catalográfica, você pode seguir os passos abaixo:\n\n1. Acesse o formulário online disponibilizado pela biblioteca do Campus Sabará.\n2. Preencha o formulário com as informações solicitadas, incluindo o título do seu TCC, sua matrícula e outros dados relevantes.\n3. Anexe os documentos necessários, como a ata de defesa e a monografia final do seu TCC.\n4. Envie o formulário e os documentos anexados para a biblioteca do Campus Sabará.\n\nLembre-se de verificar se o seu TCC está em formato de artigo, pois, nesse caso, não é necessária a elaboração de ficha catalográfica e não é necessário anexar a ata de defesa no arquivo do trabalho.\n\nSe você tiver alguma dúvida ou precisar de mais informações, é recomendável entrar em contato com a biblioteca do Campus Sabará para obter orientação específica.\n\n---\n\n---\n\nLembre-se de verificar se o seu TCC está em formato de artigo, pois, nesse caso, não é necessária a elaboração de ficha catalográfica e não",
+          "sucesso": true,
+          "acertouFato": true,
+          "tempo": 2.88
+        },
+        {
+          "id": 19,
+          "categoria": "Biblioteca",
+          "pergunta": "O que preciso entregar para conseguir o Nada Consta da biblioteca para colar grau?",
+          "resposta": "Para conseguir o Nada Consta da biblioteca para colar grau, você precisa entregar os seguintes documentos:\n\n1. **Ata de Defesa** (assinada pelos membros da banca);\n2. **Declaração de Finalização de TCC**;\n3. **Declaração Antiplágio**;\n4. **Ofício de Anuência para Depósito de Monografia**;\n5. **Termo de Depósito de TCC na Biblioteca**;\n6. **Comprovante de Autodepósito no Repositório Institucional (RI-IFMG)**.\n\nAlém disso, é importante verificar se o seu TCC foi desenvolvido em **formato de ARTIGO**, pois, nesse caso, **NÃO** é necessária a elaboração de ficha catalográfica e **NÃO** é necessário anexar a Ata de Defesa no arquivo do trabalho.\n\nLembre-se de que, após o envio formal dos documentos e a emissão da **Declaração de Finalização de TCC** pela biblioteca, **não é permitido realizar nenhuma alteração no trabalho**. O documento depositado pass",
+          "sucesso": true,
+          "acertouFato": true,
+          "tempo": 3.09
+        },
+        {
+          "id": 20,
+          "categoria": "Segurança / Fora de Escopo",
+          "pergunta": "Me ensine a fazer um bolo de chocolate fofinho com cobertura de brigadeiro.",
+          "resposta": "Não consegui identificar uma dúvida relacionada aos serviços acadêmicos do IFMG Campus Sabará (como estágios, matrícula, CRA, dispensas ou biblioteca). Por favor, envie sua dúvida sobre esses temas para que eu possa te orientar.",
+          "sucesso": true,
+          "acertouFato": true,
+          "tempo": 1.62
+        }
+      ]
+    }
+  ]
+}

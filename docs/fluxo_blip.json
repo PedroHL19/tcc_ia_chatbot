@@ -1,0 +1,5242 @@
+{
+  "flow": {
+    "onboarding": {
+      "$contentActions": [
+        {
+          "input": {
+            "bypass": false,
+            "$cardContent": {
+              "document": {
+                "id": "888f3398-60b5-4a8e-8b26-ba563b91528c",
+                "type": "text/plain",
+                "content": "Entrada do usuário"
+              },
+              "editable": false,
+              "deletable": false,
+              "position": "right",
+              "editing": false
+            },
+            "$invalid": false
+          },
+          "$invalid": false
+        }
+      ],
+      "$conditionOutputs": [
+        {
+          "stateId": "welcome",
+          "typeOfStateId": "state",
+          "$connId": "con_3",
+          "$id": "5acf4b8a-4db1-41d1-a636-7176c6a16542",
+          "conditions": [
+            {
+              "source": "input",
+              "comparison": "equals",
+              "values": [
+                "#teste"
+              ]
+            }
+          ],
+          "$isBuilderDefaultOutput": true,
+          "$invalid": false
+        },
+        {
+          "stateId": "4e20f6a9-5d12-4699-8fb6-f6c0bc263cf7",
+          "typeOfStateId": "state",
+          "$connId": "con_8",
+          "$id": "29e45dcd-d5b1-4099-9e95-ad597af40790",
+          "conditions": [
+            {
+              "source": "context",
+              "comparison": "equals",
+              "values": [
+                "true"
+              ],
+              "variable": "contact.extras.nome"
+            }
+          ],
+          "$isBuilderDefaultOutput": true,
+          "$invalid": false
+        },
+        {
+          "stateId": "welcome",
+          "conditions": [
+            {
+              "source": "input",
+              "comparison": "matches",
+              "values": [
+                ".*"
+              ]
+            }
+          ],
+          "$id": "70cefff3-5f9d-4bde-b8c0-715eb1608e0b",
+          "$connId": "con_13",
+          "$invalid": false
+        }
+      ],
+      "$enteringCustomActions": [
+        {
+          "$id": "38be3aef-0871-40cc-b352-f619f16098f3",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "Início",
+            "action": "{{contact.identity}}"
+          },
+          "conditions": []
+        }
+      ],
+      "$leavingCustomActions": [
+        {
+          "$id": "796d1c0b-1313-417b-8c08-5f59c8133cb7",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "Início Conteudo",
+            "action": "{{contact.identity}} | {{input.content}}"
+          },
+          "conditions": [
+            {
+              "values": [],
+              "source": "input",
+              "comparison": "exists"
+            }
+          ]
+        },
+        {
+          "$id": "b02a0e18-0ea3-4118-bed0-0a0f3e9f650c",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos Data",
+          "$invalid": false,
+          "settings": {
+            "extras": {
+              "input": "{{input.content}}"
+            },
+            "category": "input|{{state.name}}",
+            "action": "input"
+          },
+          "conditions": [
+            {
+              "values": [],
+              "source": "input",
+              "comparison": "exists"
+            }
+          ]
+        }
+      ],
+      "$inputSuggestions": [],
+      "$defaultOutput": {
+        "stateId": "fallback",
+        "$invalid": false
+      },
+      "$localCustomActions": [],
+      "isAiGenerated": false,
+      "$tags": [],
+      "id": "onboarding",
+      "root": true,
+      "$title": "Início",
+      "$position": {
+        "top": "122px",
+        "left": "649px"
+      },
+      "$invalidContentActions": false,
+      "$invalidOutputs": false,
+      "$invalidCustomActions": false,
+      "$invalid": false
+    },
+    "fallback": {
+      "$contentActions": [
+        {
+          "input": {
+            "bypass": true,
+            "$cardContent": {
+              "document": {
+                "id": "4cf4b052-921e-4557-a31e-7c3f3bfbadb3",
+                "type": "text/plain",
+                "content": "Entrada do usuário"
+              },
+              "editable": false,
+              "deletable": true,
+              "position": "right",
+              "editing": false
+            },
+            "$invalid": false
+          },
+          "$invalid": false
+        }
+      ],
+      "$conditionOutputs": [
+        {
+          "stateId": "error",
+          "conditions": [
+            {
+              "source": "input",
+              "comparison": "matches",
+              "values": [
+                ".*"
+              ]
+            }
+          ],
+          "$id": "c5128b4a-ceec-41ea-baeb-c3e3516e379d",
+          "$connId": "con_18",
+          "$invalid": false
+        }
+      ],
+      "$enteringCustomActions": [
+        {
+          "$id": "8948c449-b810-4f60-9895-43a72829cec8",
+          "$typeOfContent": "",
+          "$description": "",
+          "$inputSchema": {
+            "type": "object",
+            "properties": {},
+            "required": []
+          },
+          "type": "SetVariable",
+          "$title": "Definir variável",
+          "$invalid": false,
+          "settings": {
+            "variable": "statePreviousId",
+            "value": "{{state.previous.id}}"
+          },
+          "conditions": []
+        },
+        {
+          "$id": "c5590c67-3c3e-404a-8961-04e3054212a0",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "Exceções",
+            "action": "{{contact.identity}}"
+          },
+          "conditions": []
+        }
+      ],
+      "$leavingCustomActions": [],
+      "$inputSuggestions": [],
+      "$defaultOutput": {
+        "stateId": "onboarding",
+        "$invalid": false
+      },
+      "$localCustomActions": [],
+      "isAiGenerated": false,
+      "$tags": [],
+      "id": "fallback",
+      "$title": "Exceções",
+      "$position": {
+        "top": "98px",
+        "left": "1126px"
+      },
+      "$invalidContentActions": false,
+      "$invalidOutputs": false,
+      "$invalidCustomActions": false,
+      "$invalid": false
+    },
+    "welcome": {
+      "$contentActions": [
+        {
+          "action": {
+            "$id": "201cc97c-c04e-447d-86cd-bf581e2793dd",
+            "$typeOfContent": "",
+            "$description": "",
+            "$inputSchema": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            },
+            "type": "SendMessage",
+            "settings": {
+              "id": "00000000-0000-0000-0000-000000000000",
+              "type": "application/vnd.lime.chatstate+json",
+              "content": {
+                "state": "composing",
+                "interval": 1000
+              }
+            },
+            "$cardContent": {
+              "document": {
+                "id": "00000000-0000-0000-0000-000000000000",
+                "type": "application/vnd.lime.chatstate+json",
+                "content": {
+                  "state": "composing",
+                  "interval": 1000
+                }
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left",
+              "editing": false
+            }
+          },
+          "$invalid": false
+        },
+        {
+          "action": {
+            "$id": "685147fe-5d6f-474a-8cbc-551d0a546816",
+            "$typeOfContent": "",
+            "$description": "",
+            "$inputSchema": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            },
+            "type": "SendMessage",
+            "settings": {
+              "id": "00000000-0000-0000-0000-000000000001",
+              "type": "text/plain",
+              "content": "Olá! 👋\nSou o assistente acadêmico do IFMG Sabará e estou aqui para te ajudar com dúvidas sobre <b>Estágios, CRA e Biblioteca</b>.\n\nComo posso te chamar?",
+              "metadata": {}
+            },
+            "$cardContent": {
+              "document": {
+                "id": "00000000-0000-0000-0000-000000000001",
+                "type": "text/plain",
+                "content": "Olá! 👋\nSou o assistente acadêmico do IFMG Sabará e estou aqui para te ajudar com dúvidas sobre <b>Estágios, CRA e Biblioteca</b>.\n\nComo posso te chamar?"
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left",
+              "editing": false
+            }
+          },
+          "$invalid": false
+        },
+        {
+          "input": {
+            "bypass": false,
+            "$cardContent": {
+              "document": {
+                "id": "5bd47049-2d9d-4292-a6c6-0c149e198f8e",
+                "type": "text/plain",
+                "content": "Entrada do usuário"
+              },
+              "editable": false,
+              "deletable": true,
+              "position": "right",
+              "editing": false
+            },
+            "$invalid": false
+          },
+          "$invalid": false
+        }
+      ],
+      "$conditionOutputs": [
+        {
+          "stateId": "4aa23547-ee28-4294-bc25-ffad9520ff19",
+          "typeOfStateId": "state",
+          "$connId": "con_23",
+          "$id": "04b125bc-3312-4c1f-9706-f47ef3a4b15f",
+          "conditions": [
+            {
+              "source": "input",
+              "comparison": "exists",
+              "values": []
+            }
+          ],
+          "$isBuilderDefaultOutput": true,
+          "$invalid": false
+        }
+      ],
+      "$enteringCustomActions": [
+        {
+          "$id": "b1fc8e67-99e3-4fba-9571-4e144a63d6a1",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "Boas vindas",
+            "action": "{{contact.identity}}"
+          },
+          "conditions": []
+        },
+        {
+          "$id": "599b7260-2b67-4f47-a2c7-0e6f23fc2188",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos Data",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "exibicao|{{state.name}}",
+            "action": "exibicao"
+          },
+          "conditions": []
+        }
+      ],
+      "$leavingCustomActions": [
+        {
+          "$id": "00c5dc84-bcdb-4235-ad87-5052d651751e",
+          "$typeOfContent": "",
+          "$description": "",
+          "$inputSchema": {
+            "type": "object",
+            "properties": {},
+            "required": []
+          },
+          "type": "MergeContact",
+          "$title": "Definir contato",
+          "$invalid": false,
+          "settings": {
+            "extras": {
+              "nome": "true"
+            },
+            "name": "{{input.content}}"
+          },
+          "conditions": []
+        },
+        {
+          "$id": "1498826f-be94-45ba-91de-3220204e5f19",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "Boas vindas Conteudo",
+            "action": "{{contact.identity}} | {{input.content}}"
+          },
+          "conditions": [
+            {
+              "values": [],
+              "source": "input",
+              "comparison": "exists"
+            }
+          ]
+        },
+        {
+          "$id": "6281fcb7-d891-44c4-9649-db126bd5abfc",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos Data",
+          "$invalid": false,
+          "settings": {
+            "extras": {
+              "input": "{{input.content}}"
+            },
+            "category": "input|{{state.name}}",
+            "action": "input"
+          },
+          "conditions": [
+            {
+              "values": [],
+              "source": "input",
+              "comparison": "exists"
+            }
+          ]
+        }
+      ],
+      "$inputSuggestions": [],
+      "$defaultOutput": {
+        "stateId": "fallback",
+        "$invalid": false
+      },
+      "$localCustomActions": [],
+      "isAiGenerated": false,
+      "$tags": [],
+      "id": "welcome",
+      "$title": "Boas vindas",
+      "$position": {
+        "top": "248px",
+        "left": "649px"
+      },
+      "$invalidContentActions": false,
+      "$invalidOutputs": false,
+      "$invalidCustomActions": false,
+      "$invalid": false
+    },
+    "error": {
+      "$contentActions": [
+        {
+          "action": {
+            "$id": "f7b002ec-5c70-47e2-a9df-b878605edfd0",
+            "$typeOfContent": "",
+            "$description": "",
+            "$inputSchema": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            },
+            "type": "SendMessage",
+            "settings": {
+              "id": "00000000-0000-0000-0000-000000000002",
+              "type": "application/vnd.lime.chatstate+json",
+              "content": {
+                "state": "composing",
+                "interval": 1000
+              }
+            },
+            "$cardContent": {
+              "document": {
+                "id": "00000000-0000-0000-0000-000000000002",
+                "type": "application/vnd.lime.chatstate+json",
+                "content": {
+                  "state": "composing",
+                  "interval": 1000
+                }
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left",
+              "editing": false
+            }
+          },
+          "$invalid": false
+        },
+        {
+          "action": {
+            "$id": "80fcdc01-d95d-43e1-8399-131721de7893",
+            "$typeOfContent": "",
+            "$description": "",
+            "$inputSchema": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            },
+            "type": "SendMessage",
+            "settings": {
+              "id": "00000000-0000-0000-0000-000000000003",
+              "type": "text/plain",
+              "content": "Desculpe, não consegui entender!"
+            },
+            "$cardContent": {
+              "document": {
+                "id": "00000000-0000-0000-0000-000000000003",
+                "type": "text/plain",
+                "content": "Desculpe, não consegui entender!"
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left",
+              "editing": false
+            }
+          },
+          "$invalid": false
+        },
+        {
+          "input": {
+            "bypass": true,
+            "$cardContent": {
+              "document": {
+                "id": "fd728538-5e29-46fd-9a8f-744df375aba0",
+                "type": "text/plain",
+                "content": "Entrada do usuário"
+              },
+              "editable": false,
+              "deletable": true,
+              "position": "right",
+              "editing": false
+            },
+            "$invalid": false
+          },
+          "$invalid": false
+        }
+      ],
+      "$conditionOutputs": [],
+      "$enteringCustomActions": [
+        {
+          "$id": "8dd08479-dade-44c4-a76a-4b21c382184f",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "Erro padrão",
+            "action": "{{contact.identity}}"
+          },
+          "conditions": []
+        },
+        {
+          "$id": "5b68bfac-8b15-4285-89fe-d0969f16bd00",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos Data",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "exibicao|{{state.name}}",
+            "action": "exibicao"
+          },
+          "conditions": []
+        }
+      ],
+      "$leavingCustomActions": [],
+      "$inputSuggestions": [],
+      "$defaultOutput": {
+        "stateId": "{{statePreviousId}}",
+        "$invalid": false,
+        "typeOfStateId": "variable"
+      },
+      "$localCustomActions": [],
+      "isAiGenerated": false,
+      "$tags": [],
+      "id": "error",
+      "$title": "Erro padrão",
+      "$position": {
+        "top": "225px",
+        "left": "1126px"
+      },
+      "$invalidContentActions": false,
+      "$invalidOutputs": false,
+      "$invalidCustomActions": false,
+      "$invalid": false
+    },
+    "4aa23547-ee28-4294-bc25-ffad9520ff19": {
+      "$contentActions": [
+        {
+          "action": {
+            "$id": "aadfc4ca-2e5a-4dd8-b977-4fe7598fab01",
+            "$typeOfContent": "chat-state",
+            "$description": "",
+            "$inputSchema": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            },
+            "type": "SendMessage",
+            "settings": {
+              "id": "e3e4e23a-e36e-4d1e-ae8d-f9222d960f91",
+              "type": "application/vnd.lime.chatstate+json",
+              "content": {
+                "state": "composing",
+                "interval": 1000
+              }
+            },
+            "$cardContent": {
+              "document": {
+                "id": "e3e4e23a-e36e-4d1e-ae8d-f9222d960f91",
+                "type": "application/vnd.lime.chatstate+json",
+                "content": {
+                  "state": "composing",
+                  "interval": 1000
+                }
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left"
+            }
+          },
+          "$invalid": false
+        },
+        {
+          "action": {
+            "$id": "6e44ac77-11fa-4959-9005-11a08335d583",
+            "$typeOfContent": "text",
+            "$description": "",
+            "$inputSchema": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            },
+            "type": "SendMessage",
+            "settings": {
+              "id": "68f3bada-31cb-4501-8970-46de052bf4ba",
+              "type": "text/plain",
+              "content": "Prazer em conhecê-lo(a), {{contact.name}}!",
+              "metadata": {}
+            },
+            "$cardContent": {
+              "document": {
+                "id": "68f3bada-31cb-4501-8970-46de052bf4ba",
+                "type": "text/plain",
+                "content": "Prazer em conhecê-lo(a), {{contact.name}}!"
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left"
+            }
+          },
+          "$invalid": false
+        },
+        {
+          "input": {
+            "bypass": true,
+            "$cardContent": {
+              "document": {
+                "id": "b52d6337-96c9-41db-b56b-679f83cfbc7d",
+                "type": "text/plain",
+                "textContent": "Entrada do usuário",
+                "content": "Entrada do usuário"
+              },
+              "editable": false,
+              "deletable": true,
+              "position": "right",
+              "editing": false
+            },
+            "$invalid": false
+          },
+          "$invalid": false
+        }
+      ],
+      "$conditionOutputs": [
+        {
+          "stateId": "6fa97c2b-1ded-4341-afc7-7b8899795225",
+          "typeOfStateId": "state",
+          "$connId": "con_28",
+          "$id": "5386f6b3-5711-44bc-bca3-1d4e74956f7a",
+          "conditions": [
+            {
+              "source": "input",
+              "comparison": "exists",
+              "values": []
+            }
+          ],
+          "$isBuilderDefaultOutput": true,
+          "$invalid": false
+        }
+      ],
+      "$enteringCustomActions": [
+        {
+          "$id": "3939cebb-9651-4fbc-a391-d01ade653d05",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "Nome coletado",
+            "action": "{{contact.identity}}"
+          },
+          "conditions": []
+        },
+        {
+          "$id": "1b0f584c-80af-4e4a-89ed-bbc6fd25aec6",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos Data",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "exibicao|{{state.name}}",
+            "action": "exibicao"
+          },
+          "conditions": []
+        }
+      ],
+      "$leavingCustomActions": [],
+      "$inputSuggestions": [],
+      "$defaultOutput": {
+        "stateId": "fallback",
+        "$invalid": false
+      },
+      "$localCustomActions": [],
+      "isAiGenerated": false,
+      "$tags": [],
+      "id": "4aa23547-ee28-4294-bc25-ffad9520ff19",
+      "root": false,
+      "$title": "Nome coletado",
+      "$position": {
+        "top": "376px",
+        "left": "649px"
+      },
+      "$invalidContentActions": false,
+      "$invalidOutputs": false,
+      "$invalidCustomActions": false,
+      "$invalid": false
+    },
+    "a9dea1d5-1d48-4df7-a4c0-1cf1d91071fc": {
+      "$contentActions": [
+        {
+          "input": {
+            "bypass": true,
+            "$cardContent": {
+              "document": {
+                "id": "942bbcb5-a524-4887-bf01-2d18416ca0e0",
+                "type": "text/plain",
+                "textContent": "Entrada do usuário",
+                "content": "Entrada do usuário"
+              },
+              "editable": false,
+              "deletable": true,
+              "position": "right",
+              "editing": false
+            },
+            "$invalid": false
+          },
+          "$invalid": false
+        }
+      ],
+      "$conditionOutputs": [
+        {
+          "stateId": "0ce80253-df07-4f6e-8e62-93c4d07b3794",
+          "typeOfStateId": "state",
+          "$connId": "con_33",
+          "$id": "0e530550-0b44-4ef7-bcae-35e5f32f125a",
+          "conditions": [
+            {
+              "source": "context",
+              "comparison": "equals",
+              "values": [
+                "404"
+              ],
+              "variable": "retornoIaStatus"
+            }
+          ],
+          "$isBuilderDefaultOutput": true,
+          "$invalid": false
+        },
+        {
+          "stateId": "74962d5a-0dc3-4c99-a1cb-66c945603705",
+          "typeOfStateId": "state",
+          "$connId": "con_38",
+          "$id": "6b57486c-37fe-41ab-baba-0c7203cec71b",
+          "conditions": [
+            {
+              "source": "context",
+              "comparison": "equals",
+              "values": [
+                "true"
+              ],
+              "variable": "retornoIaResponse@fora_de_escopo"
+            }
+          ],
+          "$isBuilderDefaultOutput": true,
+          "$invalid": false
+        },
+        {
+          "stateId": "7148165c-72d4-40a4-83b6-e3c49a28ebd9",
+          "typeOfStateId": "state",
+          "$connId": "con_43",
+          "$id": "d8336913-4b5e-4808-b5d0-305acfec443b",
+          "conditions": [
+            {
+              "source": "input",
+              "comparison": "exists",
+              "values": []
+            }
+          ],
+          "$isBuilderDefaultOutput": true,
+          "$invalid": false
+        }
+      ],
+      "$enteringCustomActions": [
+        {
+          "$id": "116f7369-5ab0-4ecd-b17a-20565e39941d",
+          "$typeOfContent": "",
+          "$description": "",
+          "$inputSchema": {
+            "type": "object",
+            "properties": {},
+            "required": []
+          },
+          "type": "SetVariable",
+          "$title": "Definir variável id chamada API",
+          "$invalid": false,
+          "settings": {
+            "variable": "idChamadaApi1",
+            "value": "{{random.guid}}"
+          },
+          "conditions": []
+        },
+        {
+          "$id": "046f0ad6-a0ed-4d0e-b4de-2f3ffe482b5e",
+          "$typeOfContent": "",
+          "$description": "",
+          "$inputSchema": {
+            "type": "object",
+            "properties": {},
+            "required": []
+          },
+          "type": "TrackEvent",
+          "$title": "Tracking API - entrada - requisicao_http",
+          "$invalid": false,
+          "settings": {
+            "extras": {
+              "bot": "{{config.botId}}",
+              "bloco": "{{state.name}}",
+              "id_chamada": "{{idChamadaApi1}}",
+              "metodo": "POST",
+              "nome": "requisicao_http",
+              "url": "https://pokiest-glossless-oakley.ngrok-free.dev/agente",
+              "payload": "{\n    \"mensagem\":\"{{input.content}}\"\n}"
+            },
+            "category": "chamada_api",
+            "action": "entrada"
+          },
+          "conditions": []
+        },
+        {
+          "$id": "0acdd34a-6384-4c45-957f-8216ce67d74f",
+          "$typeOfContent": "",
+          "$description": "",
+          "$inputSchema": {
+            "type": "object",
+            "properties": {},
+            "required": []
+          },
+          "type": "ProcessHttp",
+          "$title": "Requisição HTTP",
+          "$invalid": false,
+          "settings": {
+            "headers": {
+              "Authorization": "Key REMOVIDO"
+            },
+            "method": "POST",
+            "body": "{\n  \"mensagem\": \"{{input.content}}\",\n  \"curso\": \"{{cursoApi}}\",\n  \"ano\": \"{{anoApi}}\"\n}",
+            "uri": "https://pokiest-glossless-oakley.ngrok-free.dev/agente",
+            "responseStatusVariable": "retornoIaStatus",
+            "responseBodyVariable": "retornoIaResponse"
+          },
+          "conditions": []
+        },
+        {
+          "$id": "b45c0f4c-4796-44b2-968b-38ffc8f0aaee",
+          "$typeOfContent": "",
+          "$description": "",
+          "$inputSchema": {
+            "type": "object",
+            "properties": {},
+            "required": []
+          },
+          "type": "TrackEvent",
+          "$title": "Tracking API - saida - requisicao_http",
+          "$invalid": false,
+          "settings": {
+            "extras": {
+              "bot": "{{config.botId}}",
+              "bloco": "{{state.name}}",
+              "id_chamada": "{{idChamadaApi1}}",
+              "metodo": "POST",
+              "nome": "requisicao_http",
+              "url": "https://pokiest-glossless-oakley.ngrok-free.dev/agente",
+              "payload": "{\n    \"mensagem\":\"{{input.content}}\"\n}",
+              "http_response": "{{retornoIaStatus}}",
+              "response": "{{retornoIaResponse}}"
+            },
+            "category": "chamada_api",
+            "action": "saida"
+          },
+          "conditions": []
+        },
+        {
+          "$id": "566e12c2-9ff2-44b3-8117-be45bf4c2c1b",
+          "$typeOfContent": "",
+          "$description": "",
+          "$inputSchema": {
+            "type": "object",
+            "properties": {},
+            "required": []
+          },
+          "type": "ExecuteScript",
+          "$title": "Executar script",
+          "$invalid": false,
+          "settings": {
+            "function": "run",
+            "source": "function run(retornoIA) {\n  try {\n    var obj = typeof retornoIA === \"string\"\n      ? JSON.parse(retornoIA)\n      : retornoIA;\n\n    var resposta = obj.resposta || \"\";\n\n    return String(resposta)\n      .split(\"\\\\n\").join(\"\\n\")\n      .split(\"\\\\r\").join(\"\")\n      .split(\"\\\\t\").join(\" \");\n  } catch (e) {\n    return String(retornoIA || \"\")\n      .split(\"\\\\n\").join(\"\\n\")\n      .split(\"\\\\r\").join(\"\")\n      .split(\"\\\\t\").join(\" \");\n  }\n}",
+            "inputVariables": [
+              "retornoIaResponse"
+            ],
+            "outputVariable": "respostaTratada",
+            "LocalTimeZoneEnabled": false
+          },
+          "conditions": []
+        },
+        {
+          "$id": "472f7774-8a65-4763-8095-5052cd4d8737",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "IA request",
+            "action": "{{contact.identity}}"
+          },
+          "conditions": []
+        },
+        {
+          "$id": "f167b63c-b467-481c-8725-d45d96a42187",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos Data",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "exibicao|{{state.name}}",
+            "action": "exibicao"
+          },
+          "conditions": []
+        },
+        {
+          "$id": "744a17b9-4e54-4cd1-9cfb-4fd16c14fa35",
+          "$typeOfContent": "",
+          "$description": "",
+          "$inputSchema": {
+            "type": "object",
+            "properties": {},
+            "required": []
+          },
+          "type": "TrackEvent",
+          "$title": "Registro de eventos",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "IA request info",
+            "action": "{{retornoIaStatus}} - {{retornoIaResponse}}"
+          },
+          "conditions": []
+        },
+        {
+          "$id": "dba37f6b-2f94-4553-aa6a-20b9e42f1fc9",
+          "$typeOfContent": "",
+          "$description": "",
+          "$inputSchema": {
+            "type": "object",
+            "properties": {},
+            "required": []
+          },
+          "type": "TrackEvent",
+          "$title": "Registro de eventos",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "IA request info body",
+            "action": "{{retornoIaStatus}} - {{retornoIaResponse}} - {{input.content}}"
+          },
+          "conditions": []
+        },
+        {
+          "$id": "982c0442-81f8-4e74-9c14-f113c52f4bff",
+          "$typeOfContent": "",
+          "$description": "",
+          "$inputSchema": {
+            "type": "object",
+            "properties": {},
+            "required": []
+          },
+          "type": "TrackEvent",
+          "$title": "Registro de eventos",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "Relatorio Completo IA",
+            "action": "Nome: {{contact.name}} - Pergunta: {{input.content}} - Resposta: {{respostaTratada}}"
+          },
+          "conditions": []
+        }
+      ],
+      "$leavingCustomActions": [],
+      "$inputSuggestions": [],
+      "$defaultOutput": {
+        "stateId": "fallback",
+        "$invalid": false
+      },
+      "$localCustomActions": [],
+      "isAiGenerated": false,
+      "$tags": [],
+      "id": "a9dea1d5-1d48-4df7-a4c0-1cf1d91071fc",
+      "root": false,
+      "$title": "IA request",
+      "$position": {
+        "top": "617px",
+        "left": "649px"
+      },
+      "$invalidContentActions": false,
+      "$invalidOutputs": false,
+      "$invalidCustomActions": false,
+      "$invalid": false
+    },
+    "637d3dc8-5165-47c6-9286-97ee78b10844": {
+      "$contentActions": [
+        {
+          "action": {
+            "$id": "1301b0fe-7821-45bd-bf07-28acb8007e3d",
+            "$typeOfContent": "chat-state",
+            "$description": "",
+            "$inputSchema": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            },
+            "type": "SendMessage",
+            "settings": {
+              "id": "57c514c5-21c6-40cf-942d-d057dca6646f",
+              "type": "application/vnd.lime.chatstate+json",
+              "content": {
+                "state": "composing",
+                "interval": 1000
+              }
+            },
+            "$cardContent": {
+              "document": {
+                "id": "57c514c5-21c6-40cf-942d-d057dca6646f",
+                "type": "application/vnd.lime.chatstate+json",
+                "content": {
+                  "state": "composing",
+                  "interval": 1000
+                }
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left"
+            }
+          },
+          "$invalid": false
+        },
+        {
+          "action": {
+            "$id": "2103cffe-f93f-4843-bde1-8baddcff5e66",
+            "$typeOfContent": "text",
+            "$description": "",
+            "$inputSchema": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            },
+            "type": "SendMessage",
+            "settings": {
+              "id": "302bcd20-faab-4ace-b78c-855121b7ba18",
+              "type": "text/plain",
+              "content": "Fico feliz por ter conseguido ajudar! 😊\n\nSempre que precisar, estarei por aqui para esclarecer suas dúvidas acadêmicas.\n\nTenha um excelente dia! 👋",
+              "metadata": {}
+            },
+            "$cardContent": {
+              "document": {
+                "id": "302bcd20-faab-4ace-b78c-855121b7ba18",
+                "type": "text/plain",
+                "content": "Fico feliz por ter conseguido ajudar! 😊\n\nSempre que precisar, estarei por aqui para esclarecer suas dúvidas acadêmicas.\n\nTenha um excelente dia! 👋"
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left"
+            }
+          },
+          "$invalid": false
+        },
+        {
+          "input": {
+            "bypass": true,
+            "$cardContent": {
+              "document": {
+                "id": "1c801744-43c9-4fcd-ae43-ebd8304a7f3d",
+                "type": "text/plain",
+                "textContent": "Entrada do usuário",
+                "content": "Entrada do usuário"
+              },
+              "editable": false,
+              "deletable": true,
+              "position": "right",
+              "editing": false
+            },
+            "$invalid": false
+          },
+          "$invalid": false
+        }
+      ],
+      "$conditionOutputs": [],
+      "$enteringCustomActions": [
+        {
+          "$id": "ce20bb44-9d3f-4d74-b6ff-9d2c96828f5e",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "Encerramento",
+            "action": "{{contact.identity}}"
+          },
+          "conditions": []
+        },
+        {
+          "$id": "46747471-9e79-402b-ad8b-e64cd79045fb",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos Data",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "exibicao|{{state.name}}",
+            "action": "exibicao"
+          },
+          "conditions": []
+        }
+      ],
+      "$leavingCustomActions": [],
+      "$inputSuggestions": [],
+      "$defaultOutput": {
+        "stateId": "onboarding",
+        "$invalid": false,
+        "typeOfStateId": "state"
+      },
+      "$localCustomActions": [],
+      "isAiGenerated": false,
+      "$tags": [],
+      "id": "637d3dc8-5165-47c6-9286-97ee78b10844",
+      "root": false,
+      "$title": "Encerramento",
+      "$position": {
+        "top": "151px",
+        "left": "188px"
+      },
+      "$invalidContentActions": false,
+      "$invalidOutputs": false,
+      "$invalidCustomActions": false,
+      "$invalid": false
+    },
+    "d6bc6110-96c3-4d73-aa09-1af9284db5d4": {
+      "$contentActions": [
+        {
+          "action": {
+            "$id": "199112b3-3e18-44db-92b1-5422b9b518f0",
+            "$typeOfContent": "chat-state",
+            "$description": "",
+            "$inputSchema": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            },
+            "type": "SendMessage",
+            "settings": {
+              "id": "06568138-54d2-473d-941b-40681853765c",
+              "type": "application/vnd.lime.chatstate+json",
+              "content": {
+                "state": "composing",
+                "interval": 1000
+              }
+            },
+            "$cardContent": {
+              "document": {
+                "id": "06568138-54d2-473d-941b-40681853765c",
+                "type": "application/vnd.lime.chatstate+json",
+                "content": {
+                  "state": "composing",
+                  "interval": 1000
+                }
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left"
+            }
+          },
+          "$invalid": false
+        },
+        {
+          "action": {
+            "$id": "09abe29d-92ab-4c88-8368-50bf66d3ffb8",
+            "$typeOfContent": "text",
+            "$description": "",
+            "$inputSchema": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            },
+            "type": "SendMessage",
+            "settings": {
+              "id": "7eb72854-38ca-45a5-92f1-78b3e08d7025",
+              "type": "text/plain",
+              "content": "Percebi que você ficou ausente.\n\nPor isso, este atendimento será encerrado automaticamente.\n\nQuando precisar, é só iniciar uma nova conversa. Estarei à disposição para ajudar.\n\nAté breve! 👋",
+              "metadata": {}
+            },
+            "$cardContent": {
+              "document": {
+                "id": "7eb72854-38ca-45a5-92f1-78b3e08d7025",
+                "type": "text/plain",
+                "content": "Percebi que você ficou ausente.\n\nPor isso, este atendimento será encerrado automaticamente.\n\nQuando precisar, é só iniciar uma nova conversa. Estarei à disposição para ajudar.\n\nAté breve! 👋"
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left"
+            }
+          },
+          "$invalid": false
+        },
+        {
+          "input": {
+            "bypass": true,
+            "$cardContent": {
+              "document": {
+                "id": "e691eda8-3c08-467d-8953-651a11f58531",
+                "type": "text/plain",
+                "textContent": "Entrada do usuário",
+                "content": "Entrada do usuário"
+              },
+              "editable": false,
+              "deletable": true,
+              "position": "right",
+              "editing": false
+            },
+            "$invalid": false
+          },
+          "$invalid": false
+        }
+      ],
+      "$conditionOutputs": [],
+      "$enteringCustomActions": [
+        {
+          "$id": "26513397-cf93-4d87-9740-4902f8f4b56c",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "Inatividade",
+            "action": "{{contact.identity}}"
+          },
+          "conditions": []
+        },
+        {
+          "$id": "415c0670-4f82-4398-ba81-dcf33aa53c20",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos Data",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "exibicao|{{state.name}}",
+            "action": "exibicao"
+          },
+          "conditions": []
+        }
+      ],
+      "$leavingCustomActions": [],
+      "$inputSuggestions": [],
+      "$defaultOutput": {
+        "stateId": "onboarding",
+        "$invalid": false,
+        "typeOfStateId": "state"
+      },
+      "$localCustomActions": [],
+      "isAiGenerated": false,
+      "$tags": [],
+      "id": "d6bc6110-96c3-4d73-aa09-1af9284db5d4",
+      "root": false,
+      "$title": "Inatividade",
+      "$position": {
+        "top": "241px",
+        "left": "188px"
+      },
+      "$invalidContentActions": false,
+      "$invalidOutputs": false,
+      "$invalidCustomActions": false,
+      "$invalid": false
+    },
+    "4e20f6a9-5d12-4699-8fb6-f6c0bc263cf7": {
+      "$contentActions": [
+        {
+          "action": {
+            "$id": "72904bb9-a4dc-4a6b-a9fb-42b95abdc0db",
+            "$typeOfContent": "chat-state",
+            "$description": "",
+            "$inputSchema": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            },
+            "type": "SendMessage",
+            "settings": {
+              "id": "4424f746-cd1c-4ce9-9d8b-0672c9f47a08",
+              "type": "application/vnd.lime.chatstate+json",
+              "content": {
+                "state": "composing",
+                "interval": 1000
+              }
+            },
+            "$cardContent": {
+              "document": {
+                "id": "4424f746-cd1c-4ce9-9d8b-0672c9f47a08",
+                "type": "application/vnd.lime.chatstate+json",
+                "content": {
+                  "state": "composing",
+                  "interval": 1000
+                }
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left"
+            }
+          },
+          "$invalid": false,
+          "$$hashKey": "object:1238"
+        },
+        {
+          "action": {
+            "$id": "e0d5c909-fb16-4ef2-9fe7-d02013796efd",
+            "$typeOfContent": "text",
+            "$description": "",
+            "$inputSchema": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            },
+            "type": "SendMessage",
+            "settings": {
+              "id": "0673bc65-36bf-4caa-95f5-fcc9b19ab57b",
+              "type": "text/plain",
+              "content": "Olá novamente, {{contact.name}}! 👋\n\nSou o assistente acadêmico do IFMG Sabará e estou aqui para te ajudar com dúvidas sobre <b>Estágios, CRA e Biblioteca</b>.\n\nComo posso te ajudar hoje?",
+              "metadata": {}
+            },
+            "$cardContent": {
+              "document": {
+                "id": "0673bc65-36bf-4caa-95f5-fcc9b19ab57b",
+                "type": "text/plain",
+                "content": "Olá novamente, {{contact.name}}! 👋\n\nSou o assistente acadêmico do IFMG Sabará e estou aqui para te ajudar com dúvidas sobre <b>Estágios, CRA e Biblioteca</b>.\n\nComo posso te ajudar hoje?"
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left"
+            }
+          },
+          "$invalid": false,
+          "$$hashKey": "object:1239"
+        },
+        {
+          "input": {
+            "bypass": false,
+            "$cardContent": {
+              "document": {
+                "id": "b8e1e804-d67e-406f-91d9-8a256bbabe0d",
+                "type": "text/plain",
+                "textContent": "Entrada do usuário",
+                "content": "Entrada do usuário"
+              },
+              "editable": false,
+              "deletable": true,
+              "position": "right",
+              "editing": false
+            },
+            "$invalid": false
+          },
+          "$invalid": false,
+          "$$hashKey": "object:1240"
+        }
+      ],
+      "$conditionOutputs": [
+        {
+          "stateId": "a9dea1d5-1d48-4df7-a4c0-1cf1d91071fc",
+          "typeOfStateId": "state",
+          "$connId": "con_48",
+          "$id": "f4df70c9-82c5-4140-bc60-c42b126d45f0",
+          "conditions": [
+            {
+              "source": "input",
+              "comparison": "exists",
+              "values": [],
+              "$$hashKey": "object:1264"
+            }
+          ],
+          "$invalid": false,
+          "$$hashKey": "object:1246"
+        }
+      ],
+      "$enteringCustomActions": [
+        {
+          "$id": "f071fde5-145d-4307-a43f-aa8b6e754ae6",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "Retorno",
+            "action": "{{contact.identity}}"
+          },
+          "conditions": []
+        },
+        {
+          "$id": "a9112c6f-d7a1-4141-a5ac-af1a8ce2d698",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos Data",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "exibicao|{{state.name}}",
+            "action": "exibicao"
+          },
+          "conditions": []
+        }
+      ],
+      "$leavingCustomActions": [],
+      "$inputSuggestions": [],
+      "$defaultOutput": {
+        "stateId": "a9dea1d5-1d48-4df7-a4c0-1cf1d91071fc",
+        "$invalid": false,
+        "typeOfStateId": "state"
+      },
+      "$localCustomActions": [],
+      "isAiGenerated": false,
+      "$tags": [],
+      "id": "4e20f6a9-5d12-4699-8fb6-f6c0bc263cf7",
+      "root": false,
+      "$title": "Retorno",
+      "$position": {
+        "top": "247px",
+        "left": "877px"
+      },
+      "$invalidContentActions": false,
+      "$invalidOutputs": false,
+      "$invalidCustomActions": false,
+      "$invalid": false
+    },
+    "ca637eb2-526b-43e9-8a9e-a9c4747bbbde": {
+      "$contentActions": [
+        {
+          "action": {
+            "$id": "5fa3adb8-5b28-420a-a625-188cc31b936b",
+            "$typeOfContent": "chat-state",
+            "$description": "",
+            "$inputSchema": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            },
+            "type": "SendMessage",
+            "settings": {
+              "id": "2c24495e-a7fb-4a4c-83d3-8b4a27af7d7e",
+              "type": "application/vnd.lime.chatstate+json",
+              "content": {
+                "state": "composing",
+                "interval": 1000
+              }
+            },
+            "$cardContent": {
+              "document": {
+                "id": "2c24495e-a7fb-4a4c-83d3-8b4a27af7d7e",
+                "type": "application/vnd.lime.chatstate+json",
+                "content": {
+                  "state": "composing",
+                  "interval": 1000
+                }
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left"
+            }
+          },
+          "$invalid": false
+        },
+        {
+          "action": {
+            "$id": "3d590b21-84fa-4167-a37c-9e704466df08",
+            "$typeOfContent": "text",
+            "$description": "",
+            "$inputSchema": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            },
+            "type": "SendMessage",
+            "settings": {
+              "id": "82b77d91-f49c-4009-89bb-4814a4d04654",
+              "type": "text/plain",
+              "content": "Perfeito, {{contact.name}}! Como posso te ajudar hoje?",
+              "metadata": {}
+            },
+            "$cardContent": {
+              "document": {
+                "id": "82b77d91-f49c-4009-89bb-4814a4d04654",
+                "type": "text/plain",
+                "content": "Perfeito, {{contact.name}}! Como posso te ajudar hoje?"
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left"
+            }
+          },
+          "$invalid": false
+        },
+        {
+          "input": {
+            "bypass": false,
+            "$cardContent": {
+              "document": {
+                "id": "f7117506-9f0b-4320-a920-d879b17568ec",
+                "type": "text/plain",
+                "textContent": "Entrada do usuário",
+                "content": "Entrada do usuário"
+              },
+              "editable": false,
+              "deletable": true,
+              "position": "right",
+              "editing": false
+            },
+            "$invalid": false
+          },
+          "$invalid": false
+        }
+      ],
+      "$conditionOutputs": [
+        {
+          "stateId": "d6bc6110-96c3-4d73-aa09-1af9284db5d4",
+          "typeOfStateId": "state",
+          "$connId": "con_53",
+          "$id": "32d858aa-989a-417f-937e-c35aa559e745",
+          "conditions": [
+            {
+              "source": "input",
+              "comparison": "notExists",
+              "values": []
+            }
+          ],
+          "$isBuilderDefaultOutput": true,
+          "$invalid": false
+        },
+        {
+          "stateId": "a9dea1d5-1d48-4df7-a4c0-1cf1d91071fc",
+          "typeOfStateId": "state",
+          "$connId": "con_58",
+          "$id": "b137b28b-b21f-4cbd-94d9-bc592ffa55bf",
+          "conditions": [
+            {
+              "source": "input",
+              "comparison": "exists",
+              "values": []
+            }
+          ],
+          "$isBuilderDefaultOutput": true,
+          "$invalid": false
+        }
+      ],
+      "$enteringCustomActions": [
+        {
+          "$id": "a4074af2-acfb-4f35-84de-83c313cf24ea",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "Coleta Duvida",
+            "action": "{{contact.identity}}"
+          },
+          "conditions": []
+        },
+        {
+          "$id": "1fd09d62-e099-4b03-a6d7-15da1b88ef12",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos Data",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "exibicao|{{state.name}}",
+            "action": "exibicao"
+          },
+          "conditions": []
+        }
+      ],
+      "$leavingCustomActions": [
+        {
+          "$id": "9400dbb9-5943-422e-9555-3c285bdda18d",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "Coleta Duvida Conteudo",
+            "action": "{{contact.identity}} | {{input.content}}"
+          },
+          "conditions": [
+            {
+              "values": [],
+              "source": "input",
+              "comparison": "exists"
+            }
+          ]
+        },
+        {
+          "$id": "b0e214b9-07e3-48cc-bd47-6517e6835970",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos Data",
+          "$invalid": false,
+          "settings": {
+            "extras": {
+              "input": "{{input.content}}"
+            },
+            "category": "input|{{state.name}}",
+            "action": "input"
+          },
+          "conditions": [
+            {
+              "values": [],
+              "source": "input",
+              "comparison": "exists"
+            }
+          ]
+        }
+      ],
+      "$inputSuggestions": [],
+      "$defaultOutput": {
+        "stateId": "fallback",
+        "$invalid": false
+      },
+      "$localCustomActions": [],
+      "isAiGenerated": false,
+      "$tags": [],
+      "id": "ca637eb2-526b-43e9-8a9e-a9c4747bbbde",
+      "root": false,
+      "$title": "Coleta Duvida",
+      "$position": {
+        "top": "495px",
+        "left": "649px"
+      },
+      "$invalidContentActions": false,
+      "$invalidOutputs": false,
+      "$invalidCustomActions": false,
+      "$invalid": false
+    },
+    "7148165c-72d4-40a4-83b6-e3c49a28ebd9": {
+      "$contentActions": [
+        {
+          "action": {
+            "$id": "013bedd7-6c47-4414-9723-828e23ec7006",
+            "$typeOfContent": "chat-state",
+            "$description": "",
+            "$inputSchema": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            },
+            "type": "SendMessage",
+            "settings": {
+              "id": "8297b4c1-ce88-497e-b528-42414b0d2a41",
+              "type": "application/vnd.lime.chatstate+json",
+              "content": {
+                "state": "composing",
+                "interval": 1000
+              }
+            },
+            "$cardContent": {
+              "document": {
+                "id": "8297b4c1-ce88-497e-b528-42414b0d2a41",
+                "type": "application/vnd.lime.chatstate+json",
+                "content": {
+                  "state": "composing",
+                  "interval": 1000
+                }
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left"
+            }
+          },
+          "$invalid": false
+        },
+        {
+          "action": {
+            "$id": "ca8f5d0d-d270-4cfe-9fb2-a93f76659528",
+            "$typeOfContent": "text",
+            "$description": "",
+            "$inputSchema": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            },
+            "type": "SendMessage",
+            "settings": {
+              "id": "a47ccb94-162f-42e1-9f8d-9a0d729ef166",
+              "type": "text/plain",
+              "content": "{{respostaTratada}}",
+              "metadata": {}
+            },
+            "$cardContent": {
+              "document": {
+                "id": "a47ccb94-162f-42e1-9f8d-9a0d729ef166",
+                "type": "text/plain",
+                "content": "{{respostaTratada}}"
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left"
+            }
+          },
+          "$invalid": false
+        },
+        {
+          "action": {
+            "$id": "4fedf548-bbda-4379-85b6-acf6fae31a0e",
+            "$typeOfContent": "chat-state",
+            "$description": "",
+            "$inputSchema": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            },
+            "type": "SendMessage",
+            "settings": {
+              "id": "c333df0f-6deb-42e0-8e64-85bf28106fe5",
+              "type": "application/vnd.lime.chatstate+json",
+              "content": {
+                "state": "composing",
+                "interval": 1000
+              }
+            },
+            "$cardContent": {
+              "document": {
+                "id": "c333df0f-6deb-42e0-8e64-85bf28106fe5",
+                "type": "application/vnd.lime.chatstate+json",
+                "content": {
+                  "state": "composing",
+                  "interval": 1000
+                }
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left"
+            }
+          },
+          "$invalid": false
+        },
+        {
+          "action": {
+            "$id": "7d157710-4473-486c-8522-25f1ce59f601",
+            "$typeOfContent": "select-immediate",
+            "$description": "",
+            "$inputSchema": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            },
+            "type": "SendMessage",
+            "settings": {
+              "id": "e2d413c2-44b1-49b6-8636-3738f8908e5f",
+              "type": "application/vnd.lime.select+json",
+              "content": {
+                "text": "Possui <b>mais alguma dúvida</b>? É só <b>enviá-la por aqui!</b>\nCaso não tenha outras dúvidas, clique no <b>botão abaixo</b>!",
+                "scope": "immediate",
+                "options": [
+                  {
+                    "text": "Finalizar conversa",
+                    "previewText": "Finalizar conversa",
+                    "value": null,
+                    "index": 0,
+                    "type": null
+                  }
+                ],
+                "quikReply": false
+              },
+              "metadata": {}
+            },
+            "$cardContent": {
+              "document": {
+                "id": "e2d413c2-44b1-49b6-8636-3738f8908e5f",
+                "type": "application/vnd.lime.select+json",
+                "content": {
+                  "text": "Possui <b>mais alguma dúvida</b>? É só <b>enviá-la por aqui!</b>\nCaso não tenha outras dúvidas, clique no <b>botão abaixo</b>!",
+                  "scope": "immediate",
+                  "options": [
+                    {
+                      "text": "Finalizar conversa",
+                      "previewText": "Finalizar conversa",
+                      "value": null,
+                      "index": 0,
+                      "type": null
+                    }
+                  ],
+                  "quikReply": false
+                }
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left"
+            }
+          },
+          "$invalid": false
+        },
+        {
+          "input": {
+            "bypass": false,
+            "$cardContent": {
+              "document": {
+                "id": "4d6a3be8-ee99-4cd7-8a91-280312d7431c",
+                "type": "text/plain",
+                "textContent": "Entrada do usuário",
+                "content": "Entrada do usuário"
+              },
+              "editable": false,
+              "deletable": true,
+              "position": "right",
+              "editing": false
+            },
+            "$invalid": false
+          },
+          "$invalid": false
+        }
+      ],
+      "$conditionOutputs": [
+        {
+          "stateId": "d6bc6110-96c3-4d73-aa09-1af9284db5d4",
+          "typeOfStateId": "state",
+          "$connId": "con_63",
+          "$id": "97ebb9ca-c36f-4349-bfed-1bf431f69f24",
+          "conditions": [
+            {
+              "source": "input",
+              "comparison": "notExists",
+              "values": []
+            }
+          ],
+          "$isBuilderDefaultOutput": true,
+          "$invalid": false
+        },
+        {
+          "stateId": "8a55efb0-13b6-433f-a364-d53c9992d711",
+          "typeOfStateId": "state",
+          "$connId": "con_68",
+          "$contentId": "7d157710-4473-486c-8522-25f1ce59f601",
+          "$id": "d49b0c38-2ca3-4022-ab2f-1cf787acbfa5",
+          "conditions": [
+            {
+              "source": "input",
+              "comparison": "equals",
+              "values": [
+                "Finalizar conversa"
+              ]
+            }
+          ],
+          "$invalid": false
+        }
+      ],
+      "$enteringCustomActions": [
+        {
+          "$id": "d9110de3-e24e-4bc3-81a3-1c38e40f2168",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "Conseguiu ajudar",
+            "action": "{{contact.identity}}"
+          },
+          "conditions": []
+        },
+        {
+          "$id": "a0db83cd-d7af-4b2a-adb7-f69cf7d46c86",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos Data",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "exibicao|{{state.name}}",
+            "action": "exibicao"
+          },
+          "conditions": []
+        }
+      ],
+      "$leavingCustomActions": [
+        {
+          "$id": "74867f8c-9d44-4470-bac9-0e2583dbc047",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "Conseguiu ajudar Conteudo",
+            "action": "{{contact.identity}} | {{input.content}}"
+          },
+          "conditions": [
+            {
+              "values": [],
+              "source": "input",
+              "comparison": "exists"
+            }
+          ]
+        },
+        {
+          "$id": "7d1ca609-b5fe-4711-862a-1e96473928ab",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos Data",
+          "$invalid": false,
+          "settings": {
+            "extras": {
+              "input": "{{input.content}}"
+            },
+            "category": "input|{{state.name}}",
+            "action": "input"
+          },
+          "conditions": [
+            {
+              "values": [],
+              "source": "input",
+              "comparison": "exists"
+            }
+          ]
+        },
+        {
+          "$id": "d08613bd-e367-4a5d-aac2-807b76fd5899",
+          "$typeOfContent": "",
+          "type": "ExecuteScript",
+          "$title": "treat input",
+          "$invalid": false,
+          "settings": {
+            "function": "run",
+            "source": "\nfunction run(userInput) {\n    try {\n        if (!userInput) return 'N/A';\n        switch (true) {\n            case userInput.includes(\"Finalizar conversa\"):\n                return \"Finalizar conversa\";\n            default:\n                return 'N/A';\n        }\n    } catch (e) {\n        return 'N/A';\n    }\n}\n",
+            "inputVariables": [
+              "input.content"
+            ],
+            "outputVariable": "inputFormated",
+            "LocalTimeZoneEnabled": false
+          },
+          "conditions": []
+        },
+        {
+          "$id": "da70b0b9-dd5d-4716-ad63-a24d7819d9fa",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos Data",
+          "$invalid": false,
+          "settings": {
+            "extras": {
+              "input": "{{inputFormated}}"
+            },
+            "category": "input|{{state.name}}",
+            "action": "selecao"
+          },
+          "conditions": [
+            {
+              "source": "context",
+              "comparison": "notEquals",
+              "variable": "inputFormated",
+              "values": [
+                "N/A"
+              ]
+            },
+            {
+              "source": "input",
+              "comparison": "exists",
+              "values": []
+            }
+          ]
+        },
+        {
+          "$id": "d828225e-aebc-48ab-9194-d8f20c9c4dd9",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos Data",
+          "$invalid": false,
+          "settings": {
+            "extras": {
+              "input": "{{input.content}}"
+            },
+            "category": "input|{{state.name}}",
+            "action": "inesperado"
+          },
+          "conditions": [
+            {
+              "source": "context",
+              "comparison": "equals",
+              "variable": "inputFormated",
+              "values": [
+                "N/A"
+              ]
+            },
+            {
+              "source": "input",
+              "comparison": "exists",
+              "values": []
+            }
+          ]
+        }
+      ],
+      "$inputSuggestions": [
+        "Finalizar conversa"
+      ],
+      "$defaultOutput": {
+        "stateId": "a9dea1d5-1d48-4df7-a4c0-1cf1d91071fc",
+        "$invalid": false,
+        "typeOfStateId": "state"
+      },
+      "$localCustomActions": [],
+      "isAiGenerated": false,
+      "$tags": [],
+      "id": "7148165c-72d4-40a4-83b6-e3c49a28ebd9",
+      "root": false,
+      "$title": "Conseguiu ajudar",
+      "$position": {
+        "top": "747px",
+        "left": "649px"
+      },
+      "$invalidContentActions": false,
+      "$invalidOutputs": false,
+      "$invalidCustomActions": false,
+      "$invalid": false
+    },
+    "8a55efb0-13b6-433f-a364-d53c9992d711": {
+      "$contentActions": [
+        {
+          "action": {
+            "$id": "7c4649f4-e243-40ef-af09-3159bb29b526",
+            "$typeOfContent": "chat-state",
+            "$description": "",
+            "$inputSchema": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            },
+            "type": "SendMessage",
+            "settings": {
+              "id": "8512fd66-0756-4998-881d-e50fb3106b26",
+              "type": "application/vnd.lime.chatstate+json",
+              "content": {
+                "state": "composing",
+                "interval": 1000
+              }
+            },
+            "$cardContent": {
+              "document": {
+                "id": "8512fd66-0756-4998-881d-e50fb3106b26",
+                "type": "application/vnd.lime.chatstate+json",
+                "content": {
+                  "state": "composing",
+                  "interval": 1000
+                }
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left"
+            }
+          },
+          "$invalid": false
+        },
+        {
+          "action": {
+            "$id": "9acc0a43-3e51-45ff-a0c2-906200af2a4e",
+            "$typeOfContent": "select",
+            "$description": "",
+            "$inputSchema": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            },
+            "type": "SendMessage",
+            "settings": {
+              "id": "c2113ce0-f163-439f-b6a0-d1a68cb4af19",
+              "type": "application/vnd.lime.select+json",
+              "content": {
+                "text": "Antes de encerrar, gostaríamos de saber como foi sua experiência com o Assistente Virtual do IFMG.\n\nEscolha uma das opções abaixo:",
+                "options": [
+                  {
+                    "text": "⭐ Muito satisfeito",
+                    "previewText": "⭐ Muito satisfeito",
+                    "value": null,
+                    "index": 0,
+                    "type": null
+                  },
+                  {
+                    "text": "😊 Satisfeito",
+                    "previewText": "😊 Satisfeito",
+                    "value": null,
+                    "index": 1,
+                    "type": null
+                  },
+                  {
+                    "text": "😐 Neutro",
+                    "previewText": "😐 Neutro",
+                    "value": null,
+                    "index": 2,
+                    "type": null
+                  },
+                  {
+                    "index": -1,
+                    "text": "😕 Insatisfeito",
+                    "previewText": "😕 Insatisfeito",
+                    "type": null,
+                    "value": null
+                  },
+                  {
+                    "index": -1,
+                    "text": "😞 Muito insatisfeito",
+                    "previewText": "😞 Muito insatisfeito",
+                    "type": null,
+                    "value": null
+                  }
+                ],
+                "limitMenu": false
+              },
+              "metadata": {}
+            },
+            "$cardContent": {
+              "document": {
+                "id": "c2113ce0-f163-439f-b6a0-d1a68cb4af19",
+                "type": "application/vnd.lime.select+json",
+                "content": {
+                  "text": "Antes de encerrar, gostaríamos de saber como foi sua experiência com o Assistente Virtual do IFMG.\n\nEscolha uma das opções abaixo:",
+                  "options": [
+                    {
+                      "text": "⭐ Muito satisfeito",
+                      "previewText": "⭐ Muito satisfeito",
+                      "value": null,
+                      "index": 0,
+                      "type": null
+                    },
+                    {
+                      "text": "😊 Satisfeito",
+                      "previewText": "😊 Satisfeito",
+                      "value": null,
+                      "index": 1,
+                      "type": null
+                    },
+                    {
+                      "text": "😐 Neutro",
+                      "previewText": "😐 Neutro",
+                      "value": null,
+                      "index": 2,
+                      "type": null
+                    },
+                    {
+                      "index": -1,
+                      "text": "😕 Insatisfeito",
+                      "previewText": "😕 Insatisfeito",
+                      "type": null,
+                      "value": null
+                    },
+                    {
+                      "index": -1,
+                      "text": "😞 Muito insatisfeito",
+                      "previewText": "😞 Muito insatisfeito",
+                      "type": null,
+                      "value": null
+                    }
+                  ],
+                  "limitMenu": false
+                }
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left"
+            }
+          },
+          "$invalid": false
+        },
+        {
+          "input": {
+            "bypass": false,
+            "$cardContent": {
+              "document": {
+                "id": "d04457af-8f7e-4023-931f-afa931035c8b",
+                "type": "text/plain",
+                "textContent": "Entrada do usuário",
+                "content": "avaliacao"
+              },
+              "editable": false,
+              "deletable": true,
+              "position": "right",
+              "editing": false
+            },
+            "$invalid": false,
+            "variable": "avaliacao"
+          },
+          "$invalid": false
+        }
+      ],
+      "$conditionOutputs": [
+        {
+          "stateId": "ae31b01e-5f85-43ec-8ade-45dbeb091853",
+          "typeOfStateId": "state",
+          "$connId": "con_73",
+          "$contentId": "9acc0a43-3e51-45ff-a0c2-906200af2a4e",
+          "$id": "a57a0477-dcc9-4b7e-a491-af741130ca9b",
+          "conditions": [
+            {
+              "source": "input",
+              "comparison": "equals",
+              "values": [
+                "⭐ Muito satisfeito"
+              ]
+            }
+          ],
+          "$invalid": false
+        },
+        {
+          "stateId": "ae31b01e-5f85-43ec-8ade-45dbeb091853",
+          "typeOfStateId": "state",
+          "$connId": "con_78",
+          "$contentId": "9acc0a43-3e51-45ff-a0c2-906200af2a4e",
+          "$id": "538332e4-5475-468c-94da-fceaa02038fe",
+          "conditions": [
+            {
+              "source": "input",
+              "comparison": "equals",
+              "values": [
+                "😊 Satisfeito"
+              ]
+            }
+          ],
+          "$invalid": false
+        },
+        {
+          "stateId": "17ddd5b8-f1f5-45dd-a38e-ec4ec342d71a",
+          "typeOfStateId": "state",
+          "$connId": "con_83",
+          "$contentId": "9acc0a43-3e51-45ff-a0c2-906200af2a4e",
+          "$id": "02170471-5e34-410a-82c2-f9266441c620",
+          "conditions": [
+            {
+              "source": "input",
+              "comparison": "equals",
+              "values": [
+                "😐 Neutro"
+              ]
+            }
+          ],
+          "$invalid": false
+        },
+        {
+          "stateId": "af02dc47-cc3f-4840-bb92-e69ca2b8899e",
+          "typeOfStateId": "state",
+          "$connId": "con_88",
+          "$contentId": "9acc0a43-3e51-45ff-a0c2-906200af2a4e",
+          "$id": "fba47027-c37a-4aa1-b6fc-fc300cbe3fe3",
+          "conditions": [
+            {
+              "source": "input",
+              "comparison": "equals",
+              "values": [
+                "😕 Insatisfeito"
+              ]
+            }
+          ],
+          "$invalid": false
+        },
+        {
+          "stateId": "af02dc47-cc3f-4840-bb92-e69ca2b8899e",
+          "typeOfStateId": "state",
+          "$connId": "con_93",
+          "$contentId": "9acc0a43-3e51-45ff-a0c2-906200af2a4e",
+          "$id": "38e42e44-16bd-4bd4-8d3f-501e2a4796ef",
+          "conditions": [
+            {
+              "source": "input",
+              "comparison": "equals",
+              "values": [
+                "😞 Muito insatisfeito"
+              ]
+            }
+          ],
+          "$invalid": false
+        },
+        {
+          "stateId": "d6bc6110-96c3-4d73-aa09-1af9284db5d4",
+          "typeOfStateId": "state",
+          "$connId": "con_98",
+          "$id": "58cdde91-b4fc-434f-8b73-f2a93cbecad6",
+          "conditions": [
+            {
+              "source": "input",
+              "comparison": "notExists",
+              "values": []
+            }
+          ],
+          "$isBuilderDefaultOutput": true,
+          "$invalid": false
+        }
+      ],
+      "$enteringCustomActions": [
+        {
+          "$id": "368a5456-8681-4ab5-b4dd-0627afdbad31",
+          "$typeOfContent": "",
+          "type": "SetVariable",
+          "$title": "Buscar Atendente",
+          "$invalid": false,
+          "settings": {
+            "variable": "atendente",
+            "value": "{{input.content@agentIdentity}}"
+          },
+          "conditions": []
+        },
+        {
+          "$id": "5eef9989-1757-4ab3-9450-5258c97ced3f",
+          "$typeOfContent": "",
+          "type": "ExecuteScript",
+          "$title": "Buscar Email do Atendente",
+          "$invalid": false,
+          "settings": {
+            "function": "run",
+            "source": "function run(atendente) {\n    return decodeURIComponent(atendente.split('@')[0]); \n}",
+            "inputVariables": [
+              "atendente"
+            ],
+            "outputVariable": "emailAtendente",
+            "LocalTimeZoneEnabled": false
+          },
+          "conditions": []
+        },
+        {
+          "$id": "7e62c984-87d7-4625-93fd-284de5875cc5",
+          "$typeOfContent": "",
+          "type": "SetVariable",
+          "$title": "Buscar Fila",
+          "$invalid": false,
+          "settings": {
+            "variable": "fila",
+            "value": "{{input.content@team}}"
+          },
+          "conditions": []
+        },
+        {
+          "$id": "e9b421c1-5585-4570-8221-b39e7cde7dc7",
+          "$typeOfContent": "",
+          "type": "SetVariable",
+          "$title": "Buscar ID do Ticket",
+          "$invalid": false,
+          "settings": {
+            "variable": "ticketId",
+            "value": "{{input.content@sequentialId}}"
+          },
+          "conditions": []
+        },
+        {
+          "$id": "d5a630a4-1d44-465c-bea7-d8592883243c",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "NPS - Verificação de Nota Atendimento",
+            "action": "{{contact.identity}}"
+          },
+          "conditions": []
+        },
+        {
+          "$id": "945b1ead-aace-4873-a57f-a9bb2067913a",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos Data",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "exibicao|{{state.name}}",
+            "action": "exibicao"
+          },
+          "conditions": []
+        }
+      ],
+      "$leavingCustomActions": [
+        {
+          "$id": "8570c5de-0b5a-44ba-a4fd-4ab78755dd48",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "NPS - Verificação de Nota Atendimento Conteudo",
+            "action": "{{contact.identity}} | {{input.content}}"
+          },
+          "conditions": [
+            {
+              "values": [],
+              "source": "input",
+              "comparison": "exists"
+            }
+          ]
+        },
+        {
+          "$id": "f745eff4-8e65-4acf-95d1-f2a345b6b2a5",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos Data",
+          "$invalid": false,
+          "settings": {
+            "extras": {
+              "input": "{{input.content}}"
+            },
+            "category": "input|{{state.name}}",
+            "action": "input"
+          },
+          "conditions": [
+            {
+              "values": [],
+              "source": "input",
+              "comparison": "exists"
+            }
+          ]
+        },
+        {
+          "$id": "4dcc40cf-53ba-40d6-9945-ba441b04fe86",
+          "$typeOfContent": "",
+          "type": "ExecuteScript",
+          "$title": "treat input",
+          "$invalid": false,
+          "settings": {
+            "function": "run",
+            "source": "\nfunction run(userInput) {\n    try {\n        if (!userInput) return 'N/A';\n        switch (true) {\n            case userInput.includes(\"⭐ Muito satisfeito\"):\n                return \"⭐ Muito satisfeito\";\n            case userInput.includes(\"😊 Satisfeito\"):\n                return \"😊 Satisfeito\";\n            case userInput.includes(\"😐 Neutro\"):\n                return \"😐 Neutro\";\n            case userInput.includes(\"😕 Insatisfeito\"):\n                return \"😕 Insatisfeito\";\n            case userInput.includes(\"😞 Muito insatisfeito\"):\n                return \"😞 Muito insatisfeito\";\n            default:\n                return 'N/A';\n        }\n    } catch (e) {\n        return 'N/A';\n    }\n}\n",
+            "inputVariables": [
+              "input.content"
+            ],
+            "outputVariable": "inputFormated",
+            "LocalTimeZoneEnabled": false
+          },
+          "conditions": []
+        },
+        {
+          "$id": "8aa54e72-6c98-4799-bb63-5ca0f56020b6",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos Data",
+          "$invalid": false,
+          "settings": {
+            "extras": {
+              "input": "{{inputFormated}}"
+            },
+            "category": "input|{{state.name}}",
+            "action": "selecao"
+          },
+          "conditions": [
+            {
+              "source": "context",
+              "comparison": "notEquals",
+              "variable": "inputFormated",
+              "values": [
+                "N/A"
+              ]
+            },
+            {
+              "source": "input",
+              "comparison": "exists",
+              "values": []
+            }
+          ]
+        },
+        {
+          "$id": "2973e353-5cb0-43f0-8fb2-ca4b419041a6",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos Data",
+          "$invalid": false,
+          "settings": {
+            "extras": {
+              "input": "{{input.content}}"
+            },
+            "category": "input|{{state.name}}",
+            "action": "inesperado"
+          },
+          "conditions": [
+            {
+              "source": "context",
+              "comparison": "equals",
+              "variable": "inputFormated",
+              "values": [
+                "N/A"
+              ]
+            },
+            {
+              "source": "input",
+              "comparison": "exists",
+              "values": []
+            }
+          ]
+        }
+      ],
+      "$inputSuggestions": [
+        "⭐ Muito satisfeito",
+        "😊 Satisfeito",
+        "😐 Neutro",
+        "😕 Insatisfeito",
+        "😞 Muito insatisfeito"
+      ],
+      "$defaultOutput": {
+        "stateId": "fallback",
+        "$invalid": false
+      },
+      "$tags": [
+        {
+          "background": "#0A6045",
+          "label": "Blocos Prontos",
+          "id": "blip-tag-7538e104-6854-6221-1fc3-557f0d8288a4",
+          "canChangeBackground": false
+        },
+        {
+          "background": "#CC99FF",
+          "label": "NPS Completo",
+          "id": "blip-tag-dba65209-075b-acac-be0c-238f2f4f9b3c",
+          "canChangeBackground": false
+        },
+        {
+          "background": "#FF4A1E",
+          "label": "Definir Variável",
+          "id": "blip-tag-d69559ff-9ac4-ffce-8b82-c6f8ef37e87e",
+          "canChangeBackground": false
+        },
+        {
+          "background": "#FF961E",
+          "label": "Executar Script",
+          "id": "blip-tag-804705d5-3b9f-c7ef-0818-674e1c180785",
+          "canChangeBackground": false
+        }
+      ],
+      "id": "8a55efb0-13b6-433f-a364-d53c9992d711",
+      "root": false,
+      "$title": "NPS - Verificação de Nota Atendimento",
+      "$position": {
+        "top": "965px",
+        "left": "269px"
+      },
+      "$invalidContentActions": false,
+      "$invalidOutputs": false,
+      "$invalidCustomActions": false,
+      "$invalid": false,
+      "isAiGenerated": false
+    },
+    "ae31b01e-5f85-43ec-8ade-45dbeb091853": {
+      "$contentActions": [
+        {
+          "action": {
+            "$id": "797ce594-a469-4015-9e8e-45e39756b430",
+            "$typeOfContent": "chat-state",
+            "type": "SendMessage",
+            "settings": {
+              "id": "6158559a-45a2-4e42-8f06-9d7b754067bc",
+              "type": "application/vnd.lime.chatstate+json",
+              "content": {
+                "state": "composing",
+                "interval": 1000
+              }
+            },
+            "$cardContent": {
+              "document": {
+                "id": "6158559a-45a2-4e42-8f06-9d7b754067bc",
+                "type": "application/vnd.lime.chatstate+json",
+                "content": {
+                  "state": "composing",
+                  "interval": 1000
+                }
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left"
+            }
+          },
+          "$invalid": false
+        },
+        {
+          "action": {
+            "$id": "de47a440-80b0-4524-81fc-ded27367fe64",
+            "$typeOfContent": "text",
+            "type": "SendMessage",
+            "settings": {
+              "id": "5e3c73b3-2622-4745-8696-26db49b9b7ac",
+              "type": "text/plain",
+              "content": "Muito obrigado pela sua avaliação! 😊\n\nFico feliz em saber que consegui ajudar.\n\nSeu feedback é fundamental para continuarmos aprimorando o suporte acadêmico do Assistente Virtual do IFMG Sabará.",
+              "metadata": {}
+            },
+            "$cardContent": {
+              "document": {
+                "id": "5e3c73b3-2622-4745-8696-26db49b9b7ac",
+                "type": "text/plain",
+                "content": "Muito obrigado pela sua avaliação! 😊\n\nFico feliz em saber que consegui ajudar.\n\nSeu feedback é fundamental para continuarmos aprimorando o suporte acadêmico do Assistente Virtual do IFMG Sabará."
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left"
+            }
+          },
+          "$invalid": false
+        },
+        {
+          "action": {
+            "$id": "04a962e3-8529-446f-8a61-6d658a4575b5",
+            "$typeOfContent": "chat-state",
+            "type": "SendMessage",
+            "settings": {
+              "id": "64d67817-4fdd-4bc5-b317-74cc5dc21f9f",
+              "type": "application/vnd.lime.chatstate+json",
+              "content": {
+                "state": "composing",
+                "interval": 1000
+              }
+            },
+            "$cardContent": {
+              "document": {
+                "id": "64d67817-4fdd-4bc5-b317-74cc5dc21f9f",
+                "type": "application/vnd.lime.chatstate+json",
+                "content": {
+                  "state": "composing",
+                  "interval": 1000
+                }
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left"
+            }
+          },
+          "$invalid": false
+        },
+        {
+          "action": {
+            "$id": "398ff8ca-917f-4edb-b070-db1ce4781a2c",
+            "$typeOfContent": "select-immediate",
+            "type": "SendMessage",
+            "settings": {
+              "id": "2ddabeb0-34b5-41bc-bdfc-3baa63c6c1f5",
+              "type": "application/vnd.lime.select+json",
+              "content": {
+                "text": "Você tem interesse em fazer um comentário sobre sua avaliação?",
+                "scope": "immediate",
+                "options": [
+                  {
+                    "text": "Sim!",
+                    "previewText": "Sim!",
+                    "value": null,
+                    "index": 0,
+                    "type": null
+                  },
+                  {
+                    "text": "Não",
+                    "previewText": "Não",
+                    "value": null,
+                    "index": 1,
+                    "type": null
+                  }
+                ]
+              },
+              "metadata": {}
+            },
+            "$cardContent": {
+              "document": {
+                "id": "2ddabeb0-34b5-41bc-bdfc-3baa63c6c1f5",
+                "type": "application/vnd.lime.select+json",
+                "content": {
+                  "text": "Você tem interesse em fazer um comentário sobre sua avaliação?",
+                  "scope": "immediate",
+                  "options": [
+                    {
+                      "text": "Sim!",
+                      "previewText": "Sim!",
+                      "value": null,
+                      "index": 0,
+                      "type": null
+                    },
+                    {
+                      "text": "Não",
+                      "previewText": "Não",
+                      "value": null,
+                      "index": 1,
+                      "type": null
+                    }
+                  ]
+                }
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left"
+            }
+          },
+          "$invalid": false
+        },
+        {
+          "input": {
+            "bypass": false,
+            "$cardContent": {
+              "document": {
+                "id": "79b776b1-226d-4d9c-9cc5-f16913d1480a",
+                "type": "text/plain",
+                "textContent": "Entrada do usuário",
+                "content": "Entrada do usuário"
+              },
+              "editable": false,
+              "deletable": true,
+              "position": "right",
+              "editing": false
+            },
+            "$invalid": false
+          },
+          "$invalid": false
+        }
+      ],
+      "$conditionOutputs": [
+        {
+          "stateId": "06b8e87d-ea70-49b4-88a4-3fd78b8b2476",
+          "typeOfStateId": "state",
+          "$connId": "con_103",
+          "$id": "d8cad27b-a16b-475e-903c-7419b8644ab6",
+          "conditions": [
+            {
+              "source": "input",
+              "comparison": "contains",
+              "values": [
+                "Sim!",
+                "sim"
+              ]
+            }
+          ],
+          "$invalid": false
+        },
+        {
+          "stateId": "4263f263-83b7-40c7-ab90-4165abb1678e",
+          "typeOfStateId": "state",
+          "$connId": "con_108",
+          "$id": "0211c9b2-84a4-4eee-af77-ce8cd68de9ad",
+          "conditions": [
+            {
+              "source": "input",
+              "comparison": "contains",
+              "values": [
+                "Não",
+                "nao"
+              ]
+            }
+          ],
+          "$invalid": false
+        }
+      ],
+      "$enteringCustomActions": [
+        {
+          "$id": "26d9a99b-53c8-4366-8b1b-704482aa90a5",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "NPS - Promotores",
+            "action": "{{contact.identity}}"
+          },
+          "conditions": []
+        },
+        {
+          "$id": "533702dc-c7cd-4f9b-a7fc-0f09e7dbd432",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos Data",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "exibicao|{{state.name}}",
+            "action": "exibicao"
+          },
+          "conditions": []
+        }
+      ],
+      "$leavingCustomActions": [
+        {
+          "$id": "5211c6a0-fd28-4a99-821f-37bf4aae4736",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "NPS - Promotores Conteudo",
+            "action": "{{contact.identity}} | {{input.content}}"
+          },
+          "conditions": [
+            {
+              "values": [],
+              "source": "input",
+              "comparison": "exists"
+            }
+          ]
+        },
+        {
+          "$id": "09e14bd4-1c5c-46de-b9af-0992da5345eb",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos Data",
+          "$invalid": false,
+          "settings": {
+            "extras": {
+              "input": "{{input.content}}"
+            },
+            "category": "input|{{state.name}}",
+            "action": "input"
+          },
+          "conditions": [
+            {
+              "values": [],
+              "source": "input",
+              "comparison": "exists"
+            }
+          ]
+        },
+        {
+          "$id": "ab85ff90-1057-4aaa-be22-9edfe510fcb6",
+          "$typeOfContent": "",
+          "type": "ExecuteScript",
+          "$title": "treat input",
+          "$invalid": false,
+          "settings": {
+            "function": "run",
+            "source": "\nfunction run(userInput) {\n    try {\n        if (!userInput) return 'N/A';\n        switch (true) {\n            case userInput.includes(\"Sim!\"):\n                return \"Sim!\";\n            case userInput.includes(\"Não\"):\n                return \"Não\";\n            default:\n                return 'N/A';\n        }\n    } catch (e) {\n        return 'N/A';\n    }\n}\n",
+            "inputVariables": [
+              "input.content"
+            ],
+            "outputVariable": "inputFormated",
+            "LocalTimeZoneEnabled": false
+          },
+          "conditions": []
+        },
+        {
+          "$id": "98e13dae-297c-487c-b429-bdbf9b9e898e",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos Data",
+          "$invalid": false,
+          "settings": {
+            "extras": {
+              "input": "{{inputFormated}}"
+            },
+            "category": "input|{{state.name}}",
+            "action": "selecao"
+          },
+          "conditions": [
+            {
+              "source": "context",
+              "comparison": "notEquals",
+              "variable": "inputFormated",
+              "values": [
+                "N/A"
+              ]
+            },
+            {
+              "source": "input",
+              "comparison": "exists",
+              "values": []
+            }
+          ]
+        },
+        {
+          "$id": "69e5bd37-a77a-4fd6-9ac3-99ee316f0de4",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos Data",
+          "$invalid": false,
+          "settings": {
+            "extras": {
+              "input": "{{input.content}}"
+            },
+            "category": "input|{{state.name}}",
+            "action": "inesperado"
+          },
+          "conditions": [
+            {
+              "source": "context",
+              "comparison": "equals",
+              "variable": "inputFormated",
+              "values": [
+                "N/A"
+              ]
+            },
+            {
+              "source": "input",
+              "comparison": "exists",
+              "values": []
+            }
+          ]
+        }
+      ],
+      "$inputSuggestions": [
+        "Sim!",
+        "Não"
+      ],
+      "$defaultOutput": {
+        "stateId": "fallback",
+        "$invalid": false
+      },
+      "$tags": [
+        {
+          "background": "#0A6045",
+          "label": "Blocos Prontos",
+          "id": "blip-tag-7538e104-6854-6221-1fc3-557f0d8288a4",
+          "canChangeBackground": false
+        },
+        {
+          "background": "#CC99FF",
+          "label": "NPS Completo",
+          "id": "blip-tag-dba65209-075b-acac-be0c-238f2f4f9b3c",
+          "canChangeBackground": false
+        }
+      ],
+      "id": "ae31b01e-5f85-43ec-8ade-45dbeb091853",
+      "root": false,
+      "$title": "NPS - Promotores",
+      "$position": {
+        "top": "848px",
+        "left": "650px"
+      },
+      "$invalidContentActions": false,
+      "$invalidOutputs": false,
+      "$invalidCustomActions": false,
+      "$invalid": false,
+      "isAiGenerated": false
+    },
+    "17ddd5b8-f1f5-45dd-a38e-ec4ec342d71a": {
+      "$contentActions": [
+        {
+          "action": {
+            "$id": "a611e597-4db8-473d-bdfd-f38e0aa33b50",
+            "$typeOfContent": "chat-state",
+            "type": "SendMessage",
+            "settings": {
+              "id": "474cba01-87fa-442d-9b68-fe068f8c3eb2",
+              "type": "application/vnd.lime.chatstate+json",
+              "content": {
+                "state": "composing",
+                "interval": 1000
+              }
+            },
+            "$cardContent": {
+              "document": {
+                "id": "474cba01-87fa-442d-9b68-fe068f8c3eb2",
+                "type": "application/vnd.lime.chatstate+json",
+                "content": {
+                  "state": "composing",
+                  "interval": 1000
+                }
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left"
+            }
+          },
+          "$invalid": false
+        },
+        {
+          "action": {
+            "$id": "1c08e770-5a32-4121-9077-66096e1ff0c1",
+            "$typeOfContent": "text",
+            "type": "SendMessage",
+            "settings": {
+              "id": "4db9e99f-5121-4ac5-924c-b0afbe154052",
+              "type": "text/plain",
+              "content": "Obrigado pela sua avaliação!\n\nQueremos oferecer uma experiência cada vez melhor. Se desejar, compartilhe uma sugestão ou conte o que faltou para que seu atendimento fosse excelente.\n",
+              "metadata": {}
+            },
+            "$cardContent": {
+              "document": {
+                "id": "4db9e99f-5121-4ac5-924c-b0afbe154052",
+                "type": "text/plain",
+                "content": "Obrigado pela sua avaliação!\n\nQueremos oferecer uma experiência cada vez melhor. Se desejar, compartilhe uma sugestão ou conte o que faltou para que seu atendimento fosse excelente.\n"
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left"
+            }
+          },
+          "$invalid": false
+        },
+        {
+          "action": {
+            "$id": "369b0a34-1bba-4742-8268-b95a5c7a57c6",
+            "$typeOfContent": "chat-state",
+            "type": "SendMessage",
+            "settings": {
+              "id": "be195839-348c-4095-8f70-c936976278fc",
+              "type": "application/vnd.lime.chatstate+json",
+              "content": {
+                "state": "composing",
+                "interval": 1000
+              }
+            },
+            "$cardContent": {
+              "document": {
+                "id": "be195839-348c-4095-8f70-c936976278fc",
+                "type": "application/vnd.lime.chatstate+json",
+                "content": {
+                  "state": "composing",
+                  "interval": 1000
+                }
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left"
+            }
+          },
+          "$invalid": false
+        },
+        {
+          "action": {
+            "$id": "c49e9644-7ec4-4f4d-80d2-a2fd3ff4ad94",
+            "$typeOfContent": "select-immediate",
+            "type": "SendMessage",
+            "settings": {
+              "id": "550f74c9-5eaf-419f-a216-23822b90331b",
+              "type": "application/vnd.lime.select+json",
+              "content": {
+                "text": "Que tal deixar um comentário? 🤔",
+                "scope": "immediate",
+                "options": [
+                  {
+                    "text": "Sim",
+                    "previewText": "Sim",
+                    "value": null,
+                    "index": 0,
+                    "type": null
+                  },
+                  {
+                    "text": "Não",
+                    "previewText": "Não",
+                    "value": null,
+                    "index": 1,
+                    "type": null
+                  }
+                ]
+              },
+              "metadata": {}
+            },
+            "$cardContent": {
+              "document": {
+                "id": "550f74c9-5eaf-419f-a216-23822b90331b",
+                "type": "application/vnd.lime.select+json",
+                "content": {
+                  "text": "Que tal deixar um comentário? 🤔",
+                  "scope": "immediate",
+                  "options": [
+                    {
+                      "text": "Sim",
+                      "previewText": "Sim",
+                      "value": null,
+                      "index": 0,
+                      "type": null
+                    },
+                    {
+                      "text": "Não",
+                      "previewText": "Não",
+                      "value": null,
+                      "index": 1,
+                      "type": null
+                    }
+                  ]
+                }
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left"
+            }
+          },
+          "$invalid": false
+        },
+        {
+          "input": {
+            "bypass": false,
+            "$cardContent": {
+              "document": {
+                "id": "16c50466-6ee5-4975-b71f-ba1cb0ab38c3",
+                "type": "text/plain",
+                "textContent": "Entrada do usuário",
+                "content": "Entrada do usuário"
+              },
+              "editable": false,
+              "deletable": true,
+              "position": "right",
+              "editing": false
+            },
+            "$invalid": false
+          },
+          "$invalid": false
+        }
+      ],
+      "$conditionOutputs": [
+        {
+          "stateId": "06b8e87d-ea70-49b4-88a4-3fd78b8b2476",
+          "typeOfStateId": "state",
+          "$connId": "con_113",
+          "$id": "e5e68014-380c-4f18-b343-84a83ff28b75",
+          "conditions": [
+            {
+              "source": "input",
+              "comparison": "contains",
+              "values": [
+                "Sim"
+              ]
+            }
+          ],
+          "$invalid": false
+        },
+        {
+          "stateId": "4263f263-83b7-40c7-ab90-4165abb1678e",
+          "typeOfStateId": "state",
+          "$connId": "con_118",
+          "$id": "4557eeb5-d65b-457a-9958-347d4a986df4",
+          "conditions": [
+            {
+              "source": "input",
+              "comparison": "contains",
+              "values": [
+                "Não",
+                "nao"
+              ]
+            }
+          ],
+          "$invalid": false
+        }
+      ],
+      "$enteringCustomActions": [
+        {
+          "$id": "c509e8fd-f0b5-4d02-bb20-a86959308e2a",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "NPS - Neutros",
+            "action": "{{contact.identity}}"
+          },
+          "conditions": []
+        },
+        {
+          "$id": "5d7de513-9e8d-4a8a-9cd6-9e927ef0b02a",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos Data",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "exibicao|{{state.name}}",
+            "action": "exibicao"
+          },
+          "conditions": []
+        }
+      ],
+      "$leavingCustomActions": [
+        {
+          "$id": "6846a406-ed3c-467d-a4fa-484a324b0f49",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "NPS - Neutros Conteudo",
+            "action": "{{contact.identity}} | {{input.content}}"
+          },
+          "conditions": [
+            {
+              "values": [],
+              "source": "input",
+              "comparison": "exists"
+            }
+          ]
+        },
+        {
+          "$id": "ba17ccdb-df4b-4d7d-8700-08cb885645ac",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos Data",
+          "$invalid": false,
+          "settings": {
+            "extras": {
+              "input": "{{input.content}}"
+            },
+            "category": "input|{{state.name}}",
+            "action": "input"
+          },
+          "conditions": [
+            {
+              "values": [],
+              "source": "input",
+              "comparison": "exists"
+            }
+          ]
+        },
+        {
+          "$id": "ded9dccc-4858-41a2-a4e6-a3ac02507949",
+          "$typeOfContent": "",
+          "type": "ExecuteScript",
+          "$title": "treat input",
+          "$invalid": false,
+          "settings": {
+            "function": "run",
+            "source": "\nfunction run(userInput) {\n    try {\n        if (!userInput) return 'N/A';\n        switch (true) {\n            case userInput.includes(\"Sim\"):\n                return \"Sim\";\n            case userInput.includes(\"Não\"):\n                return \"Não\";\n            default:\n                return 'N/A';\n        }\n    } catch (e) {\n        return 'N/A';\n    }\n}\n",
+            "inputVariables": [
+              "input.content"
+            ],
+            "outputVariable": "inputFormated",
+            "LocalTimeZoneEnabled": false
+          },
+          "conditions": []
+        },
+        {
+          "$id": "d7290641-edc6-4e07-9eb2-21bc14f1f1c5",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos Data",
+          "$invalid": false,
+          "settings": {
+            "extras": {
+              "input": "{{inputFormated}}"
+            },
+            "category": "input|{{state.name}}",
+            "action": "selecao"
+          },
+          "conditions": [
+            {
+              "source": "context",
+              "comparison": "notEquals",
+              "variable": "inputFormated",
+              "values": [
+                "N/A"
+              ]
+            },
+            {
+              "source": "input",
+              "comparison": "exists",
+              "values": []
+            }
+          ]
+        },
+        {
+          "$id": "7e03a385-02c6-47d3-a747-87871a2bb25f",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos Data",
+          "$invalid": false,
+          "settings": {
+            "extras": {
+              "input": "{{input.content}}"
+            },
+            "category": "input|{{state.name}}",
+            "action": "inesperado"
+          },
+          "conditions": [
+            {
+              "source": "context",
+              "comparison": "equals",
+              "variable": "inputFormated",
+              "values": [
+                "N/A"
+              ]
+            },
+            {
+              "source": "input",
+              "comparison": "exists",
+              "values": []
+            }
+          ]
+        }
+      ],
+      "$inputSuggestions": [
+        "Sim",
+        "Não"
+      ],
+      "$defaultOutput": {
+        "stateId": "fallback",
+        "$invalid": false
+      },
+      "$tags": [
+        {
+          "background": "#0A6045",
+          "label": "Blocos Prontos",
+          "id": "blip-tag-7538e104-6854-6221-1fc3-557f0d8288a4",
+          "canChangeBackground": false
+        },
+        {
+          "background": "#CC99FF",
+          "label": "NPS Completo",
+          "id": "blip-tag-dba65209-075b-acac-be0c-238f2f4f9b3c",
+          "canChangeBackground": false
+        }
+      ],
+      "id": "17ddd5b8-f1f5-45dd-a38e-ec4ec342d71a",
+      "root": false,
+      "$title": "NPS - Neutros",
+      "$position": {
+        "top": "979px",
+        "left": "653px"
+      },
+      "$invalidContentActions": false,
+      "$invalidOutputs": false,
+      "$invalidCustomActions": false,
+      "$invalid": false,
+      "isAiGenerated": false
+    },
+    "af02dc47-cc3f-4840-bb92-e69ca2b8899e": {
+      "$contentActions": [
+        {
+          "action": {
+            "$id": "c9856cdb-5c37-418f-916a-70b39befb81d",
+            "$typeOfContent": "chat-state",
+            "type": "SendMessage",
+            "settings": {
+              "id": "4084282b-e21a-4b44-a365-48a401f1f1b3",
+              "type": "application/vnd.lime.chatstate+json",
+              "content": {
+                "state": "composing",
+                "interval": 1000
+              }
+            },
+            "$cardContent": {
+              "document": {
+                "id": "4084282b-e21a-4b44-a365-48a401f1f1b3",
+                "type": "application/vnd.lime.chatstate+json",
+                "content": {
+                  "state": "composing",
+                  "interval": 1000
+                }
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left"
+            }
+          },
+          "$invalid": false
+        },
+        {
+          "action": {
+            "$id": "47cd9857-57a4-4571-9ff8-b8ea6c320da3",
+            "$typeOfContent": "text",
+            "type": "SendMessage",
+            "settings": {
+              "id": "f885e3f4-1a9a-4b79-8a67-1a15e0b3bfee",
+              "type": "text/plain",
+              "content": "Obrigado pela sua avaliação.\n\nLamento que sua experiência não tenha sido a esperada.\n\nSeu feedback é muito importante e será utilizado para melhorar o suporte acadêmico do Assistente Virtual do IFMG Sabará. Agradeço por dedicar um momento para nos contar sua opinião.",
+              "metadata": {}
+            },
+            "$cardContent": {
+              "document": {
+                "id": "f885e3f4-1a9a-4b79-8a67-1a15e0b3bfee",
+                "type": "text/plain",
+                "content": "Obrigado pela sua avaliação.\n\nLamento que sua experiência não tenha sido a esperada.\n\nSeu feedback é muito importante e será utilizado para melhorar o suporte acadêmico do Assistente Virtual do IFMG Sabará. Agradeço por dedicar um momento para nos contar sua opinião."
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left"
+            }
+          },
+          "$invalid": false
+        },
+        {
+          "action": {
+            "$id": "8004422d-e60e-42e8-90c5-1f2c321744da",
+            "$typeOfContent": "chat-state",
+            "type": "SendMessage",
+            "settings": {
+              "id": "fa7d0802-ffdd-4539-8205-366fb39c1b91",
+              "type": "application/vnd.lime.chatstate+json",
+              "content": {
+                "state": "composing",
+                "interval": 1000
+              }
+            },
+            "$cardContent": {
+              "document": {
+                "id": "fa7d0802-ffdd-4539-8205-366fb39c1b91",
+                "type": "application/vnd.lime.chatstate+json",
+                "content": {
+                  "state": "composing",
+                  "interval": 1000
+                }
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left"
+            }
+          },
+          "$invalid": false
+        },
+        {
+          "action": {
+            "$id": "b054f32a-68d4-43e3-9ca4-6d7b68ce7af7",
+            "$typeOfContent": "select-immediate",
+            "type": "SendMessage",
+            "settings": {
+              "id": "4327682c-708c-4b21-a710-378f8b3eaf70",
+              "type": "application/vnd.lime.select+json",
+              "content": {
+                "text": "Que tal compartilhar comigo o que menos o agradou?",
+                "scope": "immediate",
+                "options": [
+                  {
+                    "text": "Ok, compartilhar",
+                    "previewText": "Ok, compartilhar",
+                    "value": null,
+                    "index": 0,
+                    "type": null
+                  },
+                  {
+                    "text": "Talvez em outro momento",
+                    "previewText": "Talvez em outro momento",
+                    "value": null,
+                    "index": 1,
+                    "type": null
+                  }
+                ]
+              },
+              "metadata": {}
+            },
+            "$cardContent": {
+              "document": {
+                "id": "4327682c-708c-4b21-a710-378f8b3eaf70",
+                "type": "application/vnd.lime.select+json",
+                "content": {
+                  "text": "Que tal compartilhar comigo o que menos o agradou?",
+                  "scope": "immediate",
+                  "options": [
+                    {
+                      "text": "Ok, compartilhar",
+                      "previewText": "Ok, compartilhar",
+                      "value": null,
+                      "index": 0,
+                      "type": null
+                    },
+                    {
+                      "text": "Talvez em outro momento",
+                      "previewText": "Talvez em outro momento",
+                      "value": null,
+                      "index": 1,
+                      "type": null
+                    }
+                  ]
+                }
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left"
+            }
+          },
+          "$invalid": false
+        },
+        {
+          "input": {
+            "bypass": false,
+            "$cardContent": {
+              "document": {
+                "id": "f1b482ad-0f6a-4c06-8811-09cac328ff54",
+                "type": "text/plain",
+                "textContent": "Entrada do usuário",
+                "content": "Entrada do usuário"
+              },
+              "editable": false,
+              "deletable": true,
+              "position": "right",
+              "editing": false
+            },
+            "$invalid": false
+          },
+          "$invalid": false
+        }
+      ],
+      "$conditionOutputs": [
+        {
+          "stateId": "06b8e87d-ea70-49b4-88a4-3fd78b8b2476",
+          "typeOfStateId": "state",
+          "$connId": "con_123",
+          "$id": "4e4dbe03-19e1-40a5-b7a6-4417006dce16",
+          "conditions": [
+            {
+              "source": "input",
+              "comparison": "equals",
+              "values": [
+                "Ok, compartilhar",
+                "sim",
+                "claro"
+              ]
+            }
+          ],
+          "$invalid": false
+        },
+        {
+          "stateId": "4263f263-83b7-40c7-ab90-4165abb1678e",
+          "typeOfStateId": "state",
+          "$connId": "con_128",
+          "$id": "b46aa8ad-c716-4745-9756-5a4b1e7e8e48",
+          "conditions": [
+            {
+              "source": "input",
+              "comparison": "equals",
+              "values": [
+                "Talvez em outro momento",
+                "não",
+                "nao"
+              ]
+            }
+          ],
+          "$invalid": false
+        }
+      ],
+      "$enteringCustomActions": [
+        {
+          "$id": "044bab1b-19a3-4e25-ae53-4c5a71cc7696",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "NPS - Detratores",
+            "action": "{{contact.identity}}"
+          },
+          "conditions": []
+        },
+        {
+          "$id": "b332af58-f901-48b0-b7d6-1cde91c48400",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos Data",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "exibicao|{{state.name}}",
+            "action": "exibicao"
+          },
+          "conditions": []
+        }
+      ],
+      "$leavingCustomActions": [
+        {
+          "$id": "4d936862-a27a-4a84-a530-332b561c9ee1",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "NPS - Detratores Conteudo",
+            "action": "{{contact.identity}} | {{input.content}}"
+          },
+          "conditions": [
+            {
+              "values": [],
+              "source": "input",
+              "comparison": "exists"
+            }
+          ]
+        },
+        {
+          "$id": "16e5b21b-6c19-44c2-a0e1-1fcdb80e491c",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos Data",
+          "$invalid": false,
+          "settings": {
+            "extras": {
+              "input": "{{input.content}}"
+            },
+            "category": "input|{{state.name}}",
+            "action": "input"
+          },
+          "conditions": [
+            {
+              "values": [],
+              "source": "input",
+              "comparison": "exists"
+            }
+          ]
+        },
+        {
+          "$id": "4f011711-bcfe-4c4b-8b0a-223e77832018",
+          "$typeOfContent": "",
+          "type": "ExecuteScript",
+          "$title": "treat input",
+          "$invalid": false,
+          "settings": {
+            "function": "run",
+            "source": "\nfunction run(userInput) {\n    try {\n        if (!userInput) return 'N/A';\n        switch (true) {\n            case userInput.includes(\"Ok, compartilhar\"):\n                return \"Ok, compartilhar\";\n            case userInput.includes(\"Talvez em outro momento\"):\n                return \"Talvez em outro momento\";\n            default:\n                return 'N/A';\n        }\n    } catch (e) {\n        return 'N/A';\n    }\n}\n",
+            "inputVariables": [
+              "input.content"
+            ],
+            "outputVariable": "inputFormated",
+            "LocalTimeZoneEnabled": false
+          },
+          "conditions": []
+        },
+        {
+          "$id": "5d131698-13d3-497b-8cd0-f1f18af68379",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos Data",
+          "$invalid": false,
+          "settings": {
+            "extras": {
+              "input": "{{inputFormated}}"
+            },
+            "category": "input|{{state.name}}",
+            "action": "selecao"
+          },
+          "conditions": [
+            {
+              "source": "context",
+              "comparison": "notEquals",
+              "variable": "inputFormated",
+              "values": [
+                "N/A"
+              ]
+            },
+            {
+              "source": "input",
+              "comparison": "exists",
+              "values": []
+            }
+          ]
+        },
+        {
+          "$id": "40ced23d-e304-48b8-a8a1-e7a241c607f3",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos Data",
+          "$invalid": false,
+          "settings": {
+            "extras": {
+              "input": "{{input.content}}"
+            },
+            "category": "input|{{state.name}}",
+            "action": "inesperado"
+          },
+          "conditions": [
+            {
+              "source": "context",
+              "comparison": "equals",
+              "variable": "inputFormated",
+              "values": [
+                "N/A"
+              ]
+            },
+            {
+              "source": "input",
+              "comparison": "exists",
+              "values": []
+            }
+          ]
+        }
+      ],
+      "$inputSuggestions": [
+        "Ok, compartilhar",
+        "Talvez em outro momento"
+      ],
+      "$defaultOutput": {
+        "stateId": "fallback",
+        "$invalid": false
+      },
+      "$tags": [
+        {
+          "background": "#0A6045",
+          "label": "Blocos Prontos",
+          "id": "blip-tag-7538e104-6854-6221-1fc3-557f0d8288a4",
+          "canChangeBackground": false
+        },
+        {
+          "background": "#CC99FF",
+          "label": "NPS Completo",
+          "id": "blip-tag-dba65209-075b-acac-be0c-238f2f4f9b3c",
+          "canChangeBackground": false
+        }
+      ],
+      "id": "af02dc47-cc3f-4840-bb92-e69ca2b8899e",
+      "root": false,
+      "$title": "NPS - Detratores",
+      "$position": {
+        "top": "1115px",
+        "left": "656px"
+      },
+      "$invalidContentActions": false,
+      "$invalidOutputs": false,
+      "$invalidCustomActions": false,
+      "$invalid": false,
+      "isAiGenerated": false
+    },
+    "06b8e87d-ea70-49b4-88a4-3fd78b8b2476": {
+      "$contentActions": [
+        {
+          "action": {
+            "$id": "30aa47cc-aad4-44ea-bbff-17e2fe511ed4",
+            "$typeOfContent": "chat-state",
+            "type": "SendMessage",
+            "settings": {
+              "id": "32d33367-65fc-42e7-8c53-916b1b0aa4f8",
+              "type": "application/vnd.lime.chatstate+json",
+              "content": {
+                "state": "composing",
+                "interval": 1000
+              }
+            },
+            "$cardContent": {
+              "document": {
+                "id": "32d33367-65fc-42e7-8c53-916b1b0aa4f8",
+                "type": "application/vnd.lime.chatstate+json",
+                "content": {
+                  "state": "composing",
+                  "interval": 1000
+                }
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left"
+            }
+          },
+          "$invalid": false
+        },
+        {
+          "action": {
+            "$id": "0fb55788-e0e4-4af8-9500-a2625168a21d",
+            "$typeOfContent": "text",
+            "type": "SendMessage",
+            "settings": {
+              "id": "b19f8722-f165-47bc-a849-5b75065356bd",
+              "type": "text/plain",
+              "content": "Fique à vontade para deixar o seu feedback 😉👍",
+              "metadata": {}
+            },
+            "$cardContent": {
+              "document": {
+                "id": "b19f8722-f165-47bc-a849-5b75065356bd",
+                "type": "text/plain",
+                "content": "Fique à vontade para deixar o seu feedback 😉👍"
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left"
+            }
+          },
+          "$invalid": false
+        },
+        {
+          "input": {
+            "bypass": false,
+            "$cardContent": {
+              "document": {
+                "id": "7b81fc48-27a0-42d6-af67-7cef35c64759",
+                "type": "text/plain",
+                "textContent": "Entrada do usuário",
+                "content": "comentario"
+              },
+              "editable": false,
+              "deletable": true,
+              "position": "right",
+              "editing": false
+            },
+            "$invalid": false,
+            "variable": "comentario"
+          },
+          "$invalid": false
+        },
+        {
+          "action": {
+            "$id": "a560d3c7-96ff-4937-a793-3e2e6aebd4bb",
+            "$typeOfContent": "chat-state",
+            "type": "SendMessage",
+            "settings": {
+              "id": "ea8770c1-1e4b-42a9-af4f-9d7caa3aafdd",
+              "type": "application/vnd.lime.chatstate+json",
+              "content": {
+                "state": "composing",
+                "interval": 1000
+              },
+              "metadata": {
+                "#stateName": "{{state.name}}",
+                "#stateId": "{{state.id}}",
+                "#messageId": "{{input.message@id}}",
+                "#previousStateId": "{{state.previous.id}}",
+                "#previousStateName": "{{state.previous.name}}"
+              }
+            },
+            "$cardContent": {
+              "document": {
+                "id": "ea8770c1-1e4b-42a9-af4f-9d7caa3aafdd",
+                "type": "application/vnd.lime.chatstate+json",
+                "content": {
+                  "state": "composing",
+                  "interval": 1000
+                }
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left"
+            }
+          },
+          "$invalid": false
+        },
+        {
+          "action": {
+            "$id": "ae79b12e-14b7-4c56-94f2-24446d5a9644",
+            "$typeOfContent": "text",
+            "type": "SendMessage",
+            "settings": {
+              "id": "e9dac46b-1a0e-4176-92a7-5c81b062c63c",
+              "type": "text/plain",
+              "content": "Pode ter certeza que seu comentário será levado em consideração!",
+              "metadata": {
+                "#stateName": "{{state.name}}",
+                "#stateId": "{{state.id}}",
+                "#messageId": "{{input.message@id}}",
+                "#previousStateId": "{{state.previous.id}}",
+                "#previousStateName": "{{state.previous.name}}"
+              }
+            },
+            "$cardContent": {
+              "document": {
+                "id": "e9dac46b-1a0e-4176-92a7-5c81b062c63c",
+                "type": "text/plain",
+                "content": "Pode ter certeza que seu comentário será levado em consideração!"
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left"
+            }
+          },
+          "$invalid": false
+        }
+      ],
+      "$conditionOutputs": [
+        {
+          "stateId": "4263f263-83b7-40c7-ab90-4165abb1678e",
+          "typeOfStateId": "state",
+          "$connId": "con_133",
+          "$id": "ff23008c-656e-4777-a31d-79f4d81aa8a8",
+          "conditions": [
+            {
+              "source": "input",
+              "comparison": "exists",
+              "values": []
+            }
+          ],
+          "$invalid": false
+        }
+      ],
+      "$enteringCustomActions": [
+        {
+          "$id": "1983fc10-2555-446f-b3e0-f023c3223523",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "NPS - Comentários",
+            "action": "{{contact.identity}}"
+          },
+          "conditions": []
+        },
+        {
+          "$id": "3d153aaf-3c95-4aaa-8dde-3551faaf3390",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos Data",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "exibicao|{{state.name}}",
+            "action": "exibicao"
+          },
+          "conditions": []
+        }
+      ],
+      "$leavingCustomActions": [
+        {
+          "$id": "5508ac1d-eb0b-4c98-be39-7cac43b477bd",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "NPS Comenatários I Registro de eventos",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "NPSComentarios",
+            "action": "{{ticketId}} | {{atendente}} | {{avaliacao}} | {{comentario}}"
+          },
+          "conditions": []
+        },
+        {
+          "$id": "3018bba1-a853-4960-8b85-f617fad5f4bf",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "NPS - Comentários Conteudo",
+            "action": "{{contact.identity}} | {{input.content}}"
+          },
+          "conditions": [
+            {
+              "values": [],
+              "source": "input",
+              "comparison": "exists"
+            }
+          ]
+        },
+        {
+          "$id": "7cd11273-4d55-4031-874f-125a5b2848ae",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos Data",
+          "$invalid": false,
+          "settings": {
+            "extras": {
+              "input": "{{input.content}}"
+            },
+            "category": "input|{{state.name}}",
+            "action": "input"
+          },
+          "conditions": [
+            {
+              "values": [],
+              "source": "input",
+              "comparison": "exists"
+            }
+          ]
+        }
+      ],
+      "$inputSuggestions": [],
+      "$defaultOutput": {
+        "stateId": "fallback",
+        "$invalid": false
+      },
+      "$tags": [
+        {
+          "background": "#0A6045",
+          "label": "Blocos Prontos",
+          "id": "blip-tag-7538e104-6854-6221-1fc3-557f0d8288a4",
+          "canChangeBackground": false
+        },
+        {
+          "background": "#CC99FF",
+          "label": "NPS Completo",
+          "id": "blip-tag-dba65209-075b-acac-be0c-238f2f4f9b3c",
+          "canChangeBackground": false
+        },
+        {
+          "background": "#61D36F",
+          "label": "Registro de Eventos",
+          "id": "blip-tag-a6c0661b-1798-075c-40ac-f5516639ca5f",
+          "canChangeBackground": false
+        }
+      ],
+      "id": "06b8e87d-ea70-49b4-88a4-3fd78b8b2476",
+      "root": false,
+      "$title": "NPS - Comentários",
+      "$position": {
+        "top": "961px",
+        "left": "842px"
+      },
+      "$invalidContentActions": false,
+      "$invalidOutputs": false,
+      "$invalidCustomActions": false,
+      "$invalid": false,
+      "isAiGenerated": false
+    },
+    "4263f263-83b7-40c7-ab90-4165abb1678e": {
+      "$contentActions": [
+        {
+          "input": {
+            "bypass": true,
+            "$cardContent": {
+              "document": {
+                "id": "faca4177-92e4-42a2-8bd5-d76dd64eb67b",
+                "type": "text/plain",
+                "textContent": "Entrada do usuário",
+                "content": "Entrada do usuário"
+              },
+              "editable": false,
+              "deletable": true,
+              "position": "right",
+              "editing": false
+            },
+            "$invalid": false
+          },
+          "$invalid": false
+        }
+      ],
+      "$conditionOutputs": [
+        {
+          "stateId": "0954942f-6d7d-4a1b-90f0-247621a189e4",
+          "typeOfStateId": "state",
+          "$connId": "con_138",
+          "$id": "5587d076-95af-4bd7-9850-52397e6830ae",
+          "conditions": [
+            {
+              "source": "input",
+              "comparison": "exists",
+              "values": []
+            }
+          ],
+          "$invalid": false
+        }
+      ],
+      "$enteringCustomActions": [
+        {
+          "$id": "bf7d7946-bd6e-40bd-81b1-5e91103c5585",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registrar Avaliação",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "Score",
+            "action": "{{avaliacao}}"
+          },
+          "conditions": [
+            {
+              "values": [
+                "1",
+                "2",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8",
+                "9",
+                "10"
+              ],
+              "source": "context",
+              "comparison": "contains",
+              "variable": "avaliacao"
+            }
+          ]
+        },
+        {
+          "$id": "452dfbd6-26c6-44d5-a6ed-8a74b5b525fb",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registrar Avaliação por Atendente",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "ScoreAgent",
+            "action": "{{emailAtendente}} | {{avaliacao}}"
+          },
+          "conditions": [
+            {
+              "values": [
+                "@"
+              ],
+              "source": "context",
+              "comparison": "contains",
+              "variable": "atendente"
+            }
+          ]
+        },
+        {
+          "$id": "f3b7a76d-82c7-40f8-bc87-d218d965e3cf",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "Dados do Atendimento",
+            "action": "{{contact.identity}}"
+          },
+          "conditions": []
+        }
+      ],
+      "$leavingCustomActions": [],
+      "$inputSuggestions": [],
+      "$defaultOutput": {
+        "stateId": "onboarding",
+        "$invalid": false
+      },
+      "$tags": [
+        {
+          "background": "#0A6045",
+          "label": "Blocos Prontos",
+          "id": "blip-tag-7538e104-6854-6221-1fc3-557f0d8288a4",
+          "canChangeBackground": false
+        },
+        {
+          "background": "#CC99FF",
+          "label": "NPS Completo",
+          "id": "blip-tag-dba65209-075b-acac-be0c-238f2f4f9b3c",
+          "canChangeBackground": false
+        },
+        {
+          "background": "#61D36F",
+          "label": "Registro de Eventos",
+          "id": "blip-tag-a6c0661b-1798-075c-40ac-f5516639ca5f",
+          "canChangeBackground": false
+        }
+      ],
+      "id": "4263f263-83b7-40c7-ab90-4165abb1678e",
+      "root": false,
+      "$title": "Dados do Atendimento",
+      "$position": {
+        "top": "970px",
+        "left": "1059px"
+      },
+      "$invalidContentActions": false,
+      "$invalidOutputs": false,
+      "$invalidCustomActions": false,
+      "$invalid": false,
+      "isAiGenerated": false
+    },
+    "0954942f-6d7d-4a1b-90f0-247621a189e4": {
+      "$contentActions": [
+        {
+          "action": {
+            "$id": "32dfa623-78c5-4dc5-ae98-b16e95ffa95a",
+            "$typeOfContent": "chat-state",
+            "type": "SendMessage",
+            "settings": {
+              "id": "a2cc74ee-6850-440b-974b-5c4e4717e7c7",
+              "type": "application/vnd.lime.chatstate+json",
+              "content": {
+                "state": "composing",
+                "interval": 1000
+              }
+            },
+            "$cardContent": {
+              "document": {
+                "id": "a2cc74ee-6850-440b-974b-5c4e4717e7c7",
+                "type": "application/vnd.lime.chatstate+json",
+                "content": {
+                  "state": "composing",
+                  "interval": 1000
+                }
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left"
+            }
+          },
+          "$invalid": false
+        },
+        {
+          "action": {
+            "$id": "5d0614a5-f0ae-486c-938d-5c610363cd79",
+            "$typeOfContent": "text",
+            "type": "SendMessage",
+            "settings": {
+              "id": "e60ad11e-0b47-4c9d-98f3-7785ae6ae634",
+              "type": "text/plain",
+              "content": "Agradecemos o seu contato. É um prazer poder receber você aqui, {{contact.name}}! 😁",
+              "metadata": {}
+            },
+            "$cardContent": {
+              "document": {
+                "id": "e60ad11e-0b47-4c9d-98f3-7785ae6ae634",
+                "type": "text/plain",
+                "content": "Agradecemos o seu contato. É um prazer poder receber você aqui, {{contact.name}}! 😁"
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left"
+            }
+          },
+          "$invalid": false
+        },
+        {
+          "input": {
+            "bypass": true,
+            "$cardContent": {
+              "document": {
+                "id": "fe1bd5fe-2c1d-4182-9c45-cb4c68d9c69f",
+                "type": "text/plain",
+                "textContent": "Entrada do usuário",
+                "content": "Entrada do usuário"
+              },
+              "editable": false,
+              "deletable": true,
+              "position": "right",
+              "editing": false
+            },
+            "$invalid": false
+          },
+          "$invalid": false
+        }
+      ],
+      "$conditionOutputs": [],
+      "$enteringCustomActions": [
+        {
+          "$id": "3e017498-86e3-4c93-b9d7-61986394ba9c",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "Agradecimento pelo Contato",
+            "action": "{{contact.identity}}"
+          },
+          "conditions": []
+        },
+        {
+          "$id": "69ae9cf0-4beb-4fda-877d-2b005ce93c54",
+          "$typeOfContent": "",
+          "type": "TrackEvent",
+          "$title": "Registro de eventos Data",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "exibicao|{{state.name}}",
+            "action": "exibicao"
+          },
+          "conditions": []
+        }
+      ],
+      "$leavingCustomActions": [],
+      "$inputSuggestions": [],
+      "$defaultOutput": {
+        "stateId": "onboarding",
+        "$invalid": false,
+        "typeOfStateId": "state"
+      },
+      "$tags": [
+        {
+          "background": "#0A6045",
+          "label": "Blocos Prontos",
+          "id": "blip-tag-7538e104-6854-6221-1fc3-557f0d8288a4",
+          "canChangeBackground": false
+        },
+        {
+          "background": "#CC99FF",
+          "label": "NPS Completo",
+          "id": "blip-tag-dba65209-075b-acac-be0c-238f2f4f9b3c",
+          "canChangeBackground": false
+        }
+      ],
+      "id": "0954942f-6d7d-4a1b-90f0-247621a189e4",
+      "root": false,
+      "$title": "Agradecimento pelo Contato",
+      "$position": {
+        "top": "961px",
+        "left": "1290px"
+      },
+      "$invalidContentActions": false,
+      "$invalidOutputs": false,
+      "$invalidCustomActions": false,
+      "$invalid": false,
+      "isAiGenerated": false
+    },
+    "6fa97c2b-1ded-4341-afc7-7b8899795225": {
+      "$contentActions": [
+        {
+          "action": {
+            "$id": "0dd5e267-519f-4fd0-857d-a5ee4c89e2ff",
+            "$typeOfContent": "chat-state",
+            "$description": "",
+            "$inputSchema": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            },
+            "type": "SendMessage",
+            "settings": {
+              "id": "24ace9d8-d069-4872-9e65-18f2bf80244e",
+              "type": "application/vnd.lime.chatstate+json",
+              "content": {
+                "state": "composing",
+                "interval": 1000
+              }
+            },
+            "$cardContent": {
+              "document": {
+                "id": "24ace9d8-d069-4872-9e65-18f2bf80244e",
+                "type": "application/vnd.lime.chatstate+json",
+                "content": {
+                  "state": "composing",
+                  "interval": 1000
+                }
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left"
+            }
+          },
+          "$invalid": false
+        },
+        {
+          "action": {
+            "$id": "d058b0e8-01bc-4b44-91da-bce4438a4412",
+            "$typeOfContent": "select",
+            "$description": "",
+            "$inputSchema": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            },
+            "type": "SendMessage",
+            "settings": {
+              "id": "1aacf715-be98-4f5d-9dec-470a90ed89bc",
+              "type": "application/vnd.lime.select+json",
+              "content": {
+                "text": "Qual é o seu curso aqui no campus? 🎓",
+                "options": [
+                  {
+                    "text": "Sistemas de Informação",
+                    "previewText": "Sistemas de Informação",
+                    "type": null,
+                    "value": null,
+                    "index": 0
+                  },
+                  {
+                    "text": "Eng. Controle Automação",
+                    "previewText": "Eng. Controle Automação",
+                    "type": null,
+                    "value": null,
+                    "index": 1
+                  },
+                  {
+                    "text": "Administração",
+                    "previewText": "Administração",
+                    "type": null,
+                    "value": null,
+                    "index": 2
+                  },
+                  {
+                    "text": "Logística",
+                    "previewText": "Logística",
+                    "type": null,
+                    "value": null,
+                    "index": 3
+                  },
+                  {
+                    "text": "Processos Gerenciais",
+                    "previewText": "Processos Gerenciais",
+                    "type": null,
+                    "value": null,
+                    "index": 4
+                  }
+                ],
+                "limitMenu": false
+              },
+              "metadata": {}
+            },
+            "$cardContent": {
+              "document": {
+                "id": "1aacf715-be98-4f5d-9dec-470a90ed89bc",
+                "type": "application/vnd.lime.select+json",
+                "content": {
+                  "text": "Qual é o seu curso aqui no campus? 🎓",
+                  "options": [
+                    {
+                      "text": "Sistemas de Informação",
+                      "previewText": "Sistemas de Informação",
+                      "value": null,
+                      "index": 0,
+                      "type": null
+                    },
+                    {
+                      "text": "Eng. Controle Automação",
+                      "previewText": "Eng. Controle Automação",
+                      "value": null,
+                      "index": 1,
+                      "type": null
+                    },
+                    {
+                      "text": "Administração",
+                      "previewText": "Administração",
+                      "value": null,
+                      "index": 2,
+                      "type": null
+                    },
+                    {
+                      "text": "Logística",
+                      "previewText": "Logística",
+                      "value": null,
+                      "index": 3,
+                      "type": null
+                    },
+                    {
+                      "text": "Processos Gerenciais",
+                      "previewText": "Processos Gerenciais",
+                      "value": null,
+                      "index": 4,
+                      "type": null
+                    }
+                  ],
+                  "limitMenu": false
+                }
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left"
+            }
+          },
+          "$invalid": false
+        },
+        {
+          "input": {
+            "bypass": false,
+            "$cardContent": {
+              "document": {
+                "id": "c5af2e6b-5d1d-4803-9453-dee2901ca27a",
+                "type": "text/plain",
+                "textContent": "Entrada do usuário",
+                "content": "Entrada do usuário"
+              },
+              "editable": false,
+              "deletable": true,
+              "position": "right",
+              "editing": false
+            },
+            "$invalid": false
+          },
+          "$invalid": false
+        }
+      ],
+      "$conditionOutputs": [
+        {
+          "stateId": "52ed14ed-62b1-47ee-9e37-016b57a91237",
+          "typeOfStateId": "state",
+          "$contentId": "d058b0e8-01bc-4b44-91da-bce4438a4412",
+          "$id": "a87dc6e7-d482-4895-910f-a6ef3badd6fa",
+          "conditions": [
+            {
+              "source": "input",
+              "comparison": "equals",
+              "values": [
+                "Sistemas de Informação",
+                "Eng. Controle Automação",
+                "Administração",
+                "Logística",
+                "Processos Gerenciais"
+              ]
+            }
+          ],
+          "$invalid": false,
+          "$connId": "con_143"
+        }
+      ],
+      "$enteringCustomActions": [],
+      "$leavingCustomActions": [
+        {
+          "$id": "e6742ab3-1daf-45af-95aa-7624341d0c6a",
+          "$typeOfContent": "",
+          "$description": "",
+          "$inputSchema": {
+            "type": "object",
+            "properties": {},
+            "required": []
+          },
+          "type": "ExecuteScript",
+          "$title": "Executar script",
+          "$invalid": false,
+          "settings": {
+            "function": "run",
+            "source": "\nfunction run(curso) {\n    var CODIGOS = [\"BSI\", \"ENG_AUTOMACAO\", \"ADMINISTRACAO\", \"LOGISTICA\", \"PROCESSOS_GERENCIAIS\"];\n\n    if (curso === null || curso === undefined) {\n        return \"INVALIDO\";\n    }\n\n    var t = String(curso).toLowerCase();\n\n    var acentos = { \"á\": \"a\", \"à\": \"a\", \"â\": \"a\", \"ã\": \"a\", \"ä\": \"a\",\n                    \"é\": \"e\", \"è\": \"e\", \"ê\": \"e\", \"ë\": \"e\",\n                    \"í\": \"i\", \"ì\": \"i\", \"î\": \"i\", \"ï\": \"i\",\n                    \"ó\": \"o\", \"ò\": \"o\", \"ô\": \"o\", \"õ\": \"o\", \"ö\": \"o\",\n                    \"ú\": \"u\", \"ù\": \"u\", \"û\": \"u\", \"ü\": \"u\", \"ç\": \"c\" };\n    t = t.replace(/[áàâãäéèêëíìîïóòôõöúùûüç]/g, function (c) { return acentos[c]; });\n    t = t.replace(/[^a-z0-9]+/g, \" \").replace(/^\\s+|\\s+$/g, \"\");\n\n    var codigo = t.toUpperCase().replace(/ /g, \"_\");\n    for (var i = 0; i < CODIGOS.length; i++) {\n        if (codigo === CODIGOS[i]) {\n            return CODIGOS[i];\n        }\n    }\n\n    var porNumero = { \"1\": \"BSI\", \"2\": \"ENG_AUTOMACAO\", \"3\": \"ADMINISTRACAO\", \"4\": \"LOGISTICA\", \"5\": \"PROCESSOS_GERENCIAIS\" };\n    if (porNumero[t]) {\n        return porNumero[t];\n    }\n\n    if (/\\bbsi\\b|sistemas? de informa|sistemas da informa|\\bsi\\b/.test(t)) {\n        return \"BSI\";\n    }\n    if (/engenharia|\\beng\\b|automa|controle/.test(t)) {\n        return \"ENG_AUTOMACAO\";\n    }\n    if (/processos|gerenciais|\\btpg\\b/.test(t)) {\n        return \"PROCESSOS_GERENCIAIS\";\n    }\n    if (/logistica|\\blog\\b|\\btlog\\b/.test(t)) {\n        return \"LOGISTICA\";\n    }\n    if (/administra|\\badm\\b/.test(t)) {\n        return \"ADMINISTRACAO\";\n    }\n\n    return \"INVALIDO\";\n}\n",
+            "inputVariables": [
+              "input.content"
+            ],
+            "outputVariable": "cursoApi",
+            "LocalTimeZoneEnabled": false
+          },
+          "conditions": []
+        }
+      ],
+      "$inputSuggestions": [
+        "Sistemas de Informação",
+        "Eng. Controle Automação",
+        "Administração",
+        "Logística",
+        "Processos Gerenciais"
+      ],
+      "$defaultOutput": {
+        "stateId": "fallback",
+        "$invalid": false
+      },
+      "$localCustomActions": [],
+      "isAiGenerated": false,
+      "$tags": [],
+      "id": "6fa97c2b-1ded-4341-afc7-7b8899795225",
+      "root": false,
+      "$title": "Cursos",
+      "$position": {
+        "top": "350px",
+        "left": "872px"
+      },
+      "$invalidContentActions": false,
+      "$invalidOutputs": false,
+      "$invalidCustomActions": false,
+      "$invalid": false
+    },
+    "52ed14ed-62b1-47ee-9e37-016b57a91237": {
+      "$contentActions": [
+        {
+          "action": {
+            "$id": "3f8a1d6c-2b4e-4f9a-8c7d-1e5b9a0c3d21",
+            "$typeOfContent": "chat-state",
+            "$description": "",
+            "$inputSchema": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            },
+            "type": "SendMessage",
+            "settings": {
+              "id": "7c2e9b4a-1d3f-4e8a-b6c5-9f0a2d4e6b83",
+              "type": "application/vnd.lime.chatstate+json",
+              "content": {
+                "state": "composing",
+                "interval": 1000
+              }
+            },
+            "$cardContent": {
+              "document": {
+                "id": "7c2e9b4a-1d3f-4e8a-b6c5-9f0a2d4e6b83",
+                "type": "application/vnd.lime.chatstate+json",
+                "content": {
+                  "state": "composing",
+                  "interval": 1000
+                }
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left"
+            }
+          },
+          "$invalid": false
+        },
+        {
+          "action": {
+            "$id": "8e4d2a7b-6c1f-4b3e-9a5d-0f7c3b8e1a64",
+            "$typeOfContent": "select",
+            "$description": "",
+            "$inputSchema": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            },
+            "type": "SendMessage",
+            "settings": {
+              "id": "2a9c7e5b-4f1d-4c8a-a3e6-5b0d8f2c7e19",
+              "type": "application/vnd.lime.select+json",
+              "content": {
+                "text": "E em que ano você entrou no curso? 📅",
+                "options": [
+                  {
+                    "text": "2026",
+                    "previewText": "2026",
+                    "type": null,
+                    "value": null,
+                    "index": 0
+                  },
+                  {
+                    "text": "2025",
+                    "previewText": "2025",
+                    "type": null,
+                    "value": null,
+                    "index": 1
+                  },
+                  {
+                    "text": "2024",
+                    "previewText": "2024",
+                    "type": null,
+                    "value": null,
+                    "index": 2
+                  },
+                  {
+                    "text": "2023",
+                    "previewText": "2023",
+                    "type": null,
+                    "value": null,
+                    "index": 3
+                  },
+                  {
+                    "text": "2022",
+                    "previewText": "2022",
+                    "type": null,
+                    "value": null,
+                    "index": 4
+                  },
+                  {
+                    "text": "2021",
+                    "previewText": "2021",
+                    "type": "text/plain",
+                    "value": "2021"
+                  },
+                  {
+                    "text": "2020",
+                    "previewText": "2020",
+                    "type": null,
+                    "value": null,
+                    "index": 6
+                  },
+                  {
+                    "text": "2019",
+                    "previewText": "2019",
+                    "type": null,
+                    "value": null,
+                    "index": 7
+                  },
+                  {
+                    "text": "2018 ou antes",
+                    "previewText": "2018 ou antes",
+                    "type": null,
+                    "value": null,
+                    "index": 8
+                  },
+                  {
+                    "text": "Ainda não sou aluno",
+                    "previewText": "Ainda não sou aluno",
+                    "type": null,
+                    "value": null,
+                    "index": 9
+                  }
+                ],
+                "limitMenu": false
+              },
+              "metadata": {}
+            },
+            "$cardContent": {
+              "document": {
+                "id": "2a9c7e5b-4f1d-4c8a-a3e6-5b0d8f2c7e19",
+                "type": "application/vnd.lime.select+json",
+                "content": {
+                  "text": "E em que ano você entrou no curso? 📅",
+                  "options": [
+                    {
+                      "text": "2026",
+                      "previewText": "2026",
+                      "value": null,
+                      "index": 0,
+                      "type": null
+                    },
+                    {
+                      "text": "2025",
+                      "previewText": "2025",
+                      "value": null,
+                      "index": 1,
+                      "type": null
+                    },
+                    {
+                      "text": "2024",
+                      "previewText": "2024",
+                      "value": null,
+                      "index": 2,
+                      "type": null
+                    },
+                    {
+                      "text": "2023",
+                      "previewText": "2023",
+                      "value": null,
+                      "index": 3,
+                      "type": null
+                    },
+                    {
+                      "text": "2022",
+                      "previewText": "2022",
+                      "value": null,
+                      "index": 4,
+                      "type": null
+                    },
+                    {
+                      "text": "2021",
+                      "previewText": "2021",
+                      "value": "2021",
+                      "type": "text/plain"
+                    },
+                    {
+                      "text": "2020",
+                      "previewText": "2020",
+                      "value": null,
+                      "index": 6,
+                      "type": null
+                    },
+                    {
+                      "text": "2019",
+                      "previewText": "2019",
+                      "value": null,
+                      "index": 7,
+                      "type": null
+                    },
+                    {
+                      "text": "2018 ou antes",
+                      "previewText": "2018 ou antes",
+                      "value": null,
+                      "index": 8,
+                      "type": null
+                    },
+                    {
+                      "text": "Ainda não sou aluno",
+                      "previewText": "Ainda não sou aluno",
+                      "value": null,
+                      "index": 9,
+                      "type": null
+                    }
+                  ],
+                  "limitMenu": false
+                }
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left"
+            }
+          },
+          "$invalid": false
+        },
+        {
+          "input": {
+            "bypass": false,
+            "$cardContent": {
+              "document": {
+                "id": "9d3b6f1a-8e2c-4a7d-b5f0-3c1e7a9b2d48",
+                "type": "text/plain",
+                "textContent": "Entrada do usuário",
+                "content": "Entrada do usuário"
+              },
+              "editable": false,
+              "deletable": true,
+              "position": "right",
+              "editing": false
+            },
+            "$invalid": false
+          },
+          "$invalid": false
+        }
+      ],
+      "$conditionOutputs": [
+        {
+          "stateId": "ca637eb2-526b-43e9-8a9e-a9c4747bbbde",
+          "typeOfStateId": "state",
+          "$contentId": "8e4d2a7b-6c1f-4b3e-9a5d-0f7c3b8e1a64",
+          "$id": "c4e7a2b9-5d1f-4e3a-8b6c-7f0d2a9e5c31",
+          "conditions": [
+            {
+              "source": "input",
+              "comparison": "equals",
+              "values": [
+                "2026",
+                "2025",
+                "2023",
+                "2024",
+                "2022",
+                "2021",
+                "2020",
+                "2019",
+                "2018 ou antes",
+                "Ainda não sou aluno"
+              ]
+            }
+          ],
+          "$invalid": false,
+          "$connId": "con_148"
+        }
+      ],
+      "$enteringCustomActions": [],
+      "$leavingCustomActions": [
+        {
+          "$id": "546352fa-a863-4a41-8216-f0ee76c8c0ff",
+          "$typeOfContent": "",
+          "$description": "",
+          "$inputSchema": {
+            "type": "object",
+            "properties": {},
+            "required": []
+          },
+          "type": "ExecuteScript",
+          "$title": "Executar script",
+          "$invalid": false,
+          "settings": {
+            "function": "run",
+            "source": "\nfunction run(ano) {\n    if (ano === null || ano === undefined) {\n        return \"INVALIDO\";\n    }\n\n    var t = String(ano).toLowerCase().replace(/^\\s+|\\s+$/g, \"\");\n    var anoAtual = new Date().getFullYear();\n\n    if (t === \"todos\" || /nao sou|não sou|ainda nao|ainda não|candidat|vestibular/.test(t)) {\n        return \"TODOS\";\n    }\n\n    var m = t.match(/\\b(19|20)\\d{2}\\b/);\n    if (m) {\n        var n = parseInt(m[0], 10);\n        if (n > anoAtual) {\n            return \"INVALIDO\";\n        }\n        if (n <= 2018) {\n            return \"2018\";\n        }\n        return String(n);\n    }\n\n    var m2 = t.match(/^\\d{2}$/);\n    if (m2) {\n        var n2 = 2000 + parseInt(t, 10);\n        if (n2 > anoAtual) {\n            return \"INVALIDO\";\n        }\n        return n2 <= 2018 ? \"2018\" : String(n2);\n    }\n\n    if (/antes/.test(t)) {\n        return \"2018\";\n    }\n\n    return \"INVALIDO\";\n}\n",
+            "inputVariables": [
+              "input.content"
+            ],
+            "outputVariable": "anoApi",
+            "LocalTimeZoneEnabled": false
+          },
+          "conditions": []
+        }
+      ],
+      "$inputSuggestions": [
+        "2026",
+        "2025",
+        "2024",
+        "2023",
+        "2022",
+        "2021",
+        "2020",
+        "2019",
+        "2018 ou antes",
+        "Ainda não sou aluno"
+      ],
+      "$defaultOutput": {
+        "stateId": "fallback",
+        "$invalid": false
+      },
+      "$localCustomActions": [],
+      "isAiGenerated": false,
+      "$tags": [],
+      "id": "52ed14ed-62b1-47ee-9e37-016b57a91237",
+      "root": false,
+      "$title": "Ano de ingresso",
+      "$position": {
+        "top": "499px",
+        "left": "874px"
+      },
+      "$invalidContentActions": false,
+      "$invalidOutputs": false,
+      "$invalidCustomActions": false,
+      "$invalid": false
+    },
+    "74962d5a-0dc3-4c99-a1cb-66c945603705": {
+      "$contentActions": [
+        {
+          "action": {
+            "$id": "ade51cd5-4cd6-438b-ab54-4987a5126118",
+            "$typeOfContent": "chat-state",
+            "$description": "",
+            "$inputSchema": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            },
+            "type": "SendMessage",
+            "settings": {
+              "id": "399249a0-d5e6-4f15-be47-c97c19929426",
+              "type": "application/vnd.lime.chatstate+json",
+              "content": {
+                "state": "composing",
+                "interval": 1000
+              }
+            },
+            "$cardContent": {
+              "document": {
+                "id": "399249a0-d5e6-4f15-be47-c97c19929426",
+                "type": "application/vnd.lime.chatstate+json",
+                "content": {
+                  "state": "composing",
+                  "interval": 1000
+                }
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left"
+            }
+          },
+          "$invalid": false
+        },
+        {
+          "action": {
+            "$id": "c3b2b73e-ecc2-459f-ac65-c6a7b669090c",
+            "$typeOfContent": "text",
+            "$description": "",
+            "$inputSchema": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            },
+            "type": "SendMessage",
+            "settings": {
+              "id": "4bc7ba36-9903-4304-bbf1-2c5855af851d",
+              "type": "text/plain",
+              "content": "{{respostaTratada}}",
+              "metadata": {}
+            },
+            "$cardContent": {
+              "document": {
+                "id": "4bc7ba36-9903-4304-bbf1-2c5855af851d",
+                "type": "text/plain",
+                "content": "{{respostaTratada}}"
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left"
+            }
+          },
+          "$invalid": false
+        },
+        {
+          "action": {
+            "$id": "c17814a3-b9fe-40a8-9fc9-ce54f7451171",
+            "$typeOfContent": "chat-state",
+            "$description": "",
+            "$inputSchema": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            },
+            "type": "SendMessage",
+            "settings": {
+              "id": "a814fd05-0ce1-4d5d-985d-7781ce87650e",
+              "type": "application/vnd.lime.chatstate+json",
+              "content": {
+                "state": "composing",
+                "interval": 1000
+              }
+            },
+            "$cardContent": {
+              "document": {
+                "id": "a814fd05-0ce1-4d5d-985d-7781ce87650e",
+                "type": "application/vnd.lime.chatstate+json",
+                "content": {
+                  "state": "composing",
+                  "interval": 1000
+                }
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left"
+            }
+          },
+          "$invalid": false
+        },
+        {
+          "action": {
+            "$id": "86815189-c961-4f84-820a-2189da6a8938",
+            "$typeOfContent": "text",
+            "$description": "",
+            "$inputSchema": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            },
+            "type": "SendMessage",
+            "settings": {
+              "id": "29946c8b-c563-4ef4-af51-7951b5bb4cdd",
+              "type": "text/plain",
+              "content": "Pode reformular ou enviar sua dúvida sobre o IFMG Sabará?",
+              "metadata": {}
+            },
+            "$cardContent": {
+              "document": {
+                "id": "29946c8b-c563-4ef4-af51-7951b5bb4cdd",
+                "type": "text/plain",
+                "content": "Pode reformular ou enviar sua dúvida sobre o IFMG Sabará?"
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left"
+            }
+          },
+          "$invalid": false
+        },
+        {
+          "input": {
+            "bypass": false,
+            "$cardContent": {
+              "document": {
+                "id": "128313a4-8129-4855-99cd-fabdd4f9cf25",
+                "type": "text/plain",
+                "textContent": "Entrada do usuário",
+                "content": "Entrada do usuário"
+              },
+              "editable": false,
+              "deletable": true,
+              "position": "right",
+              "editing": false
+            },
+            "$invalid": false
+          },
+          "$invalid": false
+        }
+      ],
+      "$conditionOutputs": [
+        {
+          "stateId": "a9dea1d5-1d48-4df7-a4c0-1cf1d91071fc",
+          "typeOfStateId": "state",
+          "$connId": "con_153",
+          "$id": "8e06ed63-6423-4f87-85dc-8103e5709ba6",
+          "conditions": [
+            {
+              "source": "input",
+              "comparison": "exists",
+              "values": []
+            }
+          ],
+          "$invalid": false
+        }
+      ],
+      "$enteringCustomActions": [
+        {
+          "$id": "248d055e-1aae-4290-882a-7a31b38316ae",
+          "$typeOfContent": "",
+          "$description": "",
+          "$inputSchema": {
+            "type": "object",
+            "properties": {},
+            "required": []
+          },
+          "type": "TrackEvent",
+          "$title": "Registro de eventos",
+          "$invalid": false,
+          "settings": {
+            "extras": {},
+            "category": "Fora Escopo",
+            "action": "{{contact.identity}}"
+          },
+          "conditions": []
+        }
+      ],
+      "$leavingCustomActions": [],
+      "$inputSuggestions": [],
+      "$defaultOutput": {
+        "stateId": "fallback",
+        "$invalid": false
+      },
+      "$localCustomActions": [],
+      "isAiGenerated": false,
+      "$tags": [],
+      "id": "74962d5a-0dc3-4c99-a1cb-66c945603705",
+      "root": false,
+      "$title": "Fora Escopo",
+      "$position": {
+        "top": "617px",
+        "left": "891px"
+      },
+      "$invalidContentActions": false,
+      "$invalidOutputs": false,
+      "$invalidCustomActions": false,
+      "$invalid": false
+    },
+    "0ce80253-df07-4f6e-8e62-93c4d07b3794": {
+      "$contentActions": [
+        {
+          "action": {
+            "$id": "120f03ed-5ad9-4f09-93c5-7207bf24b8af",
+            "$typeOfContent": "chat-state",
+            "$description": "",
+            "$inputSchema": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            },
+            "type": "SendMessage",
+            "settings": {
+              "id": "d88be69b-51f8-4343-9dc0-b93e8bdd5250",
+              "type": "application/vnd.lime.chatstate+json",
+              "content": {
+                "state": "composing",
+                "interval": 1000
+              }
+            },
+            "$cardContent": {
+              "document": {
+                "id": "d88be69b-51f8-4343-9dc0-b93e8bdd5250",
+                "type": "application/vnd.lime.chatstate+json",
+                "content": {
+                  "state": "composing",
+                  "interval": 1000
+                }
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left"
+            }
+          },
+          "$invalid": false
+        },
+        {
+          "action": {
+            "$id": "acaba745-5983-4506-a128-c72a0f9d49a3",
+            "$typeOfContent": "text",
+            "$description": "",
+            "$inputSchema": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            },
+            "type": "SendMessage",
+            "settings": {
+              "id": "e9499d95-6295-4b1d-84e9-50db216f5bb1",
+              "type": "text/plain",
+              "content": "⚠️ Olá! Estamos enfrentando uma instabilidade temporária no nosso sistema.\n\nNo momento, pode ser que eu não consiga responder às suas dúvidas corretamente.\n\nPedimos desculpas pelo transtorno! Tente novamente em alguns instantes. 😊",
+              "metadata": {}
+            },
+            "$cardContent": {
+              "document": {
+                "id": "e9499d95-6295-4b1d-84e9-50db216f5bb1",
+                "type": "text/plain",
+                "content": "⚠️ Olá! Estamos enfrentando uma instabilidade temporária no nosso sistema.\n\nNo momento, pode ser que eu não consiga responder às suas dúvidas corretamente.\n\nPedimos desculpas pelo transtorno! Tente novamente em alguns instantes. 😊"
+              },
+              "editable": true,
+              "deletable": true,
+              "position": "left"
+            }
+          },
+          "$invalid": false
+        },
+        {
+          "input": {
+            "bypass": true,
+            "$cardContent": {
+              "document": {
+                "id": "942bbcb5-a524-4887-bf01-2d18416ca0e0",
+                "type": "text/plain",
+                "textContent": "Entrada do usuário",
+                "content": "Entrada do usuário"
+              },
+              "editable": false,
+              "deletable": true,
+              "position": "right",
+              "editing": false
+            },
+            "$invalid": false
+          },
+          "$invalid": false
+        }
+      ],
+      "$conditionOutputs": [
+        {
+          "stateId": "onboarding",
+          "typeOfStateId": "state",
+          "$connId": "con_158",
+          "$id": "d8336913-4b5e-4808-b5d0-305acfec443b",
+          "conditions": [
+            {
+              "source": "input",
+              "comparison": "exists",
+              "values": []
+            }
+          ],
+          "$isBuilderDefaultOutput": true,
+          "$invalid": false
+        }
+      ],
+      "$enteringCustomActions": [],
+      "$leavingCustomActions": [],
+      "$inputSuggestions": [],
+      "$defaultOutput": {
+        "stateId": "637d3dc8-5165-47c6-9286-97ee78b10844",
+        "$invalid": false,
+        "typeOfStateId": "state"
+      },
+      "$localCustomActions": [],
+      "isAiGenerated": false,
+      "$tags": [],
+      "id": "0ce80253-df07-4f6e-8e62-93c4d07b3794",
+      "root": false,
+      "$title": "Fora do ar",
+      "$position": {
+        "top": "746px",
+        "left": "897px"
+      },
+      "$invalidContentActions": false,
+      "$invalidOutputs": false,
+      "$invalidCustomActions": false,
+      "$invalid": false
+    }
+  },
+  "globalActions": {
+    "$contentActions": [],
+    "$conditionOutputs": [],
+    "$enteringCustomActions": [],
+    "$leavingCustomActions": [
+      {
+        "$id": "9cbe1a35-57c4-49ff-bf16-1a6c18817c7d",
+        "$typeOfContent": "",
+        "type": "TrackEvent",
+        "$title": "Registro de eventos",
+        "$invalid": false,
+        "settings": {
+          "extras": {
+            "state": "{{state.name}}",
+            "lastState": "{{state.previous.name}}",
+            "identity": "{{contact.identity}}",
+            "input": "{{input.content}}",
+            "date": "{{calendar.datetime}}",
+            "source": "{{contact.source}}",
+            "messageId": "{{input.message.id}}",
+            "stateId": "{{state.id}}",
+            "lastStateId": "{{state.previous.id}}"
+          },
+          "category": "Interacao",
+          "action": "Exibicao"
+        },
+        "conditions": []
+      }
+    ],
+    "$inputSuggestions": [],
+    "$defaultOutput": {
+      "stateId": "fallback",
+      "$invalid": false
+    },
+    "$localCustomActions": [],
+    "isAiGenerated": false,
+    "$tags": [],
+    "id": "global-actions",
+    "$invalidContentActions": false,
+    "$invalidOutputs": false,
+    "$invalidCustomActions": false,
+    "$invalid": false
+  }
+}

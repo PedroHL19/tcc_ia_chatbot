@@ -2,209 +2,175 @@ import fs from "fs";
 import path from "path";
 import crypto from "crypto";
 import dotenv from "dotenv";
-import { PDFParse } from "pdf-parse";
 import { recreateCollection, upsertPoints, COLLECTION_NAME } from "./qdrantClient.js";
 import { generateEmbedding, EMBEDDING_MODEL } from "./ollamaClient.js";
 import { splitIntoChunks } from "./chunker.js";
 
 dotenv.config();
 
-const DOCS_DIR = fs.existsSync("./docs/base_conhecimento")
-  ? "./docs/base_conhecimento"
-  : "./docs";
+const BASE_CONHEC_DIR = "./docs/base_conhecimento";
 
 /**
- * Lê o texto de um arquivo (.md ou .pdf)
- * @param {string} filePath 
- * @returns {Promise<string>}
+ * Lê arquivos de texto (.md, .txt)
  */
-async function extractTextFromFile(filePath) {
-  const ext = path.extname(filePath).toLowerCase();
-
-  if (ext === ".md" || ext === ".txt") {
-    return fs.readFileSync(filePath, "utf-8");
-  }
-
-  if (ext === ".pdf") {
-    const dataBuffer = fs.readFileSync(filePath);
-    try {
-      if (typeof PDFParse === "function") {
-        const parser = new PDFParse({ data: dataBuffer });
-        const result = await parser.getText();
-        return result.text || "";
-      }
-    } catch (err) {
-      console.warn(`Aviso ao ler PDF com classe PDFParse (${filePath}): ${err.message}.`);
-    }
-  }
-
-  return "";
+function readText(filePath) {
+  return fs.readFileSync(filePath, "utf-8");
 }
 
 /**
- * Coleta recursivamente arquivos (.md, .pdf, .txt)
- * @param {string} dir
- * @returns {string[]}
+ * Extrai metadados do cabeçalho YAML (Frontmatter) do Markdown
+ * Suporta:
+ *   curso: BSI | LOGISTICA | PROCESSOS_GERENCIAIS | ENG_AUTOMACAO | ADMINISTRACAO | TODOS
+ *   ano_min: 2023 (ou 0 para geral)
+ *   ano_max: 9999 (ou ano limite)
+ *   tipo: normativo_curso | institucional_geral
  */
-function getAllFilesRecursively(dir) {
-  let results = [];
+function extractFrontmatter(filePath, content) {
+  let curso = "TODOS";
+  let ano_min = 0;
+  let ano_max = 9999;
+  let tipo = "geral";
+  let descricao = path.basename(filePath, path.extname(filePath));
+
+  const fmMatch = content.match(/^---[\s\S]*?---/);
+  if (fmMatch) {
+    const fm = fmMatch[0];
+
+    const cursoMatch = fm.match(/curso\s*:\s*([^\r\n]+)/i);
+    if (cursoMatch) curso = cursoMatch[1].trim().toUpperCase();
+
+    const minMatch = fm.match(/ano_min\s*:\s*(\d+)/i);
+    if (minMatch) ano_min = parseInt(minMatch[1], 10);
+
+    const maxMatch = fm.match(/ano_max\s*:\s*(\d+)/i);
+    if (maxMatch) ano_max = parseInt(maxMatch[1], 10);
+
+    const tipoMatch = fm.match(/tipo\s*:\s*([^\r\n]+)/i);
+    if (tipoMatch) tipo = tipoMatch[1].trim();
+
+    // Remove o frontmatter do texto indexado para evitar ruído no chunk
+    content = content.replace(/^---[\s\S]*?---\s*/, "");
+  } else {
+    // Fallback inteligente pelo nome do arquivo se não tiver frontmatter
+    const lower = filePath.toLowerCase();
+    if (lower.includes("bsi")) {
+      curso = "BSI";
+    } else if (lower.includes("logistica") || lower.includes("log_")) {
+      curso = "LOGISTICA";
+    } else if (lower.includes("processos") || lower.includes("tpg")) {
+      curso = "PROCESSOS_GERENCIAIS";
+    } else if (lower.includes("eng_automacao") || lower.includes("automacao")) {
+      curso = "ENG_AUTOMACAO";
+    } else if (lower.includes("administracao") || lower.includes("adm_")) {
+      curso = "ADMINISTRACAO";
+    }
+  }
+
+  return { curso, ano_min, ano_max, tipo, descricao, cleanContent: content };
+}
+
+/**
+ * Coleta recursivamente arquivos (.md, .txt)
+ */
+function collectFiles(dir) {
+  const EXTS = [".md", ".txt"];
+  const results = [];
   if (!fs.existsSync(dir)) return results;
-  const list = fs.readdirSync(dir);
-  for (const item of list) {
-    const fullPath = path.join(dir, item);
-    const stat = fs.statSync(fullPath);
-    if (stat && stat.isDirectory()) {
-      results = results.concat(getAllFilesRecursively(fullPath));
-    } else {
-      const ext = path.extname(item).toLowerCase();
-      if ([".md", ".pdf", ".txt"].includes(ext)) {
-        results.push(fullPath);
-      }
+  for (const item of fs.readdirSync(dir)) {
+    const full = path.join(dir, item);
+    if (fs.statSync(full).isDirectory()) {
+      results.push(...collectFiles(full));
+    } else if (EXTS.includes(path.extname(item).toLowerCase())) {
+      results.push(full);
     }
   }
   return results;
 }
 
 /**
- * Extrai metadados de Curso e Ano de forma inteligente:
- * 1. Frontmatter/cabeçalho no arquivo (ex.: curso: BSI, ano: 2023)
- * 2. Nomes de subpastas (ex.: docs/base_conhecimento/BSI/2023/)
- * 3. Convenção no nome do arquivo (ex.: bsi_matriz_curricular_nova.md, ppc_logistica_2022.pdf)
- * 4. Padrão "TODOS" para documentos institucionais gerais
- * @param {string} filePath
- * @param {string} fileContent
- * @returns {{ curso: string, ano: string }}
+ * Executa a ingestão focada dos documentos estruturados em Markdown
  */
-function extractDocumentMetadata(filePath, fileContent) {
-  let curso = "TODOS";
-  let ano = "TODOS";
-
-  const normPath = filePath.replace(/\\/g, "/");
-  const fileName = path.basename(filePath).toLowerCase();
-
-  // 1. Tenta extrair de Frontmatter ou comentários no início do texto
-  const frontmatterMatch = fileContent.match(/^(?:---|\/\*|<!--)([\s\S]*?)(?:---|\*\/|-->)/);
-  if (frontmatterMatch) {
-    const header = frontmatterMatch[1];
-    const cursoMatch = header.match(/curso\s*:\s*([^\r\n,]+)/i);
-    const anoMatch = header.match(/ano\s*:\s*([^\r\n,]+)/i);
-    if (cursoMatch) curso = cursoMatch[1].trim().toUpperCase();
-    if (anoMatch) ano = anoMatch[1].trim();
-  }
-
-  // 2. Extração por subpastas (ex: /BSI/2023/)
-  const pathParts = normPath.split("/");
-  for (let i = 0; i < pathParts.length - 1; i++) {
-    const part = pathParts[i].toUpperCase();
-    if (["BSI", "LOGISTICA", "ADMINISTRACAO", "PEDAGOGIA"].includes(part)) {
-      curso = part;
-    }
-    if (/^(19|20)\d{2}$/.test(part)) {
-      ano = part;
-    }
-  }
-
-  // 3. Fallback inteligente por nome do arquivo se ainda for TODOS
-  if (curso === "TODOS") {
-    if (fileName.includes("bsi")) {
-      curso = "BSI";
-    } else if (fileName.includes("logistica") || fileName.includes("log_")) {
-      curso = "LOGISTICA";
-    } else if (fileName.includes("admin") || fileName.includes("adm_")) {
-      curso = "ADMINISTRACAO";
-    }
-  }
-
-  if (ano === "TODOS") {
-    const yearMatch = fileName.match(/(19|20\d{2})/);
-    if (yearMatch) {
-      ano = yearMatch[0];
-    }
-  }
-
-  return { curso, ano };
-}
-
 async function runIngestion() {
-  console.log("=== INICIANDO INGESTÃO DE DOCUMENTOS PARA O QDRANT ===");
-  console.log(`Modelo de embeddings: ${EMBEDDING_MODEL}`);
-  console.log(`Coleção de destino: ${COLLECTION_NAME}`);
+  console.log("=== INICIANDO INGESTÃO DE BASE DE CONHECIMENTO (.MD) NO QDRANT ===");
+  console.log(`Modelo de embeddings : ${EMBEDDING_MODEL}`);
+  console.log(`Coleção de destino   : ${COLLECTION_NAME}`);
+  console.log(`Diretório de base    : ${BASE_CONHEC_DIR}\n`);
 
-  if (!fs.existsSync(DOCS_DIR)) {
-    console.error(`Diretório ${DOCS_DIR} não encontrado.`);
-    return;
-  }
-
-  const files = getAllFilesRecursively(DOCS_DIR);
+  const files = collectFiles(BASE_CONHEC_DIR);
 
   if (files.length === 0) {
-    console.log(`Nenhum documento (.md, .pdf, .txt) encontrado na pasta ${DOCS_DIR}.`);
+    console.error(`Nenhum arquivo .md encontrado em ${BASE_CONHEC_DIR}.`);
     return;
   }
 
-  console.log(`Encontrados ${files.length} documento(s) para indexação.`);
+  console.log(`Encontrados ${files.length} documentos Markdown curados para indexação.\n`);
 
-  // 1. Recria a coleção no Qdrant limpando versões antigas/duplicadas
+  // Recria a coleção garantindo limpeza de resíduos anteriores e índices numéricos
   await recreateCollection();
 
   const allPoints = [];
 
-  // 2. Processa cada documento
   for (const filePath of files) {
-    const relativeName = path.relative(DOCS_DIR, filePath);
-    console.log(`\nLendo documento: ${relativeName}...`);
-    
-    const text = await extractTextFromFile(filePath);
-    if (!text || text.trim().length === 0) {
-      console.log(`Arquivo vazio ou sem texto extraível: ${relativeName}`);
+    const fileName = path.basename(filePath);
+    const rawContent = readText(filePath);
+
+    if (!rawContent || rawContent.trim().length === 0) {
+      console.log(`Aviso: Arquivo vazio ignorado (${fileName})`);
       continue;
     }
 
-    const { curso, ano } = extractDocumentMetadata(filePath, text);
-    console.log(`  -> Metadados atribuídos: [Curso: ${curso}] | [Ano: ${ano}]`);
+    const { curso, ano_min, ano_max, tipo, descricao, cleanContent } = extractFrontmatter(filePath, rawContent);
 
-    // 3. Divide em chunks (500 tokens / 100 overlap)
-    const chunks = splitIntoChunks(text, 500, 100);
-    console.log(`  -> Gerados ${chunks.length} chunks.`);
+    const anoLabel = ano_min === 0 && ano_max === 9999 
+      ? "TODOS" 
+      : `${ano_min} a ${ano_max === 9999 ? "atual" : ano_max}`;
 
-    // 4. Gera embeddings para cada chunk
+    console.log(`Processando: ${fileName}`);
+    console.log(`  -> Metadados: Curso=[${curso}] | Anos=[${anoLabel}] | Tipo=[${tipo}]`);
+
+    // Chunks menores e precisos (500 tokens / 80 overlap)
+    const chunks = splitIntoChunks(cleanContent, 500, 80);
+    console.log(`  -> ${chunks.length} chunks gerados.`);
+
     for (let i = 0; i < chunks.length; i++) {
-      const chunk = chunks[i];
-      process.stdout.write(`  Vetorizando chunk ${i + 1}/${chunks.length}...\r`);
-      
-      const vector = await generateEmbedding(chunk);
+      process.stdout.write(`     Vetorizando chunk ${i + 1}/${chunks.length}...\r`);
+      const vector = await generateEmbedding(chunks[i]);
 
       allPoints.push({
         id: crypto.randomUUID(),
         vector,
         payload: {
-          text: chunk,
-          source: relativeName,
+          text: chunks[i],
+          source: fileName,
           curso,
-          ano,
+          ano_min,
+          ano_max,
+          tipo,
+          descricao,
           chunkIndex: i,
           totalChunks: chunks.length
         }
       });
     }
-    console.log(`\n  Concluído processamento de ${relativeName}.`);
+    console.log(`\n  Concluído: ${fileName}\n`);
   }
 
-  // 5. Salva os pontos no Qdrant
-  if (allPoints.length > 0) {
-    console.log(`\nEnviando ${allPoints.length} pontos para o Qdrant...`);
-    // Envia em lotes de 50 para garantir estabilidade
-    const batchSize = 50;
-    for (let i = 0; i < allPoints.length; i += batchSize) {
-      const batch = allPoints.slice(i, i + batchSize);
-      await upsertPoints(batch);
-      console.log(`Lote ${Math.floor(i / batchSize) + 1}/${Math.ceil(allPoints.length / batchSize)} inserido com sucesso.`);
-    }
-
-    console.log("\n=== INGESTÃO FINALIZADA COM SUCESSO! ===");
-    console.log(`Total de chunks indexados: ${allPoints.length}`);
-    console.log(`Coleção pronta para consultas: ${COLLECTION_NAME}`);
+  if (allPoints.length === 0) {
+    console.log("Nenhum chunk foi gerado.");
+    return;
   }
+
+  console.log(`Enviando ${allPoints.length} pontos para o Qdrant em lotes...`);
+  const BATCH_SIZE = 50;
+  for (let i = 0; i < allPoints.length; i += BATCH_SIZE) {
+    const batch = allPoints.slice(i, i + BATCH_SIZE);
+    await upsertPoints(batch);
+    console.log(`  Lote ${Math.floor(i / BATCH_SIZE) + 1}/${Math.ceil(allPoints.length / BATCH_SIZE)} inserido com sucesso.`);
+  }
+
+  console.log("\n=== INGESTÃO FINALIZADA COM SUCESSO! ===");
+  console.log(`Total de chunks de alta precisão indexados: ${allPoints.length}`);
+  console.log(`Coleção ativa no Qdrant: ${COLLECTION_NAME}`);
 }
 
 runIngestion().catch((err) => {

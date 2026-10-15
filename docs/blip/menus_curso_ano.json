@@ -1,0 +1,274 @@
+[
+  {
+    "$contentActions": [
+      {
+        "action": {
+          "$id": "0dd5e267-519f-4fd0-857d-a5ee4c89e2ff",
+          "$typeOfContent": "chat-state",
+          "$description": "",
+          "$inputSchema": { "type": "object", "properties": {}, "required": [] },
+          "type": "SendMessage",
+          "settings": {
+            "id": "24ace9d8-d069-4872-9e65-18f2bf80244e",
+            "type": "application/vnd.lime.chatstate+json",
+            "content": { "state": "composing", "interval": 1000 }
+          },
+          "$cardContent": {
+            "document": {
+              "id": "24ace9d8-d069-4872-9e65-18f2bf80244e",
+              "type": "application/vnd.lime.chatstate+json",
+              "content": { "state": "composing", "interval": 1000 }
+            },
+            "editable": true,
+            "deletable": true,
+            "position": "left"
+          }
+        },
+        "$invalid": false
+      },
+      {
+        "action": {
+          "$id": "d058b0e8-01bc-4b44-91da-bce4438a4412",
+          "$typeOfContent": "select",
+          "$description": "",
+          "$inputSchema": { "type": "object", "properties": {}, "required": [] },
+          "type": "SendMessage",
+          "settings": {
+            "id": "1aacf715-be98-4f5d-9dec-470a90ed89bc",
+            "type": "application/vnd.lime.select+json",
+            "content": {
+              "text": "Qual é o seu curso aqui no campus? 🎓",
+              "options": [
+                { "text": "Sistemas de Informação", "previewText": "Sistemas de Informação", "type": "text/plain", "value": "BSI" },
+                { "text": "Eng. Controle Automação", "previewText": "Eng. Controle Automação", "type": "text/plain", "value": "ENG_AUTOMACAO" },
+                { "text": "Administração", "previewText": "Administração", "type": "text/plain", "value": "ADMINISTRACAO" },
+                { "text": "Logística", "previewText": "Logística", "type": "text/plain", "value": "LOGISTICA" },
+                { "text": "Processos Gerenciais", "previewText": "Processos Gerenciais", "type": "text/plain", "value": "PROCESSOS_GERENCIAIS" }
+              ],
+              "limitMenu": false
+            },
+            "metadata": {}
+          },
+          "$cardContent": {
+            "document": {
+              "id": "1aacf715-be98-4f5d-9dec-470a90ed89bc",
+              "type": "application/vnd.lime.select+json",
+              "content": {
+                "text": "Qual é o seu curso aqui no campus? 🎓",
+                "options": [
+                  { "text": "Sistemas de Informação", "previewText": "Sistemas de Informação", "type": "text/plain", "value": "BSI" },
+                  { "text": "Eng. Controle Automação", "previewText": "Eng. Controle Automação", "type": "text/plain", "value": "ENG_AUTOMACAO" },
+                  { "text": "Administração", "previewText": "Administração", "type": "text/plain", "value": "ADMINISTRACAO" },
+                  { "text": "Logística", "previewText": "Logística", "type": "text/plain", "value": "LOGISTICA" },
+                  { "text": "Processos Gerenciais", "previewText": "Processos Gerenciais", "type": "text/plain", "value": "PROCESSOS_GERENCIAIS" }
+                ],
+                "limitMenu": false
+              }
+            },
+            "editable": true,
+            "deletable": true,
+            "position": "left"
+          }
+        },
+        "$invalid": false
+      },
+      {
+        "input": {
+          "bypass": false,
+          "$cardContent": {
+            "document": {
+              "id": "c5af2e6b-5d1d-4803-9453-dee2901ca27a",
+              "type": "text/plain",
+              "textContent": "Entrada do usuário",
+              "content": "curso"
+            },
+            "editable": false,
+            "deletable": true,
+            "position": "right",
+            "editing": false
+          },
+          "$invalid": false,
+          "variable": "curso"
+        },
+        "$invalid": false
+      }
+    ],
+    "$conditionOutputs": [
+      {
+        "stateId": "5b1f3c2a-7d4e-4a8b-9c61-2e0f8a9d4b17",
+        "typeOfStateId": "state",
+        "$contentId": "d058b0e8-01bc-4b44-91da-bce4438a4412",
+        "$id": "a87dc6e7-d482-4895-910f-a6ef3badd6fa",
+        "conditions": [
+          {
+            "source": "input",
+            "comparison": "equals",
+            "values": [
+              "BSI", "Sistemas de Informação",
+              "ENG_AUTOMACAO", "Eng. Controle Automação",
+              "ADMINISTRACAO", "Administração",
+              "LOGISTICA", "Logística",
+              "PROCESSOS_GERENCIAIS", "Processos Gerenciais"
+            ]
+          }
+        ],
+        "$invalid": false
+      }
+    ],
+    "$enteringCustomActions": [],
+    "$leavingCustomActions": [],
+    "$inputSuggestions": ["Sistemas de Informação", "Eng. Controle Automação", "Administração", "Logística", "Processos Gerenciais"],
+    "$defaultOutput": { "stateId": "fallback", "$invalid": false },
+    "$localCustomActions": [],
+    "isAiGenerated": false,
+    "$tags": [],
+    "id": "9e743f67-fa48-425c-960c-fa7ea6b9c70d",
+    "root": false,
+    "$title": "Cursos",
+    "$position": { "top": "383px", "left": "880px" },
+    "$invalidContentActions": false,
+    "$invalidOutputs": false,
+    "$invalidCustomActions": false,
+    "$invalid": false
+  },
+  {
+    "$contentActions": [
+      {
+        "action": {
+          "$id": "3f8a1d6c-2b4e-4f9a-8c7d-1e5b9a0c3d21",
+          "$typeOfContent": "chat-state",
+          "$description": "",
+          "$inputSchema": { "type": "object", "properties": {}, "required": [] },
+          "type": "SendMessage",
+          "settings": {
+            "id": "7c2e9b4a-1d3f-4e8a-b6c5-9f0a2d4e6b83",
+            "type": "application/vnd.lime.chatstate+json",
+            "content": { "state": "composing", "interval": 1000 }
+          },
+          "$cardContent": {
+            "document": {
+              "id": "7c2e9b4a-1d3f-4e8a-b6c5-9f0a2d4e6b83",
+              "type": "application/vnd.lime.chatstate+json",
+              "content": { "state": "composing", "interval": 1000 }
+            },
+            "editable": true,
+            "deletable": true,
+            "position": "left"
+          }
+        },
+        "$invalid": false
+      },
+      {
+        "action": {
+          "$id": "8e4d2a7b-6c1f-4b3e-9a5d-0f7c3b8e1a64",
+          "$typeOfContent": "select",
+          "$description": "",
+          "$inputSchema": { "type": "object", "properties": {}, "required": [] },
+          "type": "SendMessage",
+          "settings": {
+            "id": "2a9c7e5b-4f1d-4c8a-a3e6-5b0d8f2c7e19",
+            "type": "application/vnd.lime.select+json",
+            "content": {
+              "text": "E em que ano você entrou no curso? 📅",
+              "options": [
+                { "text": "2026", "previewText": "2026", "type": "text/plain", "value": "2026" },
+                { "text": "2025", "previewText": "2025", "type": "text/plain", "value": "2025" },
+                { "text": "2024", "previewText": "2024", "type": "text/plain", "value": "2024" },
+                { "text": "2023", "previewText": "2023", "type": "text/plain", "value": "2023" },
+                { "text": "2022", "previewText": "2022", "type": "text/plain", "value": "2022" },
+                { "text": "2021", "previewText": "2021", "type": "text/plain", "value": "2021" },
+                { "text": "2020", "previewText": "2020", "type": "text/plain", "value": "2020" },
+                { "text": "2019", "previewText": "2019", "type": "text/plain", "value": "2019" },
+                { "text": "2018 ou antes", "previewText": "2018 ou antes", "type": "text/plain", "value": "2018" },
+                { "text": "Ainda não sou aluno", "previewText": "Ainda não sou aluno", "type": "text/plain", "value": "TODOS" }
+              ],
+              "limitMenu": false
+            },
+            "metadata": {}
+          },
+          "$cardContent": {
+            "document": {
+              "id": "2a9c7e5b-4f1d-4c8a-a3e6-5b0d8f2c7e19",
+              "type": "application/vnd.lime.select+json",
+              "content": {
+                "text": "E em que ano você entrou no curso? 📅",
+                "options": [
+                  { "text": "2026", "previewText": "2026", "type": "text/plain", "value": "2026" },
+                  { "text": "2025", "previewText": "2025", "type": "text/plain", "value": "2025" },
+                  { "text": "2024", "previewText": "2024", "type": "text/plain", "value": "2024" },
+                  { "text": "2023", "previewText": "2023", "type": "text/plain", "value": "2023" },
+                  { "text": "2022", "previewText": "2022", "type": "text/plain", "value": "2022" },
+                  { "text": "2021", "previewText": "2021", "type": "text/plain", "value": "2021" },
+                  { "text": "2020", "previewText": "2020", "type": "text/plain", "value": "2020" },
+                  { "text": "2019", "previewText": "2019", "type": "text/plain", "value": "2019" },
+                  { "text": "2018 ou antes", "previewText": "2018 ou antes", "type": "text/plain", "value": "2018" },
+                  { "text": "Ainda não sou aluno", "previewText": "Ainda não sou aluno", "type": "text/plain", "value": "TODOS" }
+                ],
+                "limitMenu": false
+              }
+            },
+            "editable": true,
+            "deletable": true,
+            "position": "left"
+          }
+        },
+        "$invalid": false
+      },
+      {
+        "input": {
+          "bypass": false,
+          "$cardContent": {
+            "document": {
+              "id": "9d3b6f1a-8e2c-4a7d-b5f0-3c1e7a9b2d48",
+              "type": "text/plain",
+              "textContent": "Entrada do usuário",
+              "content": "ano"
+            },
+            "editable": false,
+            "deletable": true,
+            "position": "right",
+            "editing": false
+          },
+          "$invalid": false,
+          "variable": "ano"
+        },
+        "$invalid": false
+      }
+    ],
+    "$conditionOutputs": [
+      {
+        "stateId": "fallback",
+        "typeOfStateId": "state",
+        "$contentId": "8e4d2a7b-6c1f-4b3e-9a5d-0f7c3b8e1a64",
+        "$id": "c4e7a2b9-5d1f-4e3a-8b6c-7f0d2a9e5c31",
+        "conditions": [
+          {
+            "source": "input",
+            "comparison": "equals",
+            "values": [
+              "2026", "2025", "2024", "2023", "2022", "2021", "2020", "2019",
+              "2018", "2018 ou antes",
+              "TODOS", "Ainda não sou aluno"
+            ]
+          }
+        ],
+        "$invalid": false
+      }
+    ],
+    "$enteringCustomActions": [],
+    "$leavingCustomActions": [],
+    "$inputSuggestions": ["2026", "2025", "2024", "2023", "2022", "2021", "2020", "2019", "2018 ou antes", "Ainda não sou aluno"],
+    "$defaultOutput": { "stateId": "fallback", "$invalid": false },
+    "$localCustomActions": [],
+    "isAiGenerated": false,
+    "$tags": [],
+    "id": "5b1f3c2a-7d4e-4a8b-9c61-2e0f8a9d4b17",
+    "root": false,
+    "$title": "Ano de ingresso",
+    "$position": { "top": "383px", "left": "1200px" },
+    "$invalidContentActions": false,
+    "$invalidOutputs": false,
+    "$invalidCustomActions": false,
+    "$invalid": false
+  }
+]

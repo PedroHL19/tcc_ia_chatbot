@@ -1,3 +1,10 @@
+---
+curso: BSI
+ano_min: 2023
+ano_max: 9999
+tipo: normativo_curso
+---
+
 # Matriz Curricular Nova — Bacharelado em Sistemas de Informação (BSI) — IFMG Campus Sabará
 
 Este documento resume a matriz curricular do Projeto Pedagógico de Curso (PPC) novo do curso de Bacharelado em Sistemas de Informação do IFMG Campus Sabará.

@@ -33,54 +33,65 @@ export async function ensureCollection() {
     console.log(`Coleção '${COLLECTION_NAME}' criada com sucesso.`);
   }
 
-  // Cria índices de payload para curso e ano para acelerar filtros
+  // Cria índices de payload para acelerar filtros
   try {
     await qdrant.createPayloadIndex(COLLECTION_NAME, {
       field_name: "curso",
       field_schema: "keyword"
     });
+    // ano_min e ano_max são inteiros — usados no filtro de range
     await qdrant.createPayloadIndex(COLLECTION_NAME, {
-      field_name: "ano",
-      field_schema: "keyword"
+      field_name: "ano_min",
+      field_schema: "integer"
     });
-  } catch (err) {
-    // Índices podem já existir ou coleção recém-criada
+    await qdrant.createPayloadIndex(COLLECTION_NAME, {
+      field_name: "ano_max",
+      field_schema: "integer"
+    });
+  } catch (_) {
+    // Índices já existem ou coleção recém-criada — ignorar
   }
 }
 
 /**
- * Constrói filtro Qdrant compatível para Curso e Ano
- * Permite buscar documentos do curso específico OU documentos gerais/comuns (TODOS).
- * Se nenhum filtro for passado, retorna null (busca tudo).
- * @param {string} [curso] 
- * @param {string|number} [ano] 
+ * Constrói filtro Qdrant para Curso e Ano de ingresso.
+ *
+ * Lógica:
+ *   - curso: aceita o curso exato OU "TODOS" (documentos gerais).
+ *   - ano  : o ponto é retornado se anoAluno >= ano_min  E  anoAluno <= ano_max.
+ *            Documentos gerais têm ano_min=0 e ano_max=9999 → sempre incluídos.
+ *
+ * @param {string} [curso]  - ex.: "BSI", "LOGISTICA", "TODOS"
+ * @param {string|number} [ano] - ano de ingresso, ex.: "2023" ou 2023.
+ *                                Passar "TODOS" ou omitir para não filtrar por ano.
  * @returns {object|null}
  */
 export function buildCourseYearFilter(curso, ano) {
   const must = [];
 
+  // ── Filtro de curso ───────────────────────────────────────────────────────
   if (curso && String(curso).trim().length > 0) {
-    const cursoFormatado = String(curso).trim().toUpperCase();
-    must.push({
-      should: [
-        { key: "curso", match: { value: cursoFormatado } },
-        { key: "curso", match: { value: "TODOS" } },
-        { key: "curso", match: { value: "GERAL" } },
-        { is_empty: { key: "curso" } }
-      ]
-    });
+    const cursoFmt = String(curso).trim().toUpperCase();
+    if (cursoFmt !== "TODOS") {
+      must.push({
+        should: [
+          { key: "curso", match: { value: cursoFmt } },
+          { key: "curso", match: { value: "TODOS" } },
+          { is_empty: { key: "curso" } }
+        ]
+      });
+    }
+    // Se cursoFmt === "TODOS" não adicionamos filtro → retorna tudo.
   }
 
-  if (ano && String(ano).trim().length > 0) {
-    const anoFormatado = String(ano).trim();
-    must.push({
-      should: [
-        { key: "ano", match: { value: anoFormatado } },
-        { key: "ano", match: { value: "TODOS" } },
-        { key: "ano", match: { value: "GERAL" } },
-        { is_empty: { key: "ano" } }
-      ]
-    });
+  // ── Filtro de ano de ingresso (range numérico) ────────────────────────────
+  if (ano && String(ano).trim() !== "" && String(ano).trim().toUpperCase() !== "TODOS") {
+    const anoNum = parseInt(String(ano).trim(), 10);
+    if (!isNaN(anoNum)) {
+      // O ponto deve cobrir este ano: ano_min <= anoAluno <= ano_max
+      must.push({ key: "ano_min", range: { lte: anoNum } });
+      must.push({ key: "ano_max", range: { gte: anoNum } });
+    }
   }
 
   if (must.length === 0) return null;

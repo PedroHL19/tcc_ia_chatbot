@@ -98,17 +98,23 @@ app.post("/agente", authMiddleware, async (req, res) => {
     const relevantResults = searchResults.filter((r) => r.score >= MIN_RELEVANCE_SCORE);
 
     const contextChunks = relevantResults.map((result) => ({
-      text: result.payload?.text || "",
-      source: result.payload?.source || "Oficial",
-      curso: result.payload?.curso || "TODOS",
-      ano: result.payload?.ano || "TODOS",
-      score: result.score
+      text:       result.payload?.text       || "",
+      source:     result.payload?.source     || "Oficial",
+      curso:      result.payload?.curso      || "TODOS",
+      tipo:       result.payload?.tipo       || "geral",
+      descricao:  result.payload?.descricao  || "",
+      ano_min:    result.payload?.ano_min    ?? 0,
+      ano_max:    result.payload?.ano_max    ?? 9999,
+      score:      result.score
     }));
 
     console.log(`Recuperados ${searchResults.length} trechos do Qdrant (${contextChunks.length} acima do score mínimo de ${(MIN_RELEVANCE_SCORE * 100)}%):`);
     searchResults.forEach((c, idx) => {
       const status = c.score >= MIN_RELEVANCE_SCORE ? "[USADO]" : "[IGNORADO - SCORE BAIXO]";
-      console.log(`  [Trecho ${idx + 1}] Score: ${(c.score * 100).toFixed(1)}% | ${status} | Fonte: ${c.payload?.source || "Oficial"} | Curso: ${c.payload?.curso || "TODOS"} | Ano: ${c.payload?.ano || "TODOS"}`);
+      const anoLabel = c.payload?.tipo === "ppc"
+        ? `${c.payload?.ano_min ?? "?"}–${c.payload?.ano_max === 9999 ? "atual" : c.payload?.ano_max ?? "?"}`
+        : "GERAL";
+      console.log(`  [Trecho ${idx + 1}] Score: ${(c.score * 100).toFixed(1)}% | ${status} | Curso: ${c.payload?.curso || "TODOS"} | Anos: ${anoLabel} | ${c.payload?.source || "?"}`);
     });
 
     // 3. Monta o prompt contextualizado incluindo perfil do aluno

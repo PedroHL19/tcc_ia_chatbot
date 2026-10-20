@@ -84,6 +84,24 @@ app.post("/agente", authMiddleware, async (req, res) => {
 
     console.log(`\n[${new Date().toLocaleTimeString()}] Nova pergunta recebida: "${pergunta}" ${perfilLog ? `(${perfilLog})` : ""}`);
 
+    // Defesa programática contra vazamento de prompt / injeção de prompt
+    const isPromptLeakAttempt =
+      /(?:repita|mostre|veja|quais\s+s[aã]o|liste|exiba|print|diga|revele)\s+(?:todas?\s+)?(?:as?\s+)?(?:suas?\s+)?(?:instru[cç][oõ]es|regras|diretrizes|prompts?)(?:\s+(?:do\s+sistema|confidenciais|iniciais|anteriores))?|system\s+prompt|prompt\s+injection|ignore\s+(?:todas?\s+)?(?:as?\s+)?(?:suas?\s+)?(?:regras|instru[cç][oõ]es)/i.test(pergunta);
+
+    if (isPromptLeakAttempt) {
+      console.log(`[Segurança] Bloqueada tentativa de vazamento de prompt: "${pergunta}"`);
+      return res.json({
+        sucesso: true,
+        encontrou_resposta: false,
+        fora_de_escopo: true,
+        resposta: "Sou o assistente virtual acadêmico do IFMG Campus Sabará e minhas instruções internas são confidenciais. Estou à disposição para ajudar com dúvidas sobre Estágios, CRA (matrícula/dispensas), Biblioteca ou PPCs dos cursos do campus. Como posso te ajudar hoje?",
+        perfil: {
+          curso,
+          ano
+        }
+      });
+    }
+
     console.time("[Tempo] 1. Embedding");
     // 1. Gera embedding da pergunta com o BGE-M3 (1024 dimensões)
     const queryVector = await generateEmbedding(pergunta.trim());
@@ -146,6 +164,18 @@ app.post("/agente", authMiddleware, async (req, res) => {
       .replace(/^\s*\*{0,2}[^\n\r]*resposta[^\n\r]*\*{0,2}\s*\r?\n+/i, "")
       .trim();
 
+    // Remove citações a documentos internos como "De acordo com o/a FAQ XX", "FAQ XX", etc.
+    resposta = resposta
+      .replace(/\b(?:de\s+acordo\s+com|conforme|segundo|no|na)\s+(?:o|a|os|as)?\s*faq\s*\d+[,:\s—–-]*/gi, "")
+      .replace(/\bfaq\s*\d+[,:\s—–-]*/gi, "")
+      .trim();
+
+    // Remove repetição robótica de perfil no início da resposta (ex.: "Você está cursando o BSI no ano de ingresso 2023...")
+    resposta = resposta
+      .replace(/^\s*voc[êe]\s+est[áa]\s+cursando\s+[^.]*?\bno\s+ano\s+de\s+ingresso\s+(?:de\s+)?\d{4}\.?\s*/i, "")
+      .replace(/^\s*voc[êe]\s+est[áa]\s+cursando\s+o\s+bsi\s+[^.]*?\.\s*/i, "")
+      .trim();
+
     // Se o usuário fez uma pergunta real (não apenas saudação), remove saudações e apresentações repetitivas
     const isApenasSaudacao = /^(oi|ol[aá]|bom dia|boa tarde|boa noite|e ai|e a[ií]|opa)[\s!.,?]*$/i.test(pergunta.trim());
     if (!isApenasSaudacao) {
@@ -153,6 +183,11 @@ app.post("/agente", authMiddleware, async (req, res) => {
         .replace(/^\s*(?:ol[aá]|bom dia|boa tarde|boa noite)!?\s*(?:Sou\s+o\s+assistente\s+virtual\s+acadêmico\s+(?:do\s+IFMG\s+Campus\s+Sabará|do\s+IFMG)?\.?)?\s*/i, "")
         .replace(/^\s*Sou\s+o\s+assistente\s+virtual\s+acadêmico\s+(?:do\s+IFMG\s+Campus\s+Sabará|do\s+IFMG)?\.?\s*/i, "")
         .trim();
+    }
+
+    // Garante que a primeira letra seja maiúscula após qualquer remoção
+    if (resposta.length > 0) {
+      resposta = resposta.charAt(0).toUpperCase() + resposta.slice(1);
     }
 
     // Identifica se a pergunta foi fora de escopo (score baixo ou recusa padrão)

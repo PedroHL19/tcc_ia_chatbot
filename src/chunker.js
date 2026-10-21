@@ -1,6 +1,6 @@
 /**
  * Utilitário de divisão de texto em Chunks para RAG
- * Regra: 500 tokens por chunk com 100 tokens de overlap.
+ * Padrão: 500 tokens por chunk com 100 tokens de overlap (a ingestão usa 500/80).
  * 
  * Em modelos de NLP/LLM, 1 token equivale em média a ~4 caracteres (ou ~0.75 palavras).
  */

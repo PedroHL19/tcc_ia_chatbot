@@ -1,10 +1,19 @@
 import express from "express";
 import dotenv from "dotenv";
+import crypto from "crypto";
 import { SYSTEM_PROMPT, buildUserPromptWithContext } from "./prompt.js";
 import { generateEmbedding, generateChat, LLM_MODEL, EMBEDDING_MODEL } from "./ollamaClient.js";
-import { searchSimilar, buildCourseYearFilter, COLLECTION_NAME } from "./qdrantClient.js";
+import { searchSimilar, buildCourseYearFilter, normalizeCurso, COLLECTION_NAME } from "./qdrantClient.js";
 
 dotenv.config();
+
+// A chave é obrigatória: sem ela o servidor não sobe (evita rodar com uma chave padrão conhecida)
+const RAW_API_KEY = process.env.API_KEY || process.env.API_TOKEN;
+if (!RAW_API_KEY || RAW_API_KEY.trim().length === 0) {
+  console.error("Erro fatal: defina API_KEY no arquivo .env antes de iniciar o servidor.");
+  process.exit(1);
+}
+const EXPECTED_KEY = Buffer.from(RAW_API_KEY.replace(/^(Key|Bearer)\s+/i, "").trim());
 
 const app = express();
 app.use(express.json());
@@ -12,7 +21,6 @@ app.use(express.json());
 // Middleware de autenticação tolerante a prefixos (Key/Bearer)
 const authMiddleware = (req, res, next) => {
   const authHeader = req.headers.authorization;
-  const rawExpected = process.env.API_KEY || process.env.API_TOKEN || "MEU_TOKEN_SECRETO";
 
   if (!authHeader) {
     return res.status(401).json({ 
@@ -22,10 +30,10 @@ const authMiddleware = (req, res, next) => {
   }
 
   // Normaliza removendo prefixos 'Key ' ou 'Bearer ' para comparar o valor real da chave
-  const cleanReceived = authHeader.replace(/^(Key|Bearer)\s+/i, "").trim();
-  const cleanExpected = rawExpected.replace(/^(Key|Bearer)\s+/i, "").trim();
+  // Comparação em tempo constante para não vazar a chave por diferença de tempo de resposta
+  const received = Buffer.from(authHeader.replace(/^(Key|Bearer)\s+/i, "").trim());
 
-  if (cleanReceived !== cleanExpected) {
+  if (received.length !== EXPECTED_KEY.length || !crypto.timingSafeEqual(received, EXPECTED_KEY)) {
     return res.status(401).json({ 
       sucesso: false, 
       erro: "Acesso negado. Chave de autorização inválida." 
@@ -77,6 +85,9 @@ app.post("/agente", authMiddleware, async (req, res) => {
       ano = temp;
     }
 
+    // Converte variações enviadas pelo Blip ("Sistemas de Informação", "logística"...) para o código usado nos metadados
+    curso = normalizeCurso(curso);
+
     const perfilLog = [
       curso ? `Curso: ${curso}` : null,
       ano ? `Ano: ${ano}` : null
@@ -84,9 +95,15 @@ app.post("/agente", authMiddleware, async (req, res) => {
 
     console.log(`\n[${new Date().toLocaleTimeString()}] Nova pergunta recebida: "${pergunta}" ${perfilLog ? `(${perfilLog})` : ""}`);
 
-    // Defesa programática contra vazamento de prompt / injeção de prompt
-    const isPromptLeakAttempt =
-      /(?:repita|mostre|veja|quais\s+s[aã]o|liste|exiba|print|diga|revele)\s+(?:todas?\s+)?(?:as?\s+)?(?:suas?\s+)?(?:instru[cç][oõ]es|regras|diretrizes|prompts?)(?:\s+(?:do\s+sistema|confidenciais|iniciais|anteriores))?|system\s+prompt|prompt\s+injection|ignore\s+(?:todas?\s+)?(?:as?\s+)?(?:suas?\s+)?(?:regras|instru[cç][oõ]es)/i.test(pergunta);
+    // Defesa programática contra vazamento de prompt / injeção de prompt.
+    // Só bloqueia quando a pergunta se refere às instruções do PRÓPRIO bot ("suas regras", "do sistema"),
+    // para não barrar dúvidas legítimas como "quais são as regras do estágio?".
+    const isPromptLeakAttempt = [
+      /(?:repita|mostre|me\s+mostre|veja|quais\s+s[aã]o|liste|exiba|imprima|print|diga|revele|resuma)\s+(?:todas?\s+)?(?:as?\s+|os?\s+)?(?:suas?|tuas?|seus?|teus?)\s+(?:instru[cç][oõ]es|regras|diretrizes|prompts?|configura[cç][oõ]es)/i,
+      /(?:instru[cç][oõ]es|regras|diretrizes|prompt|mensagem|texto)\s+(?:do\s+sistema|confidenciais|internas|iniciais|ocultas)/i,
+      /system\s+prompt|prompt\s+injection|jailbreak|modo\s+desenvolvedor|developer\s+mode/i,
+      /(?:ignore|desconsidere|esque[cç]a)\s+(?:tudo|todas?\s+(?:as\s+)?(?:suas\s+)?(?:regras|instru[cç][oõ]es)|(?:as\s+)?(?:suas\s+)?(?:regras|instru[cç][oõ]es)\s+anteriores|o\s+que\s+(?:te\s+)?disseram)/i
+    ].some((re) => re.test(pergunta));
 
     if (isPromptLeakAttempt) {
       console.log(`[Segurança] Bloqueada tentativa de vazamento de prompt: "${pergunta}"`);
@@ -111,14 +128,10 @@ app.post("/agente", authMiddleware, async (req, res) => {
     const filter = buildCourseYearFilter(curso, ano);
 
     console.time("[Tempo] 2. Qdrant Search");
-    // 2. Busca os Top-3 chunks mais relevantes no Qdrant
-    let searchResults = await searchSimilar(queryVector, 3, filter);
-
-    // Fallback inteligente: se o filtro estrito não retornou nada, busca sem restrição
-    if (searchResults.length === 0 && filter) {
-      console.log("Aviso: Nenhum documento retornado com filtro restrito. Realizando busca ampla...");
-      searchResults = await searchSimilar(queryVector, 3);
-    }
+    // 2. Busca os Top-3 chunks mais relevantes no Qdrant.
+    // Sem fallback para busca sem filtro: o filtro já inclui os documentos gerais (TODOS / 0–9999),
+    // e buscar sem ele traria regras de outros cursos ou matrizes de outro ano de ingresso.
+    const searchResults = await searchSimilar(queryVector, 3, filter);
     console.timeEnd("[Tempo] 2. Qdrant Search");
 
     // Filtra apenas trechos com relevância mínima (48%) para evitar alucinações com perguntas fora do escopo ou nomes isolados
@@ -158,10 +171,11 @@ app.post("/agente", authMiddleware, async (req, res) => {
     let resposta = await generateChat(messages);
     console.timeEnd("[Tempo] 3. LLM Generate");
 
-    // Higienização robusta: remove qualquer prefixo residual de prompt ou cabeçalho de resposta
+    // Higienização: remove cabeçalhos residuais como "**Resposta:**" ou "Resposta oficial preparada para IA:".
+    // Exige o separador (":" ou travessão) para não apagar frases reais como "A resposta do pedido sai em 5 dias".
     resposta = (resposta || "").trim()
-      .replace(/^\s*(?:#+\s*)?\*{0,2}(?:A\s+)?resposta[^\n\r:]*[:\-–—]?\*{0,2}\s*(?:é\s*:?)?\s*/i, "")
-      .replace(/^\s*\*{0,2}[^\n\r]*resposta[^\n\r]*\*{0,2}\s*\r?\n+/i, "")
+      .replace(/^\s*(?:#+\s*)?\*{0,2}(?:A\s+)?resposta[^\n\r:]{0,50}(?:[:–—]|\s-\s)\*{0,2}\s*/i, "")
+      .replace(/^\s*(?:#+\s*)?\*{0,2}[^\n\r]{0,40}resposta[^\n\r]{0,40}:\*{0,2}\s*\r?\n+/i, "")
       .trim();
 
     // Remove citações a documentos internos como "De acordo com o/a FAQ XX", "FAQ XX", etc.
@@ -191,9 +205,11 @@ app.post("/agente", authMiddleware, async (req, res) => {
     }
 
     // Identifica se a pergunta foi fora de escopo (score baixo ou recusa padrão)
+    // A comparação ignora acentos e maiúsculas para tolerar pequenas variações do LLM na frase de recusa
+    const respostaNorm = resposta.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
     const isForaDeEscopo =
       contextChunks.length === 0 ||
-      resposta.includes("Não consegui identificar uma dúvida relacionada");
+      /nao\s+consegui\s+identificar\s+uma\s+duvida/.test(respostaNorm);
 
     const encontrouResposta = !isForaDeEscopo;
 
@@ -212,8 +228,7 @@ app.post("/agente", authMiddleware, async (req, res) => {
 
     return res.status(500).json({
       sucesso: false,
-      erro: "Erro interno ao processar a consulta.",
-      detalhes: error.message
+      erro: "Erro interno ao processar a consulta."
     });
   }
 });

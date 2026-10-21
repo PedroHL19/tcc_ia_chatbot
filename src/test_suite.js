@@ -20,7 +20,11 @@ import { saveBenchmarkRun, printComparisonSummary } from "./benchmark.js";
 dotenv.config();
 
 const BASE_URL = process.env.TEST_URL || "http://localhost:3000";
-const rawKey = process.env.API_KEY || process.env.API_TOKEN || "REMOVIDO";
+const rawKey = process.env.API_KEY || process.env.API_TOKEN;
+if (!rawKey) {
+  console.error("Defina API_KEY no arquivo .env para rodar a suíte de testes.");
+  process.exit(1);
+}
 const TOKEN = rawKey.replace(/^(Key|Bearer)\s+/i, "").trim();
 
 export const GOLDEN_DATASET = [
@@ -347,7 +351,7 @@ async function runTestSuite() {
   console.log("📊 RESULTADO CONSOLIDADO DO BENCHMARK");
   console.log("================================================================================");
   console.log(`• Modelo Testado          : ${activeModel}`);
-  console.log(`• Respostas HTTP 200 OK   : ${sucessosHttp}/${GOLDEN_DATASET.length} (100%)`);
+  console.log(`• Respostas HTTP 200 OK   : ${sucessosHttp}/${GOLDEN_DATASET.length} (${Math.round((sucessosHttp / GOLDEN_DATASET.length) * 100)}%)`);
   console.log(`• Assertividade Factual   : ${acertos}/${GOLDEN_DATASET.length} (${taxaAssertividade}%)`);
   console.log(`• Latência Média          : ${mediaLatencia} segundos`);
   console.log(`• Latência Mínima / Máxima: ${minLatencia}s / ${maxLatencia}s`);

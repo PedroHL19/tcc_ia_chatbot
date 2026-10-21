@@ -64,7 +64,15 @@ export function buildUserPromptWithContext(contextChunks, userQuestion, studentP
       .map((chunk) => {
         const metadataLabels = [];
         if (chunk.curso && chunk.curso !== "TODOS") metadataLabels.push(`Curso: ${chunk.curso}`);
-        if (chunk.ano && chunk.ano !== "TODOS") metadataLabels.push(`Ano/Matriz: ${chunk.ano}`);
+        // Documentos gerais têm ano_min=0 e ano_max=9999; só os específicos recebem a tag de matriz
+        const anoMin = chunk.ano_min ?? 0;
+        const anoMax = chunk.ano_max ?? 9999;
+        if (anoMin !== 0 || anoMax !== 9999) {
+          const faixa = anoMax === 9999
+            ? `ingressantes a partir de ${anoMin}`
+            : anoMin === 0 ? `ingressantes até ${anoMax}` : `ingressantes de ${anoMin} a ${anoMax}`;
+          metadataLabels.push(`Matriz: ${faixa}`);
+        }
         const tag = metadataLabels.length > 0 ? ` [${metadataLabels.join(" | ")}]` : "";
         return `${chunk.text.trim()}${tag}`;
       })

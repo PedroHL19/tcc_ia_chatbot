@@ -54,6 +54,32 @@ export async function ensureCollection() {
 }
 
 /**
+ * Converte o curso informado pelo usuário/Blip para o código usado nos metadados.
+ * Ex.: "Sistemas de Informação" → "BSI", "logística" → "LOGISTICA".
+ * Valores não reconhecidos são devolvidos em maiúsculas, sem alteração.
+ * @param {string|null} curso
+ * @returns {string|null}
+ */
+export function normalizeCurso(curso) {
+  if (!curso || String(curso).trim().length === 0) return null;
+
+  const norm = String(curso)
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "");
+
+  if (/\bbsi\b|sistemas\s+de\s+informacao/.test(norm)) return "BSI";
+  if (/logistica|\blog\b/.test(norm)) return "LOGISTICA";
+  if (/processos\s+gerenciais|\btpg\b|^processos_gerenciais$/.test(norm)) return "PROCESSOS_GERENCIAIS";
+  if (/automacao|^eng_automacao$|\beca\b/.test(norm)) return "ENG_AUTOMACAO";
+  if (/administracao|\badm\b/.test(norm)) return "ADMINISTRACAO";
+  if (norm === "todos") return "TODOS";
+
+  return String(curso).trim().toUpperCase();
+}
+
+/**
  * Constrói filtro Qdrant para Curso e Ano de ingresso.
  *
  * Lógica:
@@ -71,7 +97,7 @@ export function buildCourseYearFilter(curso, ano) {
 
   // ── Filtro de curso ───────────────────────────────────────────────────────
   if (curso && String(curso).trim().length > 0) {
-    const cursoFmt = String(curso).trim().toUpperCase();
+    const cursoFmt = normalizeCurso(curso);
     if (cursoFmt !== "TODOS") {
       must.push({
         should: [

@@ -105,9 +105,6 @@ async function runIngestion() {
 
   console.log(`Encontrados ${files.length} documentos Markdown curados para indexação.\n`);
 
-  // Recria a coleção garantindo limpeza de resíduos anteriores e índices numéricos
-  await recreateCollection();
-
   const allPoints = [];
 
   for (const filePath of files) {
@@ -159,6 +156,10 @@ async function runIngestion() {
     console.log("Nenhum chunk foi gerado.");
     return;
   }
+
+  // Só apaga a coleção antiga depois que todas as embeddings foram geradas com sucesso,
+  // para o bot não ficar sem base caso a ingestão falhe no meio
+  await recreateCollection();
 
   console.log(`Enviando ${allPoints.length} pontos para o Qdrant em lotes...`);
   const BATCH_SIZE = 50;

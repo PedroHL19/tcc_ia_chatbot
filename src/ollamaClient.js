@@ -24,7 +24,7 @@ export async function generateEmbedding(text) {
 }
 
 /**
- * Envia mensagens para o modelo de chat (Llama 3.2) e retorna o texto da resposta
+ * Envia mensagens para o modelo de chat (LLM_MODEL, padrão llama3.1:8b) e retorna o texto da resposta
  * @param {Array<{role: string, content: string}>} messages 
  * @returns {Promise<string>}
  */
@@ -36,7 +36,7 @@ export async function generateChat(messages) {
     keep_alive: "1h",
     options: {
       temperature: 0.2, // Respostas determinísticas e fundamentadas
-      num_predict: 350, // Limite para respostas concisas e completas
+      num_predict: 512, // Folga para listas longas (ex.: matriz curricular) sem cortar a resposta
       num_ctx: 4096     // Contexto expandido para comportar todos os chunks sem truncar instruções
     }
   });

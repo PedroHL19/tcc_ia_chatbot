@@ -6,3 +6,5 @@ coverage/
 bin/
 storage/
 snapshots/
+# Textos do TCC (artigo, figuras) — mantidos só localmente
+tcc/

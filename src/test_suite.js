@@ -133,8 +133,8 @@ export const GOLDEN_DATASET = [
     pergunta: "O estágio é obrigatório para formar em Sistemas de Informação?",
     curso: "BSI",
     ano: "2024",
-    keywordsObrigatorias: ["não", "obrigatório"],
-    descricaoEsperada: "Estágio não é obrigatório em BSI"
+    keywordsObrigatorias: ["obrigatório", "120"],
+    descricaoEsperada: "Estágio obrigatório de 120 horas (matriz nova, ingressantes a partir de 2023)"
   },
 
   // ── 6. CALENDÁRIO ACADÊMICO OFICIAL 2026 ────────────────────────────────

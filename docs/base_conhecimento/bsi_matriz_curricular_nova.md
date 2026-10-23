@@ -11,6 +11,9 @@ Este documento resume a matriz curricular do Projeto Pedagógico de Curso (PPC) 
 
 > **Público-alvo da matriz:** Esta matriz deve ser considerada para os alunos que ingressaram no curso de BSI a partir do ano de 2023.
 > **Carga horária total do curso:** 3.000 horas.
+> **Estágio Supervisionado:** **Obrigatório**, com **120 horas**, podendo ser realizado em qualquer período do curso, desde que o discente esteja com matrícula e frequência regulares.
+> **Atividades Complementares:** 60 horas.
+> **Trabalho de Conclusão de Curso (TCC):** 60 horas.
 
 ---
 

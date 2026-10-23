@@ -21,7 +21,7 @@ Este documento contém as regras curriculares do curso de Bacharelado em Sistema
 ---
 
 ## 2. Componentes Curriculares e Cargas Horárias
-- **Atividades Complementares:** Os discentes ingressantes até o ano de 2022 devem cumprir o total de **100 (cem) horas** de Atividades Complementares (no PPC novo para ingressantes a partir de 2023 essa carga foi reduzida para 60h devido à extensão).
+- **Atividades Complementares:** Os discentes ingressantes até o ano de 2022 devem cumprir o total de **100 (cem) horas** de Atividades Complementares.
 - **Estágio Supervisionado:** **Não é obrigatório**. O aluno pode realizar estágio não obrigatório em qualquer período, aproveitando até o limite permitido como atividades complementares.
 - **Trabalho de Conclusão de Curso (TCC):** Obrigatório, dividido em:
   - TCC 1 (Proposta e fundamentação)

@@ -38,11 +38,9 @@ Este documento contém todas as datas oficiais, prazos acadêmicos, recessos, fe
 - **09/05:** Dia letivo sem ministração de aulas.
 - **13/05:** **Resultado final** das solicitações de AE e ACEA do 1º semestre.
 - **16/05:** Dia letivo EaD (horário de sexta-feira).
-- **20/05:** Formação Continuada Educação em Diálogo.
 - **22/05:** Resultado preliminar das Atividades Complementares.
 - **23/05:** Dia letivo sem ministração de aulas.
 - **29/05:** **Resultado final** das Atividades Complementares do 1º semestre.
-- **30/05:** Dia letivo EaD (horário de quarta-feira).
 
 ### Junho / 2026
 - **04/06:** Feriado Nacional de Corpus Christi.
@@ -73,13 +71,14 @@ Este documento contém todas as datas oficiais, prazos acadêmicos, recessos, fe
 - **04/08:** Limite para solicitação de Colação de Grau em solenidade do 2º semestre.
 - **15/08:** Feriado Municipal (Nossa Senhora da Assunção).
 - **18 a 20/08:** Solicitação de **AE e ACEA** para ingressantes do 2º semestre.
-- **19/08:** Formação Continuada Educação em Diálogo.
+- **25 e 26/08:** Dias letivos sem ministração de aulas (Semana Escolar de Combate à Violência contra a Mulher).
 - **25 a 28/08:** Período de **Trancamento de Matrícula** do 2º semestre.
+- **28/08:** Colação de Grau em solenidade do 2º semestre.
 - **29/08:** Dia letivo sem ministração de aulas.
 
 ### Setembro / 2026
+- **05/09:** Dia letivo sem ministração de aulas.
 - **07/09:** Feriado Nacional (Independência do Brasil).
-- **11/09:** Colação de Grau em solenidade do 2º semestre.
 - **12/09:** Dia letivo EaD (horário de segunda-feira).
 - **19/09:** Dia letivo sem ministração de aulas.
 - **25/09:** Resultado final de AE e ACEA para ingressantes do 2º semestre.
@@ -93,28 +92,23 @@ Este documento contém todas as datas oficiais, prazos acadêmicos, recessos, fe
 - **12/10:** Feriado Nacional (Nossa Senhora Aparecida).
 - **13/10:** Feriado do Dia do Servidor Público.
 - **14 a 16/10:** Recesso escolar.
-- **23/10:** Limite para solicitação de Colação de Grau em gabinete do 2º semestre.
 - **24/10:** Dia letivo sem ministração de aulas.
-- **31/10:** Dia letivo EaD (horário de quinta-feira).
 
 ### Novembro / 2026
 - **02/11:** Feriado Nacional de Finados.
 - **07/11:** Dia letivo EaD (horário de sexta-feira).
-- **12 a 14/11:** Semana de Ciência e Tecnologia (dias letivos sem ministração de aulas).
+- **14/11:** Dia letivo sem ministração de aulas.
 - **15/11:** Feriado Nacional (Proclamação da República).
 - **16/11:** **Resultado preliminar** das Atividades Complementares.
-- **18/11:** Formação Continuada Educação em Diálogo.
 - **20/11:** Feriado Nacional (Dia de Zumbi dos Palmares).
-- **21/11:** Dia letivo EaD (horário de sexta-feira).
 - **23/11:** **Resultado final** das Atividades Complementares do 2º semestre.
-- **27/11:** Colação de Grau em Gabinete.
+- **26 a 28/11:** Semana de Ciência e Tecnologia (dias letivos sem ministração de aulas).
 
 ### Dezembro / 2026
 - **05/12:** Dia letivo EaD (horário de segunda-feira).
 - **07/12:** Recesso escolar.
 - **08/12:** Feriado Municipal (Nossa Senhora da Imaculada Conceição).
 - **11/12:** **Término do 2º semestre letivo**.
-- **11/12:** Prazo final para entrega de etapa no SUAP pelos docentes.
 - **14 e 15/12:** Atendimento para Exame Final (sem ministração de aulas).
 - **16 e 17/12:** **Exames finais** do 2º semestre.
 - **18 e 19/12:** Dias letivos sem ministração de aulas.

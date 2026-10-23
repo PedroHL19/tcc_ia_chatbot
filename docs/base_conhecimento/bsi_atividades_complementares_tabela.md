@@ -1,4 +1,11 @@
-# Atividades Complementares (AC) — Bacharelado em Sistemas de Informação (BSI) — IFMG Campus Sabará
+---
+curso: BSI
+ano_min: 2023
+ano_max: 9999
+tipo: normativo_curso
+---
+
+# Atividades Complementares (AC) — Bacharelado em Sistemas de Informação (BSI) — Ingressantes a partir de 2023 — IFMG Campus Sabará
 
 As Atividades Complementares (AC) são componentes curriculares obrigatórios que auxiliam no desenvolvimento de habilidades e conhecimentos dos discentes de BSI, desenvolvidas com carga horária independente das disciplinas da matriz.
 

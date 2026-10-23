@@ -144,8 +144,8 @@ export const GOLDEN_DATASET = [
     pergunta: "Quando começam as aulas do primeiro semestre letivo de 2026 no IFMG Sabará?",
     curso: "TODOS",
     ano: "2026",
-    keywordsObrigatorias: ["fevereiro"],
-    descricaoEsperada: "Início das aulas em 09 de fevereiro de 2026"
+    keywordsObrigatorias: ["11", "março"],
+    descricaoEsperada: "Início do semestre letivo em 11 de março de 2026 (sem ministração de aulas)"
   },
   {
     id: 13,
@@ -163,7 +163,7 @@ export const GOLDEN_DATASET = [
     curso: "TODOS",
     ano: "2026",
     keywordsObrigatorias: ["julho"],
-    descricaoEsperada: "Exames finais de 06 a 10 de julho de 2026"
+    descricaoEsperada: "Exames finais em 15 e 16 de julho de 2026"
   },
 
   // ── 7. CRA (MATRÍCULA, DISPENSAS AE/ACEA) ────────────────────────────────

@@ -4,7 +4,8 @@
     "start": "node src/server.js",
     "ingest": "node src/ingest.js",
     "test:bot": "node src/test_suite.js",
-    "test:ngrok": "node src/test_suite.js --ngrok"
+    "test:ngrok": "node src/test_suite.js --ngrok",
+    "test:carga": "node src/load_test.js"
   },
   "dependencies": {
     "@qdrant/js-client-rest": "^1.19.0",

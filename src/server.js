@@ -88,6 +88,11 @@ app.post("/agente", authMiddleware, async (req, res) => {
     // Converte variações enviadas pelo Blip ("Sistemas de Informação", "logística"...) para o código usado nos metadados
     curso = normalizeCurso(curso);
 
+    // "TODOS" (servidores, candidatos) e "INVALIDO" (vindo do Blip) significam perfil não informado:
+    // a busca cobre toda a base e o modelo não recebe a regra de aplicar um único curso/ano
+    if (curso === "TODOS" || curso === "INVALIDO") curso = null;
+    if (ano && /^(todos|invalido)$/i.test(ano)) ano = null;
+
     const perfilLog = [
       curso ? `Curso: ${curso}` : null,
       ano ? `Ano: ${ano}` : null

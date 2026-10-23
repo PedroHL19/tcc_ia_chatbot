@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import crypto from "crypto";
 import { SYSTEM_PROMPT, buildUserPromptWithContext } from "./prompt.js";
-import { generateEmbedding, generateChat, LLM_MODEL, EMBEDDING_MODEL } from "./ollamaClient.js";
+import { generateEmbedding, generateChat, warmUpModels, LLM_MODEL, EMBEDDING_MODEL, OLLAMA_CONFIG } from "./ollamaClient.js";
 import { searchSimilar, buildCourseYearFilter, normalizeCurso, COLLECTION_NAME } from "./qdrantClient.js";
 
 dotenv.config();
@@ -124,6 +124,22 @@ app.post("/agente", authMiddleware, async (req, res) => {
       });
     }
 
+    // Saudação pura é respondida sem chamar o LLM: evita que modelos menores confundam
+    // perguntas reais com saudações e copiem a mensagem de boas-vindas
+    const isApenasSaudacao = /^(oi|ol[aá]|bom dia|boa tarde|boa noite|e ai|e a[ií]|opa)[\s!.,?]*$/i.test(pergunta.trim());
+    if (isApenasSaudacao) {
+      return res.json({
+        sucesso: true,
+        encontrou_resposta: false,
+        fora_de_escopo: true,
+        resposta: "Olá! Sou o assistente virtual acadêmico do IFMG Campus Sabará e posso te ajudar com dúvidas sobre Estágios, CRA (matrícula/dispensas), Biblioteca e os cursos do campus.",
+        perfil: {
+          curso,
+          ano
+        }
+      });
+    }
+
     console.time("[Tempo] 1. Embedding");
     // 1. Gera embedding da pergunta com o BGE-M3 (1024 dimensões)
     const queryVector = await generateEmbedding(pergunta.trim());
@@ -195,14 +211,11 @@ app.post("/agente", authMiddleware, async (req, res) => {
       .replace(/^\s*voc[êe]\s+est[áa]\s+cursando\s+o\s+bsi\s+[^.]*?\.\s*/i, "")
       .trim();
 
-    // Se o usuário fez uma pergunta real (não apenas saudação), remove saudações e apresentações repetitivas
-    const isApenasSaudacao = /^(oi|ol[aá]|bom dia|boa tarde|boa noite|e ai|e a[ií]|opa)[\s!.,?]*$/i.test(pergunta.trim());
-    if (!isApenasSaudacao) {
-      resposta = resposta
-        .replace(/^\s*(?:ol[aá]|bom dia|boa tarde|boa noite)!?\s*(?:Sou\s+o\s+assistente\s+virtual\s+acadêmico\s+(?:do\s+IFMG\s+Campus\s+Sabará|do\s+IFMG)?\.?)?\s*/i, "")
-        .replace(/^\s*Sou\s+o\s+assistente\s+virtual\s+acadêmico\s+(?:do\s+IFMG\s+Campus\s+Sabará|do\s+IFMG)?\.?\s*/i, "")
-        .trim();
-    }
+    // Saudações puras já retornaram acima; aqui remove saudações e apresentações repetitivas da resposta
+    resposta = resposta
+      .replace(/^\s*(?:ol[aá]|bom dia|boa tarde|boa noite)!?\s*(?:Sou\s+o\s+assistente\s+virtual\s+acadêmico\s+(?:do\s+IFMG\s+Campus\s+Sabará|do\s+IFMG)?\.?)?\s*/i, "")
+      .replace(/^\s*Sou\s+o\s+assistente\s+virtual\s+acadêmico\s+(?:do\s+IFMG\s+Campus\s+Sabará|do\s+IFMG)?\.?\s*/i, "")
+      .trim();
 
     // Garante que a primeira letra seja maiúscula após qualquer remoção
     if (resposta.length > 0) {
@@ -244,6 +257,12 @@ app.listen(PORT, () => {
   console.log(`\n======================================================`);
   console.log(`Servidor RAG rodando na porta ${PORT}`);
   console.log(`Coleção Qdrant: ${COLLECTION_NAME}`);
-  console.log(`Modelo LLM: ${LLM_MODEL} | Embeddings: ${EMBEDDING_MODEL}`);
+  console.log(`Modelo LLM: ${LLM_MODEL} | Embeddings: ${EMBEDDING_MODEL}${OLLAMA_CONFIG.embeddingOnCpu ? " (CPU)" : ""}`);
+  console.log(`Keep-alive: ${OLLAMA_CONFIG.keepAlive} | Máx. tokens por resposta: ${OLLAMA_CONFIG.numPredict}`);
   console.log(`======================================================\n`);
+
+  // Carrega os modelos já na subida para a primeira pergunta não sofrer cold start
+  warmUpModels()
+    .then((s) => console.log(`[Aquecimento] Modelos carregados em ${s.toFixed(1)}s`))
+    .catch((err) => console.error(`[Aquecimento] Falhou (a primeira pergunta pode demorar mais): ${err.message}`));
 });

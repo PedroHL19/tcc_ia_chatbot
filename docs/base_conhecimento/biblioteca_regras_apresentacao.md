@@ -28,9 +28,7 @@ Disponibiliza aos seus usuários os seguintes serviços:
 ---
 
 ## 3. Regras de Empréstimo, Prazos e Renovação
-- **Documento obrigatório para empréstimo:**
-  - **Discentes (estudantes):** Devem apresentar a Carteirinha de Estudante do IFMG Campus Sabará dentro do prazo de validade.
-  - **Docentes e Técnicos Administrativos:** Devem apresentar o número do SIAPE.
+- **Cadastro para empréstimo:** Para discentes, docentes e técnicos administrativos, o cadastro na biblioteca é automático, por integração com o SUAP. Basta comparecer à biblioteca com documento oficial com foto para cadastrar a senha ou a biometria usada nos empréstimos (IN 09/2020 da Pró-Reitoria de Ensino).
 - **Prazos de empréstimo:**
   - **Estudantes e Técnicos Administrativos:** 7 (sete) dias corridos.
   - **Docentes:** 15 (quinze) dias corridos.

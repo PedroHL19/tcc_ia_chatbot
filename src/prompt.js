@@ -56,6 +56,18 @@ Seu objetivo é ajudar alunos respondendo dúvidas sobre:
  * @param {{curso?: string, ano?: string|number}} [studentProfile]
  * @returns {string}
  */
+/**
+ * Orientação explícita para escolher a faixa de ano de ingresso certa quando um trecho traz várias
+ * (ex.: "a partir de 2023: 240h" e "de 2019 a 2022: 390h"); modelos menores erram essa comparação.
+ * @param {string|number} [ano]
+ * @returns {string}
+ */
+function guiaFaixaAno(ano) {
+  const n = parseInt(ano, 10);
+  if (isNaN(n)) return "";
+  return `(COMO ESCOLHER A REGRA POR ANO: o aluno ingressou em ${n}. Uma regra "a partir de AAAA" só vale se ${n} for maior ou igual a AAAA; uma regra "até AAAA", "anterior a AAAA" ou "de XXXX a AAAA" só vale se ${n} estiver dentro dessa faixa. Ex.: "a partir de 2023" ${n >= 2023 ? "VALE" : "NÃO VALE"} para este aluno. Faça essa comparação só internamente: NÃO a mencione na resposta e fale diretamente com o aluno ("você").)\n`;
+}
+
 export function buildUserPromptWithContext(contextChunks, userQuestion, studentProfile = {}) {
   let contextSection = "Nenhum documento relevante encontrado.";
 
@@ -90,7 +102,7 @@ export function buildUserPromptWithContext(contextChunks, userQuestion, studentP
     if (studentProfile.ano) details.push(`Ano de Ingresso / Matriz: ${studentProfile.ano}`);
     studentInfo = `DADOS DO ALUNO:
 - ${details.join("\n- ")}
-(ATENÇÃO MANDATÓRIA: Aplique e mencione EXCLUSIVAMENTE a regra correspondente a este curso e ano de ingresso do aluno! NUNCA cite regras de outros anos ou outros cursos divergentes.)\n\n`;
+(ATENÇÃO MANDATÓRIA: Aplique e mencione EXCLUSIVAMENTE a regra correspondente a este curso e ano de ingresso do aluno! NUNCA cite regras de outros anos ou outros cursos divergentes.)\n${guiaFaixaAno(studentProfile.ano)}\n`;
   }
 
   return `${studentInfo}CONTEXTO INFORMATIVO OFICIAL:

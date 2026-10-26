@@ -22,7 +22,7 @@ Este documento resume as diretrizes do Projeto Pedagógico de Curso (PPC) de Bac
 
 ### Distribuição da Carga Horária:
 - **Disciplinas Obrigatórias:** 2.880h a 2.940h (conforme versão)
-- **Estágio Supervisionado Obrigatório:** **360 horas**
+- **Estágio Supervisionado Obrigatório:** carga horária conforme o ano de ingresso (ver as regras de estágio da matriz do aluno)
 - **Trabalho de Conclusão de Curso (TCC):** **60 horas**
 - **Atividades Complementares:** **60 horas**
 - **Curricularização da Extensão Universitária:** **360 horas** (10% da carga horária)
@@ -30,11 +30,11 @@ Este documento resume as diretrizes do Projeto Pedagógico de Curso (PPC) de Bac
 
 ---
 
-## 2. Regras Rígidas de Estágio Supervisionado
-- **Caráter do Estágio:** **OBRIGATÓRIO (360 horas)**.
-- **Pré-requisito eliminatório para iniciar:** O estudante **só pode iniciar o estágio supervisionado obrigatório após ter integralizado, no mínimo, 1.200 (mil e duzentas) horas** do curso!
+## 2. Regras de Estágio Supervisionado
+- **Caráter do Estágio:** **OBRIGATÓRIO**. A carga horária e os pré-requisitos dependem do ano de ingresso do aluno (matriz curricular).
+- **Estágio Não Obrigatório:** pode ser realizado em qualquer período do curso.
 - **Registro:** O estágio deve ser formalmente aprovado e registrado na Seção de Estágios do campus antes do início das atividades na empresa.
-- **Validação de Atividade Profissional:** É permitida a equiparação de vínculo empregatício formal na área de automação para fins de dispensa do estágio obrigatório, desde que submetida e aprovada pelo Colegiado/NDE.
+- **Aproveitamento de Experiência Profissional:** O Regulamento de Estágio vigente do IFMG permite o aproveitamento ou equiparação da experiência profissional para o cumprimento de apenas **parte** da carga horária do estágio obrigatório, mediante entrega de documentos comprobatórios analisados pela Coordenação de Curso. Orientações: Seção de Estágios (estagio.sabara@ifmg.edu.br).
 
 ---
 
@@ -122,7 +122,7 @@ Este documento resume as diretrizes do Projeto Pedagógico de Curso (PPC) de Bac
 - Instalações Elétricas Industriais – 60h (Pré-req: Circuitos Elétricos II)
 - Robótica – 60h
 - Projeto Final de Curso 2 (TCC 2) – 30h
-- Estágio Supervisionado Obrigatório – 360h (Requer mín. 1.200h cursadas)
+- Estágio Supervisionado Obrigatório (carga horária conforme a matriz do ano de ingresso)
 - Disciplina Optativa – 60h
 
 ---

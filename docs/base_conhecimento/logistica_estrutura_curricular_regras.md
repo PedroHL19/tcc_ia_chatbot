@@ -37,7 +37,7 @@ Este documento resume as diretrizes do Projeto Pedagógico de Curso (PPC) de Tec
 
 ## 3. Estágio Supervisionado
 - **Caráter do Estágio:** **NÃO É OBRIGATÓRIO**.
-- **Regulamentação:** O discente pode realizar estágio não obrigatório em qualquer período do curso, desde que a empresa conveniada e o plano de atividades estejam validados pela Seção de Estágios do Campus Sabará. As horas de estágio não obrigatório podem ser validadas como Atividades Complementares até o limite do regulamento.
+- **Regulamentação:** O discente pode realizar estágio não obrigatório em qualquer período do curso, desde que o termo de compromisso e o plano de atividades estejam validados pela Seção de Estágios do Campus Sabará (o convênio entre o IFMG e a empresa é facultativo). As horas de estágio não obrigatório podem ser validadas como Atividades Complementares até o limite do regulamento.
 
 ---
 

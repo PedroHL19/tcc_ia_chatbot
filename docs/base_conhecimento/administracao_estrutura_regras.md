@@ -32,7 +32,7 @@ Este documento resume as diretrizes do Projeto Pedagógico de Curso (PPC) de Bac
 - **Caráter do Estágio:** **OBRIGATÓRIO (180 horas)**.
 - **Objetivo:** Proporcionar a vivência prática profissional em empresas e órgãos públicos nas áreas de gestão, finanças, marketing, recursos humanos e operações.
 - **Regulamento:** O discente deve ter o termo de compromisso e plano de atividades previamente aprovados pela Seção de Estágios e pelo professor orientador de estágio do curso.
-- **Equiparação Profissional:** O IFMG permite a convalidação de atividades profissionais formais comprovadas (como carteira de trabalho ou contrato de prestação de serviços na área gerencial) para fins de dispensa do estágio obrigatório, mediante análise do colegiado.
+- **Aproveitamento de Experiência Profissional:** O Regulamento de Estágio vigente do IFMG permite o aproveitamento ou equiparação da experiência profissional para o cumprimento de apenas **parte** da carga horária do estágio obrigatório, mediante entrega de documentos comprobatórios analisados pela Coordenação de Curso. Orientações: Seção de Estágios (estagio.sabara@ifmg.edu.br).
 
 ---
 

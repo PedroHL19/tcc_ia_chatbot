@@ -35,8 +35,8 @@ export const GOLDEN_DATASET = [
     pergunta: "O estágio supervisionado é obrigatório para Engenharia de Automação? Quantas horas precisa e quando posso começar?",
     curso: "ENG_AUTOMACAO",
     ano: "2024",
-    keywordsObrigatorias: ["360", "obrigatório", "1.200"],
-    descricaoEsperada: "Estágio obrigatório de 360h com pré-requisito mínimo de 1.200h cursadas"
+    keywordsObrigatorias: ["240", "obrigatório"],
+    descricaoEsperada: "Estágio obrigatório de 240h para ingressantes a partir de 2023 (pode iniciar após 1.200h, 33% do curso ou matérias até o 4º período)"
   },
   {
     id: 2,

@@ -162,7 +162,7 @@ export const GOLDEN_DATASET = [
     pergunta: "Qual é o período dos exames finais do primeiro semestre de 2026?",
     curso: "TODOS",
     ano: "2026",
-    keywordsObrigatorias: ["julho"],
+    keywordsObrigatorias: ["15", "16"],
     descricaoEsperada: "Exames finais em 15 e 16 de julho de 2026"
   },
 

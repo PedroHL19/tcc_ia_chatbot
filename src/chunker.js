@@ -66,3 +66,47 @@ export function splitIntoChunks(text, chunkSizeTokens = 500, overlapTokens = 100
 
   return chunks;
 }
+
+/**
+ * Divide documentos de perguntas e respostas (seções "### ") em um chunk por pergunta,
+ * evitando que várias respostas diferentes caiam no mesmo trecho e confundam a busca e o modelo.
+ * Cada chunk recebe o título do documento ("# ...") como contexto.
+ * Documentos sem seções "### " (ou seções muito longas) seguem a divisão por tamanho.
+ * @param {string} text - Conteúdo do documento (sem frontmatter)
+ * @param {number} chunkSizeTokens
+ * @param {number} overlapTokens
+ * @returns {string[]}
+ */
+export function splitMarkdownSections(text, chunkSizeTokens = 500, overlapTokens = 100) {
+  if (!text || typeof text !== "string") return [];
+
+  const cleanText = text.replace(/\r\n/g, "\n").trim();
+
+  // Só documentos de perguntas e respostas (maioria dos títulos "### " é pergunta) são divididos por seção;
+  // matrizes curriculares e calendário usam "###" para períodos/meses e precisam manter o contexto geral junto
+  const headings = cleanText.match(/^### .+$/gm) || [];
+  const perguntas = headings.filter((h) => h.includes("?")).length;
+  if (headings.length === 0 || perguntas < headings.length / 2) {
+    return splitIntoChunks(cleanText, chunkSizeTokens, overlapTokens);
+  }
+
+  const titleMatch = cleanText.match(/^# .+$/m);
+  const title = titleMatch ? titleMatch[0].replace(/^#\s+/, "").trim() : "";
+  const maxChars = chunkSizeTokens * CHARS_PER_TOKEN * 1.5;
+
+  const [intro, ...sections] = cleanText.split(/\n(?=### )/);
+  const chunks = [];
+
+  // Texto antes da primeira pergunta (apresentação, contatos) vira um chunk próprio
+  const introBody = intro.replace(/^# .+$/m, "").replace(/^-{3,}\s*$/gm, "").trim();
+  if (introBody.length > 0) chunks.push(title ? `${title}\n\n${introBody}` : introBody);
+
+  for (const section of sections) {
+    const body = section.replace(/\n-{3,}\s*$/g, "").trim();
+    if (!body) continue;
+    const parts = body.length > maxChars ? splitIntoChunks(body, chunkSizeTokens, overlapTokens) : [body];
+    for (const part of parts) chunks.push(title ? `${title}\n\n${part}` : part);
+  }
+
+  return chunks;
+}

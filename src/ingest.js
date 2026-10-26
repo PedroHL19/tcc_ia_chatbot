@@ -4,7 +4,7 @@ import crypto from "crypto";
 import dotenv from "dotenv";
 import { recreateCollection, upsertPoints, COLLECTION_NAME } from "./qdrantClient.js";
 import { generateEmbedding, EMBEDDING_MODEL } from "./ollamaClient.js";
-import { splitIntoChunks } from "./chunker.js";
+import { splitMarkdownSections } from "./chunker.js";
 
 dotenv.config();
 
@@ -125,8 +125,8 @@ async function runIngestion() {
     console.log(`Processando: ${fileName}`);
     console.log(`  -> Metadados: Curso=[${curso}] | Anos=[${anoLabel}] | Tipo=[${tipo}]`);
 
-    // Chunks menores e precisos (500 tokens / 80 overlap)
-    const chunks = splitIntoChunks(cleanContent, 500, 80);
+    // Uma pergunta por chunk em documentos de perguntas e respostas; demais por tamanho (500 tokens / 80 overlap)
+    const chunks = splitMarkdownSections(cleanContent, 500, 80);
     console.log(`  -> ${chunks.length} chunks gerados.`);
 
     for (let i = 0; i < chunks.length; i++) {

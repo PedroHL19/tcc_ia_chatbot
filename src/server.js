@@ -15,6 +15,15 @@ if (!RAW_API_KEY || RAW_API_KEY.trim().length === 0) {
 }
 const EXPECTED_KEY = Buffer.from(RAW_API_KEY.replace(/^(Key|Bearer)\s+/i, "").trim());
 
+// Nomes por extenso dos cursos, usados para enriquecer a consulta de busca semântica
+const NOMES_CURSOS = {
+  BSI: "Bacharelado em Sistemas de Informação (BSI)",
+  ENG_AUTOMACAO: "Bacharelado em Engenharia de Controle e Automação",
+  ADMINISTRACAO: "Bacharelado em Administração",
+  LOGISTICA: "Tecnologia em Logística",
+  PROCESSOS_GERENCIAIS: "Tecnologia em Processos Gerenciais"
+};
+
 const app = express();
 app.use(express.json());
 
@@ -141,18 +150,29 @@ app.post("/agente", authMiddleware, async (req, res) => {
     }
 
     console.time("[Tempo] 1. Embedding");
-    // 1. Gera embedding da pergunta com o BGE-M3 (1024 dimensões)
+    // 1. Gera embedding da pergunta com o BGE-M3 (1024 dimensões).
+    // Quando o curso é conhecido, gera também um embedding da pergunta com o nome do curso: assim trechos gerais
+    // (válidos para todos os cursos, como o FAQ de estágios) são encontrados pela seção do curso certo
+    // mesmo quando a pergunta não cita o curso, sem desviar perguntas gerais para assuntos do curso.
     const queryVector = await generateEmbedding(pergunta.trim());
+    const queryVectorCurso = curso && NOMES_CURSOS[curso]
+      ? await generateEmbedding(`${pergunta.trim()}\nCurso: ${NOMES_CURSOS[curso]}`)
+      : null;
     console.timeEnd("[Tempo] 1. Embedding");
 
     // Monta filtro por metadados no Qdrant se curso ou ano foram informados
     const filter = buildCourseYearFilter(curso, ano);
 
     console.time("[Tempo] 2. Qdrant Search");
-    // 2. Busca os Top-3 chunks mais relevantes no Qdrant.
+    // 2. Busca os Top-3 chunks mais relevantes pela pergunta e acrescenta até 2 trechos inéditos da busca com o curso.
     // Sem fallback para busca sem filtro: o filtro já inclui os documentos gerais (TODOS / 0–9999),
     // e buscar sem ele traria regras de outros cursos ou matrizes de outro ano de ingresso.
     const searchResults = await searchSimilar(queryVector, 3, filter);
+    if (queryVectorCurso) {
+      const idsJaUsados = new Set(searchResults.map((r) => r.id));
+      const extras = (await searchSimilar(queryVectorCurso, 3, filter)).filter((r) => !idsJaUsados.has(r.id));
+      searchResults.push(...extras.slice(0, 2));
+    }
     console.timeEnd("[Tempo] 2. Qdrant Search");
 
     // Filtra apenas trechos com relevância mínima (48%) para evitar alucinações com perguntas fora do escopo ou nomes isolados

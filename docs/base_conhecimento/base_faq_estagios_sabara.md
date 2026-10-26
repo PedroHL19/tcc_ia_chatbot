@@ -1,4 +1,6 @@
-## 4. Perguntas e respostas estruturadas para RAG
+# Perguntas Frequentes da Seção de Estágios — IFMG Campus Sabará
+
+Contato da Seção de Estágios: estagio.sabara@ifmg.edu.br
 
 ### Consegui uma vaga de estágio, o que preciso fazer agora? / Fui selecionada(o) para um de estágio, o que preciso fazer para formalizar?
 
@@ -234,26 +236,8 @@ São exigidos dois Relatórios de Atividades: Relatório de Atividades do Estagi
 
 ### Meu estágio se encerrou, como devo proceder? Meu contrato de estágio foi rescindido, preciso enviar algum documento?
 
-Informe à Seção de Estágios (estagio.sabara@ifmg.edu.br) a data do último dia trabalhado e o motivo da rescisão. Os dados serão inseridos no sistema SUAP para que sejam gerados os acessos aos relatórios. São exigidos 4 documentos: 1 - Relatório Semestral/Parcial de Atividades - Supervisor (sistema SUAP); 2 - Relatório de Atividades Semestral/Parcial - Estagiário (https://www.ifmg.edu.br/sabara/ensino-pesquisa-e-extensao/estagios-1) (sistema SUAP + arquivo); 3 - Termo de Realização e Avaliação Final do Estágio (https://www.ifmg.edu.br/sabara/ensino-pesquisa-e-extensao/estagios-1); 4 - Termo de Rescisão (https://www.ifmg.edu.br/sabara/ensino-pesquisa-e-extensao/estagios-1/estagios-docu mentos/if-sabara-_-termo-rescisao.docx). Os documentos 3 e 4 devem ser enviados para o e-mail da Seção de Estágios. Entre em contato se houver dúvidas (estagio.sabara@ifmg.edu.br).
+Informe à Seção de Estágios (estagio.sabara@ifmg.edu.br) a data do último dia trabalhado e o motivo da rescisão. Os dados serão inseridos no sistema SUAP para que sejam gerados os acessos aos relatórios. São exigidos 4 documentos: 1 - Relatório Semestral/Parcial de Atividades - Supervisor (sistema SUAP); 2 - Relatório de Atividades Semestral/Parcial - Estagiário (https://www.ifmg.edu.br/sabara/ensino-pesquisa-e-extensao/estagios-1) (sistema SUAP + arquivo); 3 - Termo de Realização e Avaliação Final do Estágio (https://www.ifmg.edu.br/sabara/ensino-pesquisa-e-extensao/estagios-1); 4 - Termo de Rescisão (https://www.ifmg.edu.br/sabara/ensino-pesquisa-e-extensao/estagios-1/estagios-documentos/if-sabara-_-termo-rescisao.docx). Os documentos 3 e 4 devem ser enviados para o e-mail da Seção de Estágios. Entre em contato se houver dúvidas (estagio.sabara@ifmg.edu.br).
 
 **Contato para dúvidas relacionadas:** estagio.sabara@ifmg.edu.br
 
 ---
-
-### Sou estudante de outra instituição de ensino e gostaria de fazer estágio no IFMG Campus Sabará. Como devo proceder?
-
-Ficamos felizes com o seu interesse em estagiar em nossa Instituição! Os processos para contratação de estagiários para atuação no Campus passam por edital e são analisados e tramitados pelo setor de Gestão de Pessoas, a partir das demandas de setores institucionais. Você pode buscar informações sobre editais vigentes no site do IFMG Campus Sabará (https://www.ifmg.edu.br/sabara/@@search?Subject%3Alist=Est%C3%A1gio%20Obrigat%C3%B3rio). Caso deseje ampliar sua busca a outros campi, acesse o Portal do IFMG (https://portal.concursos.ifmg.edu.br/edital/index/futuros).
-
-**Contato para dúvidas relacionadas:** estagio.sabara@ifmg.edu.br
-
----
-
-## 5. Orientações finais para resposta da IA
-
-- Responder somente com informações presentes neste arquivo.
-- Não informar que a resposta veio de uma base de conhecimento.
-- Não criar requisitos novos.
-- Não alterar prazos.
-- Não afirmar aprovação, dispensa ou autorização sem orientação oficial.
-- Para documentos e casos individuais, sempre encaminhar para estagio.sabara@ifmg.edu.br.
-- Links devem ser enviados como texto direto.

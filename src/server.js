@@ -227,7 +227,7 @@ app.post("/agente", authMiddleware, async (req, res) => {
     // com o perfil do aluno no prompt ele inventava respostas sobre o curso para mensagens como um nome solto
     let resposta;
     if (contextChunks.length === 0) {
-      resposta = "Não consegui identificar uma dúvida relacionada aos serviços acadêmicos do IFMG Campus Sabará (como estágios, matrícula, CRA, dispensas ou biblioteca). Por favor, envie sua dúvida sobre esses temas para que eu possa te orientar.";
+      resposta = "Não consegui identificar uma dúvida relacionada aos serviços acadêmicos do IFMG Campus Sabará (como estágios, matrícula, CRA, dispensas ou biblioteca).";
     } else {
       console.time("[Tempo] 3. LLM Generate");
       resposta = await generateChat(messages);

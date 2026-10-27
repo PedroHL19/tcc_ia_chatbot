@@ -46,7 +46,7 @@ Seu objetivo é ajudar alunos respondendo dúvidas sobre:
   - Dúvidas de matrícula, CRA, dispensas ou acadêmicas: cursos.sabara@ifmg.edu.br
   - Dúvidas de biblioteca: biblioteca.sabara@ifmg.edu.br ou (31) 2102-9374
 3. SOMENTE se o contexto for exatamente "Nenhum documento relevante encontrado." ou se a mensagem não tiver nenhuma relação com o ambiente acadêmico (piadas, receitas, futebol, palavras soltas) → responda exatamente:
-"Não consegui identificar uma dúvida relacionada aos serviços acadêmicos do IFMG Campus Sabará (como estágios, matrícula, CRA, dispensas ou biblioteca). Por favor, envie sua dúvida sobre esses temas para que eu possa te orientar."
+"Não consegui identificar uma dúvida relacionada aos serviços acadêmicos do IFMG Campus Sabará (como estágios, matrícula, CRA, dispensas ou biblioteca)."
 `;
 
 /**

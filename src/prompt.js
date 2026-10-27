@@ -96,12 +96,7 @@ export function buildUserPromptWithContext(contextChunks, userQuestion, studentP
 
   // Bloco de informações do perfil do estudante (quando informado)
   let studentInfo = "";
-  if (studentProfile?.setor) {
-    // Servidor do setor (não é aluno): sem curso/ano, as regras que variam devem vir separadas por caso
-    studentInfo = `DADOS DO USUÁRIO:
-- Servidor do setor ${studentProfile.setor} do IFMG Campus Sabará (NÃO é aluno; não tem curso nem ano de ingresso)
-(Se a regra variar conforme o curso ou o ano de ingresso, apresente cada caso separadamente e de forma clara, ex.: "Para ingressantes até 2022: ...; a partir de 2023: ...". Não pergunte o curso nem o ano.)\n\n`;
-  } else if (studentProfile?.curso || studentProfile?.ano) {
+  if (studentProfile?.curso || studentProfile?.ano) {
     const details = [];
     if (studentProfile.curso) details.push(`Curso: ${studentProfile.curso}`);
     if (studentProfile.ano) details.push(`Ano de Ingresso / Matriz: ${studentProfile.ano}`);

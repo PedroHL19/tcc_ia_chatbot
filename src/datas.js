@@ -202,9 +202,19 @@ export function resolverDatas(mensagem) {
   }
   // Pergunta curta e direta "tem aula ...?" com data: a resposta sai pronta do calendário
   const unicas = encontradas.filter(([dt], i) => encontradas.findIndex(([d]) => chave(d) === chave(dt)) === i);
-  const respostaDireta = /\baulas?\b/.test(msg) && unicas.length > 0 && msg.length <= 80
+  let respostaDireta = /\baulas?\b/.test(msg) && unicas.length > 0 && msg.length <= 80
     ? unicas.map(([dt, rotulo]) => respostaAula(dt, rotulo)).join("\n")
     : null;
+  // "Qual o próximo feriado?" também sai pronto: com a lista de próximas datas, o modelo pulava o primeiro feriado
+  if (!respostaDireta && /\bproxim[oa] feriado\b/.test(msg) && encontradas.length === 0 && msg.length <= 80) {
+    const [k, evs] = [...CALENDARIO.eventos.entries()]
+      .filter(([k, evs]) => k > chave(hoje) && evs.some((e) => /feriado/i.test(e)))
+      .sort(([a], [b]) => a.localeCompare(b))[0] || [];
+    const dt = k && new Date(k + "T00:00:00Z");
+    respostaDireta = dt
+      ? `O próximo feriado é em ${formatar(dt)} (${diaSemana(dt)}): ${evs.filter((e) => /feriado/i.test(e)).join("; ")}.`
+      : "Não há outro feriado no calendário acadêmico disponível. Consulte o CRA: cursos.sabara@ifmg.edu.br ou (31) 2102-9376.";
+  }
 
   // Só datas explícitas mudam a busca; perguntas sobre o semestre já encontram o calendário sozinhas e o gatilho
   // de período pode pegar frases como "no final do curso, no 8º semestre", que precisam da busca normal

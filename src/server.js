@@ -95,26 +95,15 @@ app.post("/agente", authMiddleware, async (req, res) => {
       ano = temp;
     }
 
-    // Servidores dos setores chegam como curso "SETOR_CRA", "SETOR_BIBLIOTECA" ou "SETOR_ESTAGIO":
-    // não têm curso nem ano de ingresso, então a busca cobre toda a base e as regras vêm separadas por caso
-    let setor = null;
-    const matchSetor = curso && /^SETOR[_\s-]*(CRA|BIBLIOTECA|ESTAGIOS?)$/i.exec(curso.normalize("NFD").replace(/[̀-ͯ]/g, ""));
-    if (matchSetor) {
-      setor = matchSetor[1].toUpperCase().replace(/^ESTAGIOS?$/, "ESTAGIO");
-      curso = null;
-      ano = null;
-    }
-
     // Converte variações enviadas pelo Blip ("Sistemas de Informação", "logística"...) para o código usado nos metadados
     curso = normalizeCurso(curso);
 
-    // "TODOS" (candidatos) e "INVALIDO" (vindo do Blip) significam perfil não informado:
+    // "TODOS" (servidores, candidatos) e "INVALIDO" (vindo do Blip) significam perfil não informado:
     // a busca cobre toda a base e o modelo não recebe a regra de aplicar um único curso/ano
     if (curso === "TODOS" || curso === "INVALIDO") curso = null;
     if (ano && /^(todos|invalido)$/i.test(ano)) ano = null;
 
     const perfilLog = [
-      setor ? `Servidor: ${setor}` : null,
       curso ? `Curso: ${curso}` : null,
       ano ? `Ano: ${ano}` : null
     ].filter(Boolean).join(" | ");
@@ -140,8 +129,7 @@ app.post("/agente", authMiddleware, async (req, res) => {
         resposta: "Sou o assistente virtual acadêmico do IFMG Campus Sabará e minhas instruções internas são confidenciais. Estou à disposição para ajudar com dúvidas sobre Estágios, CRA (matrícula/dispensas), Biblioteca ou PPCs dos cursos do campus. Como posso te ajudar hoje?",
         perfil: {
           curso,
-          ano,
-          setor
+          ano
         }
       });
     }
@@ -157,8 +145,7 @@ app.post("/agente", authMiddleware, async (req, res) => {
         resposta: "Olá! Sou o assistente virtual acadêmico do IFMG Campus Sabará e posso te ajudar com dúvidas sobre Estágios, CRA (matrícula/dispensas), Biblioteca e os cursos do campus.",
         perfil: {
           curso,
-          ano,
-          setor
+          ano
         }
       });
     }
@@ -174,7 +161,7 @@ app.post("/agente", authMiddleware, async (req, res) => {
         encontrou_resposta: true,
         fora_de_escopo: false,
         resposta: datas.respostaDireta,
-        perfil: { curso, ano, setor }
+        perfil: { curso, ano }
       });
     }
 
@@ -197,8 +184,7 @@ app.post("/agente", authMiddleware, async (req, res) => {
     // 2. Busca os Top-3 chunks mais relevantes pela pergunta e acrescenta até 2 trechos inéditos da busca com o curso.
     // Sem fallback para busca sem filtro: o filtro já inclui os documentos gerais (TODOS / 0–9999),
     // e buscar sem ele traria regras de outros cursos ou matrizes de outro ano de ingresso.
-    // Servidores não têm filtro de curso/ano e costumam precisar de vários casos (ex.: regras por matriz): busca mais trechos
-    const searchResults = await searchSimilar(queryVector, setor ? 5 : 3, filter);
+    const searchResults = await searchSimilar(queryVector, 3, filter);
     // Filtra apenas trechos com relevância mínima (48%) para evitar alucinações com perguntas fora do escopo ou nomes isolados
     const MIN_RELEVANCE_SCORE = 0.48;
     // A busca com o curso só complementa: o nome do curso domina o vetor de mensagens curtas ("Pedro" + "Curso: BSI"
@@ -233,7 +219,7 @@ app.post("/agente", authMiddleware, async (req, res) => {
     });
 
     // 3. Monta o prompt contextualizado incluindo perfil do aluno
-    const userPrompt = buildUserPromptWithContext(contextChunks, pergunta.trim(), { curso, ano, setor }, datas?.texto);
+    const userPrompt = buildUserPromptWithContext(contextChunks, pergunta.trim(), { curso, ano }, datas?.texto);
 
     const messages = [
       { role: "system", content: SYSTEM_PROMPT },
@@ -299,8 +285,7 @@ app.post("/agente", authMiddleware, async (req, res) => {
       resposta,
       perfil: {
         curso,
-        ano,
-        setor
+        ano
       }
     });
   } catch (error) {

@@ -182,15 +182,17 @@ app.post("/agente", authMiddleware, async (req, res) => {
     // e buscar sem ele traria regras de outros cursos ou matrizes de outro ano de ingresso.
     // Servidores não têm filtro de curso/ano e costumam precisar de vários casos (ex.: regras por matriz): busca mais trechos
     const searchResults = await searchSimilar(queryVector, setor ? 5 : 3, filter);
-    if (queryVectorCurso) {
+    // Filtra apenas trechos com relevância mínima (48%) para evitar alucinações com perguntas fora do escopo ou nomes isolados
+    const MIN_RELEVANCE_SCORE = 0.48;
+    // A busca com o curso só complementa: o nome do curso domina o vetor de mensagens curtas ("Pedro" + "Curso: BSI"
+    // casa com trechos do BSI acima de 60%), então ela só roda se a pergunta sozinha já achou algo relevante
+    if (queryVectorCurso && searchResults.some((r) => r.score >= MIN_RELEVANCE_SCORE)) {
       const idsJaUsados = new Set(searchResults.map((r) => r.id));
       const extras = (await searchSimilar(queryVectorCurso, 3, filter)).filter((r) => !idsJaUsados.has(r.id));
       searchResults.push(...extras.slice(0, 2));
     }
     console.timeEnd("[Tempo] 2. Qdrant Search");
 
-    // Filtra apenas trechos com relevância mínima (48%) para evitar alucinações com perguntas fora do escopo ou nomes isolados
-    const MIN_RELEVANCE_SCORE = 0.48;
     const relevantResults = searchResults.filter((r) => r.score >= MIN_RELEVANCE_SCORE);
 
     const contextChunks = relevantResults.map((result) => ({
@@ -221,10 +223,16 @@ app.post("/agente", authMiddleware, async (req, res) => {
       { role: "user", content: userPrompt }
     ];
 
-    console.time("[Tempo] 3. LLM Generate");
-    // 4. Executa a inferência local no Llama
-    let resposta = await generateChat(messages);
-    console.timeEnd("[Tempo] 3. LLM Generate");
+    // 4. Executa a inferência local no Llama. Sem nenhum trecho relevante a resposta é a recusa padrão, sem chamar o LLM:
+    // com o perfil do aluno no prompt ele inventava respostas sobre o curso para mensagens como um nome solto
+    let resposta;
+    if (contextChunks.length === 0) {
+      resposta = "Não consegui identificar uma dúvida relacionada aos serviços acadêmicos do IFMG Campus Sabará (como estágios, matrícula, CRA, dispensas ou biblioteca). Por favor, envie sua dúvida sobre esses temas para que eu possa te orientar.";
+    } else {
+      console.time("[Tempo] 3. LLM Generate");
+      resposta = await generateChat(messages);
+      console.timeEnd("[Tempo] 3. LLM Generate");
+    }
 
     // Higienização: remove cabeçalhos residuais como "**Resposta:**" ou "Resposta oficial preparada para IA:".
     // Exige o separador (":" ou travessão) para não apagar frases reais como "A resposta do pedido sai em 5 dias".

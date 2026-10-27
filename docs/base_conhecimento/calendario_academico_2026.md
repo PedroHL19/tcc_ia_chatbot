@@ -14,6 +14,7 @@ Este documento contém todas as datas oficiais, prazos acadêmicos, recessos, fe
 ## 1º SEMESTRE LETIVO DE 2026
 
 ### Março / 2026
+- **Demais dias de segunda a sexta de 16/03 a 31/03:** dias letivos normais, com aula.
 - **11/03:** Início do semestre letivo (sem ministração de aulas).
 - **11/03:** Limite para solicitação de Colação de Grau em solenidade do 1º semestre.
 - **11 a 13/03:** Encontro Pedagógico (sem ministração de aulas).
@@ -21,6 +22,7 @@ Este documento contém todas as datas oficiais, prazos acadêmicos, recessos, fe
 - **28/03:** Dia letivo sem ministração de aulas.
 
 ### Abril / 2026
+- **Demais dias de segunda a sexta de abril:** dias letivos normais, com aula.
 - **03/04:** Feriado Nacional de Paixão de Cristo.
 - **06 a 10/04:** Período de solicitação de **Trancamento de Matrícula** do 1º semestre.
 - **07 a 10/04:** Período de solicitação de **AE (Aproveitamento de Estudos)** e **ACEA (Aproveitamento de Conhecimentos e Experiências Anteriores)** para veteranos e ingressantes do 1º semestre.
@@ -33,6 +35,7 @@ Este documento contém todas as datas oficiais, prazos acadêmicos, recessos, fe
 - **25/04:** Dia letivo EaD (horário de terça-feira).
 
 ### Maio / 2026
+- **Demais dias de segunda a sexta de maio:** dias letivos normais, com aula.
 - **01/05:** Feriado Nacional do Dia do Trabalho.
 - **08/05:** Limite para solicitação de Colação de Grau em gabinete do 1º semestre.
 - **09/05:** Dia letivo sem ministração de aulas.
@@ -43,6 +46,7 @@ Este documento contém todas as datas oficiais, prazos acadêmicos, recessos, fe
 - **29/05:** **Resultado final** das Atividades Complementares do 1º semestre.
 
 ### Junho / 2026
+- **Demais dias de segunda a sexta de junho:** dias letivos normais, com aula.
 - **04/06:** Feriado Nacional de Corpus Christi.
 - **05/06:** Recesso escolar.
 - **06/06:** Dia letivo EaD (horário de quinta-feira).
@@ -53,6 +57,7 @@ Este documento contém todas as datas oficiais, prazos acadêmicos, recessos, fe
 - **27/06:** Dia letivo sem ministração de aulas.
 
 ### Julho / 2026
+- **Demais dias de segunda a sexta de 01/07 a 14/07 (depois, exames finais e férias):** dias letivos normais, com aula.
 - **04/07:** Dia letivo EaD (horário de quinta-feira).
 - **11/07:** Dia letivo EaD (horário de sexta-feira).
 - **14/07:** **Término do 1º semestre letivo**.
@@ -67,6 +72,7 @@ Este documento contém todas as datas oficiais, prazos acadêmicos, recessos, fe
 ## 2º SEMESTRE LETIVO DE 2026
 
 ### Agosto / 2026
+- **Demais dias de segunda a sexta de 03/08 a 31/08:** dias letivos normais, com aula.
 - **03/08:** **Início do 2º semestre letivo**.
 - **04/08:** Limite para solicitação de Colação de Grau em solenidade do 2º semestre.
 - **15/08:** Feriado Municipal (Nossa Senhora da Assunção).
@@ -77,6 +83,7 @@ Este documento contém todas as datas oficiais, prazos acadêmicos, recessos, fe
 - **29/08:** Dia letivo sem ministração de aulas.
 
 ### Setembro / 2026
+- **Demais dias de segunda a sexta de setembro:** dias letivos normais, com aula.
 - **05/09:** Dia letivo sem ministração de aulas.
 - **07/09:** Feriado Nacional (Independência do Brasil).
 - **12/09:** Dia letivo EaD (horário de segunda-feira).
@@ -86,6 +93,7 @@ Este documento contém todas as datas oficiais, prazos acadêmicos, recessos, fe
 - **28 a 30/09:** Início do período de entrega de documentos de **Atividades Complementares** (continua em outubro).
 
 ### Outubro / 2026
+- **Demais dias de segunda a sexta de outubro:** dias letivos normais, com aula.
 - **01 a 07/10:** Período de **entrega de documentos de Atividades Complementares** do 2º semestre.
 - **03/10:** Dia letivo sem ministração de aulas.
 - **10/10:** Dia letivo EaD (horário de segunda-feira).
@@ -95,6 +103,7 @@ Este documento contém todas as datas oficiais, prazos acadêmicos, recessos, fe
 - **24/10:** Dia letivo sem ministração de aulas.
 
 ### Novembro / 2026
+- **Demais dias de segunda a sexta de novembro:** dias letivos normais, com aula.
 - **02/11:** Feriado Nacional de Finados.
 - **07/11:** Dia letivo EaD (horário de sexta-feira).
 - **14/11:** Dia letivo sem ministração de aulas.
@@ -105,6 +114,7 @@ Este documento contém todas as datas oficiais, prazos acadêmicos, recessos, fe
 - **26 a 28/11:** Semana de Ciência e Tecnologia (dias letivos sem ministração de aulas).
 
 ### Dezembro / 2026
+- **Demais dias de segunda a sexta de 01/12 a 11/12 (depois, exames finais e recesso):** dias letivos normais, com aula.
 - **05/12:** Dia letivo EaD (horário de segunda-feira).
 - **07/12:** Recesso escolar.
 - **08/12:** Feriado Municipal (Nossa Senhora da Imaculada Conceição).

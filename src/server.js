@@ -4,6 +4,7 @@ import crypto from "crypto";
 import { SYSTEM_PROMPT, buildUserPromptWithContext } from "./prompt.js";
 import { generateEmbedding, generateChat, warmUpModels, LLM_MODEL, EMBEDDING_MODEL, OLLAMA_CONFIG } from "./ollamaClient.js";
 import { searchSimilar, buildCourseYearFilter, normalizeCurso, COLLECTION_NAME } from "./qdrantClient.js";
+import { resolverDatas } from "./datas.js";
 
 dotenv.config();
 
@@ -162,13 +163,29 @@ app.post("/agente", authMiddleware, async (req, res) => {
       });
     }
 
+    // Datas citadas ("amanhã", "28 de outubro") são consultadas no calendário pelo código e vão para o prompt e para a busca
+    // (senão "amanhã tem aula?" nem encontra o calendário); "tem aula em X?" já sai respondida, sem o LLM
+    const datas = resolverDatas(pergunta);
+    if (datas) console.log(`[Datas] ${datas.texto.replace(/\n/g, " | ")}`);
+    if (datas?.respostaDireta) {
+      console.log("[Datas] Resposta direta do calendário (sem LLM)");
+      return res.json({
+        sucesso: true,
+        encontrou_resposta: true,
+        fora_de_escopo: false,
+        resposta: datas.respostaDireta,
+        perfil: { curso, ano, setor }
+      });
+    }
+
     console.time("[Tempo] 1. Embedding");
     // 1. Gera embedding da pergunta com o BGE-M3 (1024 dimensões).
     // Quando o curso é conhecido, gera também um embedding da pergunta com o nome do curso: assim trechos gerais
     // (válidos para todos os cursos, como o FAQ de estágios) são encontrados pela seção do curso certo
     // mesmo quando a pergunta não cita o curso, sem desviar perguntas gerais para assuntos do curso.
-    const queryVector = await generateEmbedding(pergunta.trim());
-    const queryVectorCurso = curso && NOMES_CURSOS[curso]
+    const queryVector = await generateEmbedding(datas?.termosBusca ? `${pergunta.trim()}\n${datas.termosBusca}` : pergunta.trim());
+    // Perguntas com data são sobre o calendário, que vale para todos os cursos: a busca com o curso só traria ruído
+    const queryVectorCurso = curso && NOMES_CURSOS[curso] && !datas
       ? await generateEmbedding(`${pergunta.trim()}\nCurso: ${NOMES_CURSOS[curso]}`)
       : null;
     console.timeEnd("[Tempo] 1. Embedding");
@@ -216,7 +233,7 @@ app.post("/agente", authMiddleware, async (req, res) => {
     });
 
     // 3. Monta o prompt contextualizado incluindo perfil do aluno
-    const userPrompt = buildUserPromptWithContext(contextChunks, pergunta.trim(), { curso, ano, setor });
+    const userPrompt = buildUserPromptWithContext(contextChunks, pergunta.trim(), { curso, ano, setor }, datas?.texto);
 
     const messages = [
       { role: "system", content: SYSTEM_PROMPT },
@@ -251,6 +268,8 @@ app.post("/agente", authMiddleware, async (req, res) => {
     resposta = resposta
       .replace(/^\s*voc[êe]\s+est[áa]\s+cursando\s+[^.]*?\bno\s+ano\s+de\s+ingresso\s+(?:de\s+)?\d{4}\.?\s*/i, "")
       .replace(/^\s*voc[êe]\s+est[áa]\s+cursando\s+o\s+bsi\s+[^.]*?\.\s*/i, "")
+      // "Você." solto no início, efeito da instrução de falar com o aluno como "você"
+      .replace(/^\s*voc[êe]\s*[.,:]\s+(?=\S)/i, "")
       .trim();
 
     // Saudações puras já retornaram acima; aqui remove saudações e apresentações repetitivas da resposta

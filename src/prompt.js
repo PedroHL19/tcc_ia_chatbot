@@ -68,7 +68,7 @@ function guiaFaixaAno(ano) {
   return `(COMO ESCOLHER A REGRA POR ANO: o aluno ingressou em ${n}. Uma regra "a partir de AAAA" só vale se ${n} for maior ou igual a AAAA; uma regra "até AAAA", "anterior a AAAA" ou "de XXXX a AAAA" só vale se ${n} estiver dentro dessa faixa. Ex.: "a partir de 2023" ${n >= 2023 ? "VALE" : "NÃO VALE"} para este aluno. Faça essa comparação só internamente: NÃO a mencione na resposta e fale diretamente com o aluno ("você").)\n`;
 }
 
-export function buildUserPromptWithContext(contextChunks, userQuestion, studentProfile = {}) {
+export function buildUserPromptWithContext(contextChunks, userQuestion, studentProfile = {}, datasDaMensagem = null) {
   let contextSection = "Nenhum documento relevante encontrado.";
 
   if (contextChunks && contextChunks.length > 0) {
@@ -110,11 +110,20 @@ export function buildUserPromptWithContext(contextChunks, userQuestion, studentP
 (ATENÇÃO MANDATÓRIA: Aplique e mencione EXCLUSIVAMENTE a regra correspondente a este curso e ano de ingresso do aluno! NUNCA cite regras de outros anos ou outros cursos divergentes.)\n${guiaFaixaAno(studentProfile.ano)}\n`;
   }
 
+  // Datas calculadas pelo servidor: o modelo não sabe a data atual nem calcula dia da semana com segurança.
+  // Ficam logo antes da mensagem, onde o modelo dá mais peso, para não serem trocadas por datas parecidas do contexto;
+  // as regras de calendário vão só aqui para não alongar o prompt das demais perguntas
+  const datasInfo = datasDaMensagem
+    ? `DATAS DA MENSAGEM (já consultadas no calendário oficial pelo sistema; estão corretas e têm prioridade sobre o contexto):
+${datasDaMensagem}
+(O calendário lista só exceções: dia de segunda a sexta dentro do semestre que não aparece nele é dia de aula normal. Compare dia E mês: "28/09" não é "28/10". Nunca calcule datas por conta própria.)\n\n`
+    : "";
+
   return `${studentInfo}CONTEXTO INFORMATIVO OFICIAL:
 ${contextSection}
 
 ---
-Mensagem do aluno: ${userQuestion}
+${datasInfo}Mensagem do aluno: ${userQuestion}
 Se o contexto acima tiver informação relacionada à mensagem, responda à pergunta com base nele (não use mensagens padrão de recusa nem de saudação).
 Responda diretamente ao aluno seguindo as instruções oficiais (sem citar FAQs, sem repetir dados do aluno e aplicando apenas a regra do curso/ano informado):`;
 }

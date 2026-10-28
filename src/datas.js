@@ -175,7 +175,11 @@ export function resolverDatas(mensagem) {
 
   const perguntaProximo = /\bproxim[oa]s?\b/.test(msg) && /feriado|recesso|ferias|prazo|aula|semestre|calendario|evento|data/.test(msg);
   // Só perguntas sobre início/fim do semestre, férias ou calendário ("disciplinas do 3º semestre" não entra)
-  const perguntaPeriodo = /(inicio|comec\w*|termin\w*|acab\w*|\bfim\b|final)\b.{0,35}semestre|semestre.{0,25}(comec|termin|acab)|ferias|recesso|calendario|periodo letivo|ano letivo|volta\w* (as|das) aulas/.test(msg);
+  // Férias/recesso só contam como pergunta de calendário quando a mensagem pergunta quando são: em "posso fazer estágio
+  // nas férias?" o bloco de datas fazia o modelo tratar a pergunta como fora de escopo
+  const perguntaQuandoPausa = /\b(quando|proxim[oa]s?|datas?|calendario)\b|\b(tem|ha|vai ter|terao?)\s+(ferias|recesso)/.test(msg) || /^(as |os )?(ferias|recessos?)\s*\??$/.test(msg.trim());
+  const perguntaPausa = /ferias|recesso/.test(msg) && perguntaQuandoPausa;
+  const perguntaPeriodo = perguntaPausa || /(inicio|comec\w*|termin\w*|acab\w*|\bfim\b|final)\b.{0,35}semestre|semestre.{0,25}(comec|termin|acab)|calendario|periodo letivo|ano letivo|volta\w* (as|das) aulas/.test(msg);
   if (encontradas.length === 0 && !perguntaProximo && !perguntaPeriodo) return null;
 
   const linhas = [`Hoje é ${diaSemana(hoje)}, ${formatar(hoje)}.`];
@@ -193,7 +197,7 @@ export function resolverDatas(mensagem) {
   }
   // Férias e recessos separados em próximos e já passados: com a lista do ano inteiro, o modelo respondia as férias de julho em outubro
   let proximasPausas = null;
-  if (/ferias|recesso/.test(msg)) {
+  if (perguntaPausa) {
     const pausas = CALENDARIO.linhasOriginais.filter(([a, , texto, fim]) => a === hoje.getUTCFullYear() && fim && /f[ée]rias|recesso/i.test(texto));
     const listar = (lista) => lista.map(([a, rotulo, texto]) => `${rotulo}/${a}: ${texto}`).join(" | ");
     proximasPausas = pausas.filter(([, , , fim]) => fim >= hoje);
@@ -214,8 +218,7 @@ export function resolverDatas(mensagem) {
     ? unicas.map(([dt, rotulo]) => respostaAula(dt, rotulo)).join("\n")
     : null;
   // "Quando são as férias?" também sai pronto, com os próximos períodos e as férias do ano que já passaram
-  const perguntaQuandoPausa = /\b(quando|proxim[oa]s?|datas?)\b/.test(msg) || /^(as |os )?(ferias|recessos?)\s*\??$/.test(msg.trim());
-  if (!respostaDireta && proximasPausas && perguntaQuandoPausa && encontradas.length === 0 && msg.length <= 80) {
+  if (!respostaDireta && proximasPausas && encontradas.length === 0 && msg.length <= 80) {
     const ano = hoje.getUTCFullYear();
     const proximas = proximasPausas.map(([a, rotulo, texto]) => `${rotulo}/${a} (${texto.toLowerCase()})`).join("; ");
     const ferias = CALENDARIO.linhasOriginais.filter(([a, , texto, fim]) => a === ano && fim && fim < hoje && /f[ée]rias/i.test(texto));

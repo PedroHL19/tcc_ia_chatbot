@@ -25,6 +25,11 @@ const NOMES_CURSOS = {
   PROCESSOS_GERENCIAIS: "Tecnologia em Processos Gerenciais"
 };
 
+// Respostas sobre datas terminam com o link do calendário oficial, para o aluno conferir
+const LINK_CALENDARIO = "https://www.ifmg.edu.br/sabara/ensino-pesquisa-e-extensao/controle-e-registro-academico/calendario-academico";
+const comLinkCalendario = (texto) =>
+  texto.includes(LINK_CALENDARIO) ? texto : `${texto}\n\nCalendário acadêmico: ${LINK_CALENDARIO}`;
+
 const app = express();
 app.use(express.json());
 
@@ -201,7 +206,7 @@ app.post("/agente", authMiddleware, async (req, res) => {
         sucesso: true,
         encontrou_resposta: true,
         fora_de_escopo: false,
-        resposta: datas.respostaDireta,
+        resposta: comLinkCalendario(datas.respostaDireta),
         perfil: { curso, ano }
       });
     }
@@ -327,6 +332,7 @@ app.post("/agente", authMiddleware, async (req, res) => {
       /nao\s+consegui\s+identificar\s+uma\s+duvida/.test(respostaNorm);
 
     const encontrouResposta = !isForaDeEscopo;
+    if (datas && encontrouResposta) resposta = comLinkCalendario(resposta);
 
     return res.json({
       sucesso: true,

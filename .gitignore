@@ -8,3 +8,6 @@ storage/
 snapshots/
 # Textos do TCC (artigo, figuras) — mantidos só localmente
 tcc/
+
+# Logs da API (mensagens dos usuarios)
+logs/

@@ -68,6 +68,12 @@ app.get("/health", (req, res) => {
 
 // Endpoint principal consultado pelo Blip ou frontend
 app.post("/agente", authMiddleware, async (req, res) => {
+  // Registra a resposta enviada em todos os caminhos (prontas, calendário, recusa e LLM) para avaliar os testes com usuários
+  const enviarJson = res.json.bind(res);
+  res.json = (corpo) => {
+    console.log(`[Resposta] (fora_de_escopo=${corpo?.fora_de_escopo}) ${(corpo?.resposta || corpo?.erro || "").replace(/\s*\n\s*/g, " ")}`);
+    return enviarJson(corpo);
+  };
   try {
     // Suporta { mensagem: "..." } ou variações comuns do Blip
     const pergunta =

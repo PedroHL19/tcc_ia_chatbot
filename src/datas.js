@@ -49,7 +49,8 @@ function carregarCalendario() {
       const m = /^-\s*\*\*([\d\s/aeÀ-ÿ]+?):\*\*\s*(.+)$/.exec(linha.trim());
       if (!m) continue;
       const texto = m[2].replace(/\*\*/g, "").replace(/\.+$/, "").trim();
-      linhasOriginais.push([ano, m[1].trim(), texto]);
+      const original = [ano, m[1].trim(), texto, null];
+      linhasOriginais.push(original);
       const p = /^(\d{1,2})(?:\/(\d{1,2}))?(?:\s+(a|e)\s+(\d{1,2})\/(\d{1,2}))?$/.exec(m[1].trim());
       if (!p || (!p[2] && !p[3])) continue;
       let datas;
@@ -60,6 +61,7 @@ function carregarCalendario() {
         datas = p[3] === "e" ? [ini, fim] : [];
         if (p[3] === "a") for (let d = ini; d <= fim; d = somarDias(d, 1)) datas.push(d);
       }
+      original[3] = datas[datas.length - 1]; // último dia, para saber se o período já passou
       for (const d of datas) {
         if (!eventos.has(chave(d))) eventos.set(chave(d), []);
         eventos.get(chave(d)).push(texto);
@@ -189,11 +191,17 @@ export function resolverDatas(mensagem) {
     const periodos = periodosLetivos(hoje);
     if (periodos) linhas.push(periodos);
   }
+  // Férias e recessos separados em próximos e já passados: com a lista do ano inteiro, o modelo respondia as férias de julho em outubro
+  let proximasPausas = null;
   if (/ferias|recesso/.test(msg)) {
-    const pausas = CALENDARIO.linhasOriginais
-      .filter(([a, , texto]) => a === hoje.getUTCFullYear() && /f[ée]rias|recesso/i.test(texto))
-      .map(([a, rotulo, texto]) => `${rotulo}/${a}: ${texto}`);
-    if (pausas.length) linhas.push(`Férias e recessos de ${hoje.getUTCFullYear()}: ${pausas.join(" | ")}.`);
+    const pausas = CALENDARIO.linhasOriginais.filter(([a, , texto, fim]) => a === hoje.getUTCFullYear() && fim && /f[ée]rias|recesso/i.test(texto));
+    const listar = (lista) => lista.map(([a, rotulo, texto]) => `${rotulo}/${a}: ${texto}`).join(" | ");
+    proximasPausas = pausas.filter(([, , , fim]) => fim >= hoje);
+    const passadas = pausas.filter(([, , , fim]) => fim < hoje);
+    linhas.push(proximasPausas.length
+      ? `PRÓXIMAS férias e recessos (a partir de hoje): ${listar(proximasPausas)}.`
+      : `Não há mais férias ou recessos no calendário de ${hoje.getUTCFullYear()} a partir de hoje.`);
+    if (passadas.length) linhas.push(`Já passaram (não são as próximas): ${listar(passadas)}.`);
   }
   if (perguntaProximo) {
     const proximos = proximosEventos(hoje);
@@ -205,6 +213,18 @@ export function resolverDatas(mensagem) {
   let respostaDireta = /\baulas?\b/.test(msg) && unicas.length > 0 && msg.length <= 80
     ? unicas.map(([dt, rotulo]) => respostaAula(dt, rotulo)).join("\n")
     : null;
+  // "Quando são as férias?" também sai pronto, com os próximos períodos e as férias do ano que já passaram
+  const perguntaQuandoPausa = /\b(quando|proxim[oa]s?|datas?)\b/.test(msg) || /^(as |os )?(ferias|recessos?)\s*\??$/.test(msg.trim());
+  if (!respostaDireta && proximasPausas && perguntaQuandoPausa && encontradas.length === 0 && msg.length <= 80) {
+    const ano = hoje.getUTCFullYear();
+    const proximas = proximasPausas.map(([a, rotulo, texto]) => `${rotulo}/${a} (${texto.toLowerCase()})`).join("; ");
+    const ferias = CALENDARIO.linhasOriginais.filter(([a, , texto, fim]) => a === ano && fim && fim < hoje && /f[ée]rias/i.test(texto));
+    respostaDireta = (proximas
+      ? `Os próximos recessos e férias no calendário acadêmico de ${ano} são: ${proximas}.`
+      : `Não há mais recessos ou férias no calendário acadêmico de ${ano}.`)
+      + (ferias.length ? ` As férias escolares de ${ano} já ocorreram (${ferias.map(([a, rotulo]) => `${rotulo}/${a}`).join(", ")}).` : "")
+      + (CALENDARIO.anos.has(ano + 1) ? "" : ` O calendário de ${ano + 1} ainda não está disponível; consulte o CRA: cursos.sabara@ifmg.edu.br.`);
+  }
   // "Qual o próximo feriado?" também sai pronto: com a lista de próximas datas, o modelo pulava o primeiro feriado
   if (!respostaDireta && /\bproxim[oa] feriado\b/.test(msg) && encontradas.length === 0 && msg.length <= 80) {
     const [k, evs] = [...CALENDARIO.eventos.entries()]

@@ -150,6 +150,22 @@ app.post("/agente", authMiddleware, async (req, res) => {
       });
     }
 
+    // Mensagem quase sem conteúdo ("a[", "?", "k"): o embedding fica genérico e chega a 60% de similaridade
+    // com tabelas da base, então nem passa pela busca
+    if ((pergunta.match(/[\p{L}\p{N}]/gu) || []).length < 3) {
+      console.log("[Escopo] Mensagem sem conteúdo suficiente: recusa padrão");
+      return res.json({
+        sucesso: true,
+        encontrou_resposta: false,
+        fora_de_escopo: true,
+        resposta: "Não consegui identificar uma dúvida relacionada aos serviços acadêmicos do IFMG Campus Sabará (como estágios, matrícula, CRA, dispensas ou biblioteca).",
+        perfil: {
+          curso,
+          ano
+        }
+      });
+    }
+
     // Datas citadas ("amanhã", "28 de outubro") são consultadas no calendário pelo código e vão para o prompt e para a busca
     // (senão "amanhã tem aula?" nem encontra o calendário); "tem aula em X?" já sai respondida, sem o LLM
     const datas = resolverDatas(pergunta);
@@ -191,8 +207,17 @@ app.post("/agente", authMiddleware, async (req, res) => {
     // casa com trechos do BSI acima de 60%), então ela só roda se a pergunta sozinha já achou algo relevante
     if (queryVectorCurso && searchResults.some((r) => r.score >= MIN_RELEVANCE_SCORE)) {
       const idsJaUsados = new Set(searchResults.map((r) => r.id));
-      const extras = (await searchSimilar(queryVectorCurso, 3, filter)).filter((r) => !idsJaUsados.has(r.id));
-      searchResults.push(...extras.slice(0, 2));
+      const extras = (await searchSimilar(queryVectorCurso, 3, filter)).filter((r) => !idsJaUsados.has(r.id)).slice(0, 2);
+      const idsExtras = extras.map((r) => r.id);
+      // O próprio nome do curso eleva o FAQ de estágios e a matriz do BSI acima de 60% para qualquer mensagem ("aaaa"),
+      // então o extra também precisa ter um mínimo de relação com a pergunta sem o curso. O piso é menor que o score
+      // mínimo porque trechos certos chegam só por essa busca ("disciplinas do 3º período": 69% com o curso, 43% sem)
+      const MIN_SCORE_EXTRA_SEM_CURSO = 0.40;
+      if (idsExtras.length) {
+        const filtroExtras = { must: [{ has_id: idsExtras }, ...(filter ? [filter] : [])] };
+        const semCurso = new Map((await searchSimilar(queryVector, idsExtras.length, filtroExtras)).map((r) => [r.id, r.score]));
+        searchResults.push(...extras.filter((r) => (semCurso.get(r.id) ?? 0) >= MIN_SCORE_EXTRA_SEM_CURSO));
+      }
     }
     console.timeEnd("[Tempo] 2. Qdrant Search");
 

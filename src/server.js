@@ -136,13 +136,32 @@ app.post("/agente", authMiddleware, async (req, res) => {
 
     // Saudação pura é respondida sem chamar o LLM: evita que modelos menores confundam
     // perguntas reais com saudações e copiem a mensagem de boas-vindas
-    const isApenasSaudacao = /^(oi|ol[aá]|bom dia|boa tarde|boa noite|e ai|e a[ií]|opa)[\s!.,?]*$/i.test(pergunta.trim());
+    const isApenasSaudacao = /^(oi|ol[aá]|bom dia|boa tarde|boa noite|e ai|e a[ií]|ea[eií]|ae|opa)[\s!.,?]*$/i.test(pergunta.trim());
     if (isApenasSaudacao) {
       return res.json({
         sucesso: true,
         encontrou_resposta: false,
         fora_de_escopo: true,
         resposta: "Olá! Sou o assistente virtual acadêmico do IFMG Campus Sabará e posso te ajudar com dúvidas sobre Estágios, CRA (matrícula/dispensas), Biblioteca e os cursos do campus.",
+        perfil: {
+          curso,
+          ano
+        }
+      });
+    }
+
+    // Respostas de conversa ("sim", "ok", "obrigado") não são perguntas: a busca achava tabelas acima do score mínimo
+    // e o modelo inventava uma resposta. Saem como fora de escopo para o Blip pedir a dúvida de novo
+    const conversa = pergunta.trim().toLowerCase().replace(/[\s!.,?]+$/, "");
+    const isAgradecimento = /^(muito )?(obrigad[oa]|brigad[oa]|valeu|vlw|agrade[cç]o)( mesmo)?$/.test(conversa);
+    const isConfirmacao = /^(sim|s|n[aã]o|n|ok|okay|blz|beleza|certo|entendi|t[aá]|t[aá] bom|t[aá] certo|ah|hm+|show|perfeito|tudo bem)$/.test(conversa);
+    const isNaoEntendi = /^(eu )?n[aã]o (entendi|compreendi)( nada)?$/.test(conversa);
+    if (isAgradecimento || isConfirmacao || isNaoEntendi) {
+      return res.json({
+        sucesso: true,
+        encontrou_resposta: false,
+        fora_de_escopo: true,
+        resposta: isAgradecimento ? "De nada! Fico à disposição." : isNaoEntendi ? "Desculpe se não fui claro." : "Entendido!",
         perfil: {
           curso,
           ano

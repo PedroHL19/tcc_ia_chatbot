@@ -81,7 +81,7 @@ app.post("/agente", authMiddleware, async (req, res) => {
   };
   try {
     // Suporta { mensagem: "..." } ou variações comuns do Blip
-    const pergunta =
+    let pergunta =
       req.body.mensagem || req.body.message || req.body.text || req.body.content;
 
     if (!pergunta || typeof pergunta !== "string" || pergunta.trim().length === 0) {
@@ -164,15 +164,18 @@ app.post("/agente", authMiddleware, async (req, res) => {
     // Respostas de conversa ("sim", "ok", "obrigado") não são perguntas: a busca achava tabelas acima do score mínimo
     // e o modelo inventava uma resposta. Saem como fora de escopo para o Blip pedir a dúvida de novo
     const conversa = pergunta.trim().toLowerCase().replace(/[\s!.,?]+$/, "");
+    // Só o nome da instituição tem embedding fraco: vira a pergunta completa
+    if (/^(o )?(ifmg|instituto( federal)?)( campus)?( sabar[aá])?$/.test(conversa)) pergunta = "O que é o IFMG? Que instituição é essa?";
     const isAgradecimento = /^(muito )?(obrigad[oa]|brigad[oa]|valeu|vlw|agrade[cç]o)( mesmo)?$/.test(conversa);
     const isConfirmacao = /^(sim|s|n[aã]o|n|ok|okay|blz|beleza|certo|entendi|t[aá]|t[aá] bom|t[aá] certo|ah|hm+|show|perfeito|tudo bem)$/.test(conversa);
     const isNaoEntendi = /^(eu )?n[aã]o (entendi|compreendi)( nada)?$/.test(conversa);
-    if (isAgradecimento || isConfirmacao || isNaoEntendi) {
+    const isDespedida = /^(tchau|xau|falou|flw|at[eé] (mais|logo|breve|depois|amanh[aã])|volto (depois|mais tarde|outra hora)|depois eu (volto|vejo)|fui)$/.test(conversa);
+    if (isAgradecimento || isConfirmacao || isNaoEntendi || isDespedida) {
       return res.json({
         sucesso: true,
         encontrou_resposta: false,
         fora_de_escopo: true,
-        resposta: isAgradecimento ? "De nada! Fico à disposição." : isNaoEntendi ? "Desculpe se não fui claro." : "Entendido!",
+        resposta: isAgradecimento ? "De nada! Fico à disposição." : isDespedida ? "Até mais! Fico à disposição quando precisar." : isNaoEntendi ? "Desculpe se não fui claro." : "Entendido!",
         perfil: {
           curso,
           ano

@@ -215,6 +215,30 @@ app.post("/agente", authMiddleware, async (req, res) => {
       });
     }
 
+    // O quadro de horários das aulas não está na base: o modelo inventava horários ("começa às 18h30") ou respondia
+    // com o horário da biblioteca, mesmo recebendo o trecho que diz que a informação não existe
+    const msgSemAcento = pergunta.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+    const perguntaHorarioAula = !datas && !/quantas horas/.test(msgSemAcento) &&
+      /(horario|que horas|hora)s?\b.{0,25}\baulas?\b|\baulas?\b.{0,20}(comeca|inicia|termina|acaba|horario)|quadro de horario/.test(msgSemAcento);
+    if (perguntaHorarioAula) {
+      const TURNOS = {
+        BSI: "o curso de Sistemas de Informação (BSI) é no turno matutino (manhã)",
+        ENG_AUTOMACAO: "o curso de Engenharia de Controle e Automação é no turno noturno",
+        LOGISTICA: "o curso de Logística é no turno noturno",
+        ADMINISTRACAO: "o curso de Administração é integral, com aulas concentradas no turno noturno"
+      };
+      const turno = TURNOS[curso]
+        ? `O que consta é que ${TURNOS[curso]}.`
+        : "O que consta é o turno de cada curso: Sistemas de Informação (BSI) é matutino; Engenharia de Controle e Automação e Logística são noturnos; Administração é integral, com aulas concentradas no turno noturno.";
+      return res.json({
+        sucesso: true,
+        encontrou_resposta: true,
+        fora_de_escopo: false,
+        resposta: `Não tenho o quadro de horários das aulas: os documentos oficiais não informam o horário de início e fim de cada aula. ${turno} Para o horário das suas aulas, procure a coordenação do seu curso ou o CRA: cursos.sabara@ifmg.edu.br ou (31) 2102-9376.`,
+        perfil: { curso, ano }
+      });
+    }
+
     console.time("[Tempo] 1. Embedding");
     // 1. Gera embedding da pergunta com o BGE-M3 (1024 dimensões).
     // Quando o curso é conhecido, gera também um embedding da pergunta com o nome do curso: assim trechos gerais

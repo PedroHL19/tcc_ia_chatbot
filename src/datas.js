@@ -121,6 +121,28 @@ function respostaAula(dt, rotulo) {
   }
 }
 
+/** Resposta pronta para "X é feriado?": com respostaAula, um dia sem feriado saía como "Sim" (tem aula) */
+function respostaFeriado(dt, rotulo) {
+  const { tipo, eventos } = classificar(dt);
+  if (tipo === "sem-calendario") return respostaAula(dt, rotulo);
+  const data = `${rotulo ? `${rotulo[0].toUpperCase()}${rotulo.slice(1)}, ` : ""}${formatar(dt)} (${diaSemana(dt)})`;
+  const feriados = eventos.filter((e) => /feriado/i.test(e));
+  if (feriados.length) return `Sim. ${data}: ${feriados.join("; ")}.`;
+  const semAula = eventos.filter((e) => SEM_AULA.test(e));
+  return `Não. ${data} não é feriado no calendário acadêmico.${semAula.length ? ` Mas não tem aula: ${semAula.join("; ")}.` : ""}`;
+}
+
+/** Feriados do calendário entre duas datas (inclusive), uma frase por data */
+function listarFeriados(ini, fim) {
+  return [...CALENDARIO.eventos.entries()]
+    .filter(([k, evs]) => k >= chave(ini) && k <= chave(fim) && evs.some((e) => /feriado/i.test(e)))
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([k, evs]) => {
+      const dt = new Date(k + "T00:00:00Z");
+      return `${formatar(dt)} (${diaSemana(dt)}): ${evs.filter((e) => /feriado/i.test(e)).join("; ")}`;
+    });
+}
+
 /** Períodos letivos do ano e em qual deles está a data de hoje */
 function periodosLetivos(hoje) {
   const doAno = CALENDARIO.periodos.filter(([ini]) => ini.getUTCFullYear() === hoje.getUTCFullYear());
@@ -172,6 +194,22 @@ export function resolverDatas(mensagem) {
   for (const [, d, mes, a] of msg.matchAll(new RegExp(`\\b(\\d{1,2})\\s+de\\s+(${nomesMeses.join("|")})(?:\\s+de\\s+(\\d{4}))?`, "g"))) {
     criar(+d, nomesMeses.indexOf(mes) + 1, a && +a);
   }
+  // "dia 15" sem mês: a próxima vez que esse dia acontece (este mês, ou o próximo se já passou)
+  for (const [, d] of msg.matchAll(/\bdia (\d{1,2})\b(?!\s*\/|\s+de\s)/g)) {
+    const base = hoje.getUTCDate() <= +d ? hoje : utc(hoje.getUTCFullYear(), hoje.getUTCMonth() + 2, 1);
+    criar(+d, base.getUTCMonth() + 1, base.getUTCFullYear());
+  }
+  // "segunda tem aula?", "sexta é feriado?": a próxima ocorrência do dia (hoje conta). Só com aula/feriado na frase,
+  // para não pegar "segunda chamada" ou "segunda via"
+  if (/\baulas?\b|feriado/.test(msg)) {
+    const nomes = ["domingo", "segunda", "terca", "quarta", "quinta", "sexta", "sabado"];
+    for (const [, nome] of msg.matchAll(/\b(domingo|segunda|terca|quarta|quinta|sexta|sabado)(?:-feira| feira)?\b(?! (chamada|via|etapa|vez|parte|prova|opcao))/g)) {
+      encontradas.push([somarDias(hoje, (nomes.indexOf(nome) - hoje.getUTCDay() + 7) % 7), null]);
+    }
+  }
+  // "feriados de novembro", "tem feriado essa semana?", "quais os feriados?": lista pronta do calendário
+  const mesCitado = nomesMeses.find((m) => new RegExp(`\\b${m}\\b`).test(msg));
+  const perguntaFeriados = /feriados?/.test(msg) && !/\bproxim[oa] feriado\b/.test(msg);
 
   const perguntaProximo = /\bproxim[oa]s?\b/.test(msg) && /feriado|recesso|ferias|prazo|aula|semestre|calendario|evento|data/.test(msg);
   // Só perguntas sobre início/fim do semestre, férias ou calendário ("disciplinas do 3º semestre" não entra)
@@ -180,7 +218,7 @@ export function resolverDatas(mensagem) {
   const perguntaQuandoPausa = /\b(quando|proxim[oa]s?|datas?|calendario)\b|\b(tem|ha|vai ter|terao?)\s+(ferias|recesso)/.test(msg) || /^(as |os )?(ferias|recessos?)\s*\??$/.test(msg.trim());
   const perguntaPausa = /ferias|recesso/.test(msg) && perguntaQuandoPausa;
   const perguntaPeriodo = perguntaPausa || /(inicio|comec\w*|termin\w*|acab\w*|\bfim\b|final)\b.{0,35}semestre|semestre.{0,25}(comec|termin|acab)|calendario|periodo letivo|ano letivo|volta\w* (as|das) aulas/.test(msg);
-  if (encontradas.length === 0 && !perguntaProximo && !perguntaPeriodo) return null;
+  if (encontradas.length === 0 && !perguntaProximo && !perguntaPeriodo && !perguntaFeriados) return null;
 
   const linhas = [`Hoje é ${diaSemana(hoje)}, ${formatar(hoje)}.`];
   const termos = new Set();
@@ -214,9 +252,30 @@ export function resolverDatas(mensagem) {
   }
   // Pergunta curta e direta "tem aula ...?" com data: a resposta sai pronta do calendário
   const unicas = encontradas.filter(([dt], i) => encontradas.findIndex(([d]) => chave(d) === chave(dt)) === i);
-  let respostaDireta = /\baulas?\b/.test(msg) && unicas.length > 0 && msg.length <= 80
-    ? unicas.map(([dt, rotulo]) => respostaAula(dt, rotulo)).join("\n")
+  const sobreFeriado = /feriado/.test(msg) && !/\baulas?\b/.test(msg);
+  let respostaDireta = (/\baulas?\b/.test(msg) || sobreFeriado) && unicas.length > 0 && msg.length <= 80
+    ? unicas.map(([dt, rotulo]) => (sobreFeriado ? respostaFeriado : respostaAula)(dt, rotulo)).join("\n")
     : null;
+  if (!respostaDireta && perguntaFeriados && unicas.length === 0 && msg.length <= 80) {
+    const ano = hoje.getUTCFullYear();
+    let ini, fim, periodo;
+    if (/(essa|esta|nessa|nesta) semana/.test(msg)) {
+      ini = hoje; fim = somarDias(hoje, (7 - hoje.getUTCDay()) % 7); periodo = "nesta semana";
+    } else if (/semana que vem|proxima semana/.test(msg)) {
+      ini = somarDias(hoje, 7 - hoje.getUTCDay() + 1); fim = somarDias(ini, 6); periodo = "na próxima semana";
+    } else if (mesCitado) {
+      const m = nomesMeses.indexOf(mesCitado) + 1;
+      ini = utc(ano, m, 1); fim = utc(ano, m + 1, 0); periodo = `em ${MESES[m - 1]} de ${ano}`;
+    } else {
+      ini = hoje; fim = utc(ano, 12, 31); periodo = `de hoje até o fim de ${ano}`;
+    }
+    const feriados = listarFeriados(ini, fim);
+    respostaDireta = !CALENDARIO.anos.has(ini.getUTCFullYear())
+      ? `Ainda não tenho o calendário acadêmico de ${ini.getUTCFullYear()}. Consulte o CRA: cursos.sabara@ifmg.edu.br ou (31) 2102-9376.`
+      : feriados.length
+        ? `Feriados ${periodo} no calendário acadêmico: ${feriados.join("; ")}.`
+        : `Não há feriados ${periodo} no calendário acadêmico.`;
+  }
   // "Quando são as férias?" também sai pronto, com os próximos períodos e as férias do ano que já passaram
   if (!respostaDireta && proximasPausas && encontradas.length === 0 && msg.length <= 80) {
     const ano = hoje.getUTCFullYear();

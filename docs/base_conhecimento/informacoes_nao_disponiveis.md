@@ -26,3 +26,9 @@ Não tenho essa informação: os documentos oficiais não informam valores de bo
 ### Posso fazer estágio durante as férias?
 
 Não tenho essa informação: os documentos oficiais não tratam de estágio durante as férias escolares. Procure a Seção de Estágios: estagio.sabara@ifmg.edu.br.
+
+---
+
+### Qual o horário das aulas? Que horas começa e termina a aula? Qual o quadro de horários do meu curso?
+
+Não tenho essa informação: os documentos oficiais não trazem o quadro de horários das aulas (horário de início e fim de cada aula ou disciplina). Não confunda com o horário da Biblioteca nem com a carga horária das disciplinas. O que consta é o turno de cada curso: Sistemas de Informação (BSI) é matutino (manhã); Engenharia de Controle e Automação e Logística são noturnos; Administração é integral, com aulas concentradas no turno noturno. Para o quadro de horários, procure a coordenação do seu curso ou o CRA: cursos.sabara@ifmg.edu.br ou (31) 2102-9376.

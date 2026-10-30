@@ -218,6 +218,26 @@ app.post("/agente", authMiddleware, async (req, res) => {
     // Horário das aulas: o modelo inventava horários ("começa às 18h30") ou respondia com o horário da biblioteca,
     // então a resposta sai pronta com o período do curso
     const msgSemAcento = pergunta.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+    // Requisitos/período do estágio na Engenharia: a Seção de Estágios pediu a resposta completa (as duas matrizes),
+    // porque o modelo escolhia uma regra só e dizia "qualquer período" para quem é da matriz nova
+    const perguntaRequisitosEstagioEng = !datas &&
+      (curso === "ENG_AUTOMACAO" || /engenharia|automacao/.test(msgSemAcento)) &&
+      /estagio/.test(msgSemAcento) &&
+      /periodo|requisit|exigenc|exige|quando (posso|pode|devo)|a partir de|pre-?requisito|aptidao|apto/.test(msgSemAcento) &&
+      !/orientador|document|relatorio|termo|aditivo|prorrog|rescis|supervisor/.test(msgSemAcento);
+    if (perguntaRequisitosEstagioEng) {
+      return res.json({
+        sucesso: true,
+        encontrou_resposta: true,
+        fora_de_escopo: false,
+        resposta: "Para a Engenharia de Controle e Automação, o estágio é um componente curricular obrigatório, mas também é possível realizar o estágio não obrigatório. Para ambas as modalidades, a/o discente deve estar com matrícula e frequência regulares e as atividades planejadas devem ter relação direta com o curso.\n\n" +
+          "- Ingressantes entre 2019 e 2022: são exigidas 390 horas de Estágio Obrigatório, permitida a realização em qualquer período do curso.\n" +
+          "- Ingressantes a partir de 2023: são exigidas 240 horas de Estágio Obrigatório, que pode ser realizado após a conclusão de 1200 horas de curso OU após concluir 33% do curso OU, em períodos letivos regulares, após ter integralizado todas as matérias até o 4º período.\n\n" +
+          "Já o Estágio Não Obrigatório pode ser realizado em qualquer período.\n\nDúvidas: Seção de Estágios — estagio.sabara@ifmg.edu.br",
+        perfil: { curso, ano }
+      });
+    }
+
     const perguntaHorarioAula = !datas && !/quantas horas/.test(msgSemAcento) &&
       /(horario|que horas|hora)s?\b.{0,25}\baulas?\b|\baulas?\b.{0,20}(comeca|inicia|termina|acaba|horario)|quadro de horario/.test(msgSemAcento);
     if (perguntaHorarioAula) {

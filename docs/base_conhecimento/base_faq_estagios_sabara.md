@@ -162,6 +162,14 @@ A alteração do supervisor do estágio ou qualquer outra alteração dos termos
 
 ---
 
+### No estágio não obrigatório, também é necessário ter um professor orientador e entregar a documentação, ou essas exigências se aplicam apenas aos estágios obrigatórios?
+
+Os estágios em ambas as modalidades, obrigatório e não obrigatório, devem ser orientados e supervisionados e devem cumprir os requisitos legais quanto à carga horária máxima de 6 horas diárias e 30 horas semanais, período máximo de estágio de 2 anos, documentação (Termo de Compromisso de Estágio - TCE, Plano de Atividades, Relatórios de Atividades, Termo de Realização de Avaliação Final, Termo de Rescisão), entre outros.
+
+**Contato para dúvidas relacionadas:** estagio.sabara@ifmg.edu.br
+
+---
+
 ### Posso realizar mais de um estágio ao mesmo tempo?
 
 De acordo com a LEI Nº 11.788, Lei do Estágio, o limite de carga horária para a realização de estágios é de 6 horas diárias e 30 horas semanais. Desta forma, somente é possível realizar mais de um estágio simultaneamente, se a soma das jornadas diárias dos estágios for igual ou inferior a 6 horas diárias e a soma das jornadas semanais for inferior ou igual a 30 horas semanais. Além disso, devem inexistir conflitos entre os horários dos estágios. Procure a Seção de Estágios para sanar suas dúvidas e receber mais orientações: estagio.sabara@ifmg.edu.br.

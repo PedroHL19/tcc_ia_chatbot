@@ -1,0 +1,708 @@
+{
+  "rotulo": "notebook",
+  "url": "http://localhost:3000/agente",
+  "curso": "BSI",
+  "ano": "2025",
+  "inicio": "2026-10-30T22:18:11.144Z",
+  "niveis": [
+    {
+      "simultaneas": 5,
+      "totalS": 152.82,
+      "respostas": [
+        {
+          "id": "T001",
+          "pergunta": "Estágio",
+          "ok": true,
+          "status": 200,
+          "s": 36.119,
+          "fora": false,
+          "resposta": "Você está cursando o Bacharelado em Sistemas de Informação (BSI) no IFMG Campus Sabará, com ingresso em 2025. De acordo com a matriz curricular do curso, o estágio curricular é um componente obrigatór"
+        },
+        {
+          "id": "T002",
+          "pergunta": "Como faço para iniciar um estágio no IFMG Campus Sabará?",
+          "ok": true,
+          "status": 200,
+          "s": 68.387,
+          "fora": false,
+          "resposta": "Para iniciar um estágio no IFMG Campus Sabará, você precisa convidar um(a) docente da área para a função de orientador(a) e preencher a Ficha Cadastral com, ao menos, 7 dias úteis de antecedência em r"
+        },
+        {
+          "id": "T003",
+          "pergunta": "Quais documentos preciso entregar antes de começar o estágio?",
+          "ok": true,
+          "status": 200,
+          "s": 128.765,
+          "fora": false,
+          "resposta": "Para iniciar um estágio, você precisará convidar um(a) docente da área para a função de orientador(a) e também preencher a Ficha Cadastral com, ao menos, 7 dias úteis de antecedência em relação ao iní"
+        },
+        {
+          "id": "T004",
+          "pergunta": "Posso começar a estagiar antes de assinar o termo de compromisso?",
+          "ok": true,
+          "status": 200,
+          "s": 152.818,
+          "fora": false,
+          "resposta": "Não. Para que se formalize um estágio, a documentação deve estar assinada pelos seguintes partícipes: representante da parte concedente; supervisor na parte concedente, estudante, professor(a) orienta"
+        },
+        {
+          "id": "T005",
+          "pergunta": "Qual é a diferença entre estágio obrigatório e não obrigatório?",
+          "ok": true,
+          "status": 200,
+          "s": 95.738,
+          "fora": false,
+          "resposta": "O Estágio Obrigatório é aquele definido como tal no Projeto Pedagógico do Curso (PPC). Trata-se de um componente curricular obrigatório, cuja carga horária é requisito para aprovação e obtenção de dip"
+        }
+      ]
+    },
+    {
+      "simultaneas": 10,
+      "totalS": 189.315,
+      "respostas": [
+        {
+          "id": "T006",
+          "pergunta": "Como descubro se meu curso exige estágio obrigatório?",
+          "ok": true,
+          "status": 200,
+          "s": 33.012,
+          "fora": false,
+          "resposta": "Para saber se o seu curso exige estágio obrigatório, você precisa consultar o Projeto Pedagógico do Curso (PPC). No IFMG Campus Sabará, todos os cursos permitem a realização de Estágio Não Obrigatório"
+        },
+        {
+          "id": "T007",
+          "pergunta": "Qual é a carga horária máxima diária permitida para um estagiário?",
+          "ok": true,
+          "status": 200,
+          "s": 36.496,
+          "fora": false,
+          "resposta": "A carga horária máxima diária permitida para um estagiário é de 8 horas."
+        },
+        {
+          "id": "T008",
+          "pergunta": "Preciso de um professor orientador para realizar o estágio?",
+          "ok": true,
+          "status": 200,
+          "s": 50.737,
+          "fora": false,
+          "resposta": "Para formalizar o seu estágio, você precisará convidar um(a) docente da área para a função de orientador(a). Procure a Seção de Estágios para sanar suas dúvidas e receber mais orientações: estagio.sab"
+        },
+        {
+          "id": "T009",
+          "pergunta": "Como faço para cadastrar uma empresa como concedente de estágio?",
+          "ok": true,
+          "status": 200,
+          "s": 62.56,
+          "fora": false,
+          "resposta": "Para cadastrar uma empresa como concedente de estágio, você precisará entrar em contato com a Seção de Estágios do Campus. Eles podem ser alcançados através do e-mail estagio.sabara@ifmg.edu.br."
+        },
+        {
+          "id": "T010",
+          "pergunta": "O que devo fazer se a empresa quiser alterar minha carga horária?",
+          "ok": true,
+          "status": 200,
+          "s": 108.923,
+          "fora": false,
+          "resposta": "Se a empresa quiser alterar sua carga horária, você deve formalizar a alteração por meio de um Termo Aditivo. Procure a Seção de Estágios para sanar suas dúvidas e receber mais orientações: estagio.sa"
+        },
+        {
+          "id": "T011",
+          "pergunta": "Como faço para prorrogar meu estágio?",
+          "ok": true,
+          "status": 200,
+          "s": 90.953,
+          "fora": false,
+          "resposta": "Para prorrogar seu estágio, você precisa entregar um Termo Aditivo com, no mínimo, 7 dias úteis antes do vencimento do Termo de Compromisso de Estágio - TCE. Além disso, é necessário verificar se você"
+        },
+        {
+          "id": "T012",
+          "pergunta": "Como encerro o estágio antes da data prevista?",
+          "ok": true,
+          "status": 200,
+          "s": 126.973,
+          "fora": false,
+          "resposta": "Para encerrar o estágio antes da data prevista, você precisará preencher e entregar a Ficha de Conclusão de Estágio, que será editada pela Seção de Estágios do Campus, com, no mínimo, 7 dias úteis de "
+        },
+        {
+          "id": "T013",
+          "pergunta": "Preciso entregar algum relatório durante ou após o estágio?",
+          "ok": true,
+          "status": 200,
+          "s": 162.869,
+          "fora": false,
+          "resposta": "Sim, você precisa entregar o Relatório de Atividades (Semestral) no SUAP. O sistema SUAP emite um alerta para os e-mails cadastrados no fechamento de cada período. O SUPERVISOR deve preencher o Relató"
+        },
+        {
+          "id": "T014",
+          "pergunta": "Onde encontro os formulários de estágio?",
+          "ok": true,
+          "status": 200,
+          "s": 183.032,
+          "fora": false,
+          "resposta": "Você pode acessar os formulários de estágio e obter mais informações sobre o assunto no site do IFMG Campus Sabará. No menu, busque por “Ensino, Pesquisa e Extensão” > “Estágios” (https://www.ifmg.edu"
+        },
+        {
+          "id": "T015",
+          "pergunta": "Com quem devo entrar em contato se tiver dúvidas sobre meus documentos?",
+          "ok": true,
+          "status": 200,
+          "s": 189.31,
+          "fora": false,
+          "resposta": "Entre em contato com a Seção de Estágios pelo e-mail estagio.sabara@ifmg.edu.br."
+        }
+      ]
+    },
+    {
+      "simultaneas": 20,
+      "totalS": 300.006,
+      "respostas": [
+        {
+          "id": "T016",
+          "pergunta": "A escola pode assinar meus documentos de estágio depois que eu já tiver começado?",
+          "ok": true,
+          "status": 200,
+          "s": 17.369,
+          "fora": false,
+          "resposta": "Não. Para que se formalize um estágio, a documentação deve estar assinada pelos seguintes partícipes: representante da parte concedente; supervisor na parte concedente, estudante, professor(a) orienta"
+        },
+        {
+          "id": "T017",
+          "pergunta": "Biblioteca",
+          "ok": true,
+          "status": 200,
+          "s": 29.671,
+          "fora": false,
+          "resposta": "Você pode entrar em contato com a equipe da biblioteca pelo telefone (31) 2102-9374, pelo e-mail biblioteca.sabara@ifmg.edu.br ou presencialmente, durante o horário de atendimento. Além disso, as info"
+        },
+        {
+          "id": "T018",
+          "pergunta": "Qual é o horário de funcionamento da biblioteca?",
+          "ok": true,
+          "status": 200,
+          "s": 57.999,
+          "fora": false,
+          "resposta": "O horário de funcionamento da biblioteca é de segunda a sexta-feira, das 9h às 21h. Para períodos de recesso escolar, feriados ou alterações excepcionais, consulte os comunicados do campus ou entre em"
+        },
+        {
+          "id": "T019",
+          "pergunta": "Como faço para pegar um livro emprestado?",
+          "ok": true,
+          "status": 200,
+          "s": 43.493,
+          "fora": false,
+          "resposta": "Para saber se um livro está disponível para empréstimo, você deve abrir o registro da obra no Pergamum e consultar a situação dos exemplares de Sabará. Verifique se há exemplar disponível e se ele pod"
+        },
+        {
+          "id": "T020",
+          "pergunta": "Quantos livros posso retirar de uma vez?",
+          "ok": true,
+          "status": 200,
+          "s": 72.971,
+          "fora": false,
+          "resposta": "Você pode procurar a Biblioteca para saber o limite de livros por empréstimo. Eles têm informações atualizadas sobre os empréstimos e podem ajudá-lo a entender melhor as regras de empréstimo. Você pod"
+        },
+        {
+          "id": "T021",
+          "pergunta": "Por quantos dias posso ficar com um livro emprestado?",
+          "ok": true,
+          "status": 200,
+          "s": 83.884,
+          "fora": false,
+          "resposta": "Você pode ficar com um livro emprestado por 7 dias corridos."
+        },
+        {
+          "id": "T022",
+          "pergunta": "Posso renovar um empréstimo? Como?",
+          "ok": true,
+          "status": 200,
+          "s": 78.865,
+          "fora": false,
+          "resposta": "Você pode renovar um empréstimo diretamente pelo SUAP ou pelo Pergamum, ou no balcão da biblioteca."
+        },
+        {
+          "id": "T023",
+          "pergunta": "Como faço para reservar um livro que está emprestado?",
+          "ok": true,
+          "status": 200,
+          "s": 270.265,
+          "fora": false,
+          "resposta": "Para reservar um livro que está emprestado, você pode verificar se há exemplar disponível no Pergamum. Abra o registro da obra e consulte a situação dos exemplares de Sabará. Se houver exemplar dispon"
+        },
+        {
+          "id": "T024",
+          "pergunta": "Onde consulto se um livro está disponível?",
+          "ok": true,
+          "status": 200,
+          "s": 124.482,
+          "fora": false,
+          "resposta": "Abra o registro da obra no Pergamum e consulte a situação dos exemplares de Sabará. Verifique se há exemplar disponível e se ele pode ser emprestado. Se a informação gerar dúvida, confirme no balcão d"
+        },
+        {
+          "id": "T025",
+          "pergunta": "O que acontece se eu atrasar a devolução?",
+          "ok": true,
+          "status": 200,
+          "s": 114.252,
+          "fora": false,
+          "resposta": "Se você atrasar a devolução, a pendência na biblioteca será registrada. Isso pode impedir novos empréstimos, o trancamento de matrícula, a expedição do diploma e a renovação de matrícula. Para resolve"
+        },
+        {
+          "id": "T026",
+          "pergunta": "Posso pegar livros emprestados estando com uma devolução atrasada?",
+          "ok": false,
+          "status": 0,
+          "s": 300.005,
+          "fora": null,
+          "resposta": "ERRO: The operation was aborted due to timeout"
+        },
+        {
+          "id": "T027",
+          "pergunta": "O que devo fazer se perder ou danificar um livro?",
+          "ok": true,
+          "status": 200,
+          "s": 139.807,
+          "fora": false,
+          "resposta": "Se você perder ou danificar um livro, entre em contato com a equipe da Biblioteca para regularizar a pendência. Eles podem ser contatados pelo telefone (31) 2102-9374, pelo e-mail biblioteca.sabara@if"
+        },
+        {
+          "id": "T028",
+          "pergunta": "Alunos de todos os cursos podem usar a biblioteca?",
+          "ok": true,
+          "status": 200,
+          "s": 226.66,
+          "fora": false,
+          "resposta": "Sim, qualquer membro da comunidade externa pode utilizar a biblioteca para estudar e consultar o acervo no local. O empréstimo domiciliar exige vínculo formal com o IFMG. Para saber mais, consulte a I"
+        },
+        {
+          "id": "T029",
+          "pergunta": "Pessoas que não estudam no IFMG podem consultar o acervo?",
+          "ok": true,
+          "status": 200,
+          "s": 165.866,
+          "fora": false,
+          "resposta": "Sim. Qualquer membro da comunidade externa pode utilizar a biblioteca para estudar e consultar o acervo no local. O empréstimo domiciliar exige vínculo formal com o IFMG. Para saber mais, consulte a I"
+        },
+        {
+          "id": "T030",
+          "pergunta": "Como acesso o catálogo on-line da biblioteca?",
+          "ok": true,
+          "status": 200,
+          "s": 149.377,
+          "fora": false,
+          "resposta": "O catálogo da biblioteca é o Pergamum. Você pode acessá-lo diretamente pelo link https://pergamum.ifmg.edu.br/ ou pelo SUAP, na barra de menu à esquerda, clique em \"Biblioteca\" e depois em \"Pergamum\"."
+        },
+        {
+          "id": "T031",
+          "pergunta": "A biblioteca possui acesso a livros digitais ou bases de artigos?",
+          "ok": true,
+          "status": 200,
+          "s": 255.66,
+          "fora": false,
+          "resposta": "Sim, a biblioteca possui acesso a livros digitais e bases de artigos. O IFMG disponibiliza acesso gratuito a acervos virtuais, bases de dados de normas técnicas e repositórios acadêmicos para toda a c"
+        },
+        {
+          "id": "T032",
+          "pergunta": "Como entro em contato com a biblioteca?",
+          "ok": true,
+          "status": 200,
+          "s": 283.54,
+          "fora": false,
+          "resposta": "Você pode entrar em contato com a equipe da biblioteca pelo telefone (31) 2102-9374, pelo e-mail biblioteca.sabara@ifmg.edu.br ou presencialmente, durante o horário de atendimento. As informações tamb"
+        },
+        {
+          "id": "T033",
+          "pergunta": "Controle e Registro Acadêmico",
+          "ok": true,
+          "status": 200,
+          "s": 209.784,
+          "fora": false,
+          "resposta": "Se você precisar de informações sobre o Controle e Registro Acadêmico (CRA), entre em contato com o setor responsável pelo e-mail cursos.sabara@ifmg.edu.br ou pelo telefone (31) 2102-9376."
+        },
+        {
+          "id": "T034",
+          "pergunta": "Como solicito uma declaração de matrícula?",
+          "ok": true,
+          "status": 200,
+          "s": 199.814,
+          "fora": false,
+          "resposta": "Você pode emitir documentos do aluno pelo SUAP (declaração de matrícula, histórico parcial) diretamente. O vídeo com orientações está disponível no link https://www.youtube.com/watch?v=tkwjdIRMytc."
+        },
+        {
+          "id": "T035",
+          "pergunta": "Onde posso consultar meu histórico escolar?",
+          "ok": true,
+          "status": 200,
+          "s": 188.127,
+          "fora": false,
+          "resposta": "Para consultar seu histórico escolar, você pode acessar o SUAP e seguir os passos abaixo:\n\n1. Faça login no SUAP;\n2. Navegue até **\"Meus Dados\"**;\n3. Acesse a aba **\"Histórico\"**.\n\nEssa aba deve conte"
+        }
+      ]
+    },
+    {
+      "simultaneas": 40,
+      "totalS": 300.021,
+      "respostas": [
+        {
+          "id": "T036",
+          "pergunta": "Como faço para obter meu comprovante de matrícula?",
+          "ok": true,
+          "status": 200,
+          "s": 92.358,
+          "fora": false,
+          "resposta": "Você pode emitir documentos como declaração de matrícula diretamente pelo SUAP. Acesse o ambiente virtual do SUAP com sua matrícula e senha, localize a opção de requerimento/solicitação de documentos "
+        },
+        {
+          "id": "T037",
+          "pergunta": "Como solicito o trancamento de matrícula?",
+          "ok": true,
+          "status": 200,
+          "s": 72.099,
+          "fora": false,
+          "resposta": "Para solicitar o trancamento de matrícula, você deve acessar o ambiente virtual do SUAP durante o período aberto pelo calendário acadêmico. Siga os passos abaixo:\n\n1. Acesse o SUAP com sua matrícula e"
+        },
+        {
+          "id": "T038",
+          "pergunta": "Existe prazo para solicitar o trancamento?",
+          "ok": true,
+          "status": 200,
+          "s": 108.025,
+          "fora": false,
+          "resposta": "O prazo para solicitar o trancamento de matrícula está previsto no Calendário Acadêmico vigente do campus. Você pode consultar o calendário acadêmico em: https://www.ifmg.edu.br/sabara/ensino-pesquisa"
+        },
+        {
+          "id": "T039",
+          "pergunta": "Posso trancar apenas uma disciplina?",
+          "ok": true,
+          "status": 200,
+          "s": 147.339,
+          "fora": false,
+          "resposta": "O trancamento parcial (disciplinas) suspende parcialmente as atividades acadêmicas. Para solicitar o trancamento parcial, você deve realizar o pedido pelo SUAP (Requerimentos) e observar o período pre"
+        },
+        {
+          "id": "T040",
+          "pergunta": "Como faço para cancelar minha matrícula?",
+          "ok": true,
+          "status": 200,
+          "s": 127.521,
+          "fora": false,
+          "resposta": "Para cancelar sua matrícula, você deve solicitar o desligamento (desistência) do curso. A solicitação deve ser encaminhada para o e-mail cursos.sabara@ifmg.edu.br, conforme as orientações em https://w"
+        },
+        {
+          "id": "T041",
+          "pergunta": "Como solicito aproveitamento de disciplinas que já cursei?",
+          "ok": true,
+          "status": 200,
+          "s": 202.395,
+          "fora": false,
+          "resposta": "Para solicitar aproveitamento de disciplinas que já cursei, você deve seguir o processo de Aproveitamento de Estudos (AE) do IFMG Campus Sabará. O AE é o processo pelo qual o discente pode aproveitar "
+        },
+        {
+          "id": "T042",
+          "pergunta": "Como peço revisão de uma nota?",
+          "ok": true,
+          "status": 200,
+          "s": 270.555,
+          "fora": false,
+          "resposta": "Para solicitar a revisão de uma nota, você deve enviar um e-mail formal para a Coordenação do seu Curso, contendo as informações necessárias. Seguem as orientações:\n\n1. Nome completo e Turma/Período;\n"
+        },
+        {
+          "id": "T043",
+          "pergunta": "Como atualizo meus dados cadastrais?",
+          "ok": true,
+          "status": 200,
+          "s": 212.897,
+          "fora": false,
+          "resposta": "Para atualizar seus dados cadastrais, você pode realizar o processo de renovação de matrícula e ajuste de disciplinas no sistema SUAP. Se você tiver alguma dúvida ou precisar de ajuda, entre em contat"
+        },
+        {
+          "id": "T044",
+          "pergunta": "Como faço para solicitar transferência para outro campus?",
+          "ok": true,
+          "status": 200,
+          "s": 293.805,
+          "fora": false,
+          "resposta": "Se você deseja solicitar transferência para outro campus, basta acessar o ambiente virtual do SUAP e solicitar a transferência diretamente pelo sistema, durante o período aberto pelo calendário acadêm"
+        },
+        {
+          "id": "T045",
+          "pergunta": "Como solicito transferência de outra instituição para o IFMG?",
+          "ok": false,
+          "status": 0,
+          "s": 300.009,
+          "fora": null,
+          "resposta": "ERRO: The operation was aborted due to timeout"
+        },
+        {
+          "id": "T046",
+          "pergunta": "Como faço para retornar ao curso após um período de trancamento?",
+          "ok": false,
+          "status": 0,
+          "s": 300.009,
+          "fora": null,
+          "resposta": "ERRO: The operation was aborted due to timeout"
+        },
+        {
+          "id": "T047",
+          "pergunta": "Onde encontro o calendário acadêmico?",
+          "ok": true,
+          "status": 200,
+          "s": 35.173,
+          "fora": false,
+          "resposta": "O calendário acadêmico é um documento oficial do campus que organiza e divulga as datas e os prazos das principais atividades acadêmicas ao longo de um semestre ou ano letivo. Ele funciona como um gui"
+        },
+        {
+          "id": "T048",
+          "pergunta": "Como entro em contato com o Controle e Registro Acadêmico?",
+          "ok": false,
+          "status": 0,
+          "s": 300.01,
+          "fora": null,
+          "resposta": "ERRO: The operation was aborted due to timeout"
+        },
+        {
+          "id": "T049",
+          "pergunta": "Preciso de um documento que comprove que estou estudando no IFMG. Como consigo?",
+          "ok": false,
+          "status": 0,
+          "s": 300.01,
+          "fora": null,
+          "resposta": "ERRO: The operation was aborted due to timeout"
+        },
+        {
+          "id": "T050",
+          "pergunta": "Encontrei uma vaga em uma empresa. O que preciso fazer antes de começar?",
+          "ok": false,
+          "status": 0,
+          "s": 300.01,
+          "fora": null,
+          "resposta": "ERRO: The operation was aborted due to timeout"
+        },
+        {
+          "id": "T051",
+          "pergunta": "Estou com um livro atrasado. Como resolvo isso?",
+          "ok": false,
+          "status": 0,
+          "s": 300.009,
+          "fora": null,
+          "resposta": "ERRO: The operation was aborted due to timeout"
+        },
+        {
+          "id": "T052",
+          "pergunta": "Quero aproveitar uma matéria que fiz em outra faculdade. O que faço?",
+          "ok": false,
+          "status": 0,
+          "s": 300.01,
+          "fora": null,
+          "resposta": "ERRO: The operation was aborted due to timeout"
+        },
+        {
+          "id": "T053",
+          "pergunta": "Minha empresa quer que eu trabalhe mais horas do que estava previsto no contrato. Como devo proceder?",
+          "ok": false,
+          "status": 0,
+          "s": 300.01,
+          "fora": null,
+          "resposta": "ERRO: The operation was aborted due to timeout"
+        },
+        {
+          "id": "T054",
+          "pergunta": "Preciso consultar um livro para um trabalho, mas não sei se ele existe no campus.",
+          "ok": false,
+          "status": 0,
+          "s": 300.011,
+          "fora": null,
+          "resposta": "ERRO: The operation was aborted due to timeout"
+        },
+        {
+          "id": "T055",
+          "pergunta": "Vou ficar um semestre sem estudar. Quais opções tenho?",
+          "ok": false,
+          "status": 0,
+          "s": 300.01,
+          "fora": null,
+          "resposta": "ERRO: The operation was aborted due to timeout"
+        },
+        {
+          "id": "T056",
+          "pergunta": "Quem pode assinar a documentação necessária para o meu estágio?",
+          "ok": false,
+          "status": 0,
+          "s": 300.01,
+          "fora": null,
+          "resposta": "ERRO: The operation was aborted due to timeout"
+        },
+        {
+          "id": "T057",
+          "pergunta": "Preciso de um documento com todas as matérias e notas que já cursei.",
+          "ok": false,
+          "status": 0,
+          "s": 300.011,
+          "fora": null,
+          "resposta": "ERRO: The operation was aborted due to timeout"
+        },
+        {
+          "id": "T058",
+          "pergunta": "Perdi um livro que peguei emprestado. Com quem devo falar?",
+          "ok": false,
+          "status": 0,
+          "s": 300.011,
+          "fora": null,
+          "resposta": "ERRO: The operation was aborted due to timeout"
+        },
+        {
+          "id": "T001",
+          "pergunta": "Estágio",
+          "ok": false,
+          "status": 0,
+          "s": 300.011,
+          "fora": null,
+          "resposta": "ERRO: The operation was aborted due to timeout"
+        },
+        {
+          "id": "T002",
+          "pergunta": "Como faço para iniciar um estágio no IFMG Campus Sabará?",
+          "ok": false,
+          "status": 0,
+          "s": 300.012,
+          "fora": null,
+          "resposta": "ERRO: The operation was aborted due to timeout"
+        },
+        {
+          "id": "T003",
+          "pergunta": "Quais documentos preciso entregar antes de começar o estágio?",
+          "ok": false,
+          "status": 0,
+          "s": 300.011,
+          "fora": null,
+          "resposta": "ERRO: The operation was aborted due to timeout"
+        },
+        {
+          "id": "T004",
+          "pergunta": "Posso começar a estagiar antes de assinar o termo de compromisso?",
+          "ok": false,
+          "status": 0,
+          "s": 300.011,
+          "fora": null,
+          "resposta": "ERRO: The operation was aborted due to timeout"
+        },
+        {
+          "id": "T005",
+          "pergunta": "Qual é a diferença entre estágio obrigatório e não obrigatório?",
+          "ok": false,
+          "status": 0,
+          "s": 300.012,
+          "fora": null,
+          "resposta": "ERRO: The operation was aborted due to timeout"
+        },
+        {
+          "id": "T006",
+          "pergunta": "Como descubro se meu curso exige estágio obrigatório?",
+          "ok": false,
+          "status": 0,
+          "s": 300.012,
+          "fora": null,
+          "resposta": "ERRO: The operation was aborted due to timeout"
+        },
+        {
+          "id": "T007",
+          "pergunta": "Qual é a carga horária máxima diária permitida para um estagiário?",
+          "ok": false,
+          "status": 0,
+          "s": 300.012,
+          "fora": null,
+          "resposta": "ERRO: The operation was aborted due to timeout"
+        },
+        {
+          "id": "T008",
+          "pergunta": "Preciso de um professor orientador para realizar o estágio?",
+          "ok": false,
+          "status": 0,
+          "s": 300.013,
+          "fora": null,
+          "resposta": "ERRO: The operation was aborted due to timeout"
+        },
+        {
+          "id": "T009",
+          "pergunta": "Como faço para cadastrar uma empresa como concedente de estágio?",
+          "ok": false,
+          "status": 0,
+          "s": 300.012,
+          "fora": null,
+          "resposta": "ERRO: The operation was aborted due to timeout"
+        },
+        {
+          "id": "T010",
+          "pergunta": "O que devo fazer se a empresa quiser alterar minha carga horária?",
+          "ok": false,
+          "status": 0,
+          "s": 300.012,
+          "fora": null,
+          "resposta": "ERRO: The operation was aborted due to timeout"
+        },
+        {
+          "id": "T011",
+          "pergunta": "Como faço para prorrogar meu estágio?",
+          "ok": false,
+          "status": 0,
+          "s": 300.011,
+          "fora": null,
+          "resposta": "ERRO: The operation was aborted due to timeout"
+        },
+        {
+          "id": "T012",
+          "pergunta": "Como encerro o estágio antes da data prevista?",
+          "ok": false,
+          "status": 0,
+          "s": 300.012,
+          "fora": null,
+          "resposta": "ERRO: The operation was aborted due to timeout"
+        },
+        {
+          "id": "T013",
+          "pergunta": "Preciso entregar algum relatório durante ou após o estágio?",
+          "ok": false,
+          "status": 0,
+          "s": 300.012,
+          "fora": null,
+          "resposta": "ERRO: The operation was aborted due to timeout"
+        },
+        {
+          "id": "T014",
+          "pergunta": "Onde encontro os formulários de estágio?",
+          "ok": false,
+          "status": 0,
+          "s": 300.012,
+          "fora": null,
+          "resposta": "ERRO: The operation was aborted due to timeout"
+        },
+        {
+          "id": "T015",
+          "pergunta": "Com quem devo entrar em contato se tiver dúvidas sobre meus documentos?",
+          "ok": false,
+          "status": 0,
+          "s": 300.011,
+          "fora": null,
+          "resposta": "ERRO: The operation was aborted due to timeout"
+        },
+        {
+          "id": "T016",
+          "pergunta": "A escola pode assinar meus documentos de estágio depois que eu já tiver começado?",
+          "ok": false,
+          "status": 0,
+          "s": 300.012,
+          "fora": null,
+          "resposta": "ERRO: The operation was aborted due to timeout"
+        },
+        {
+          "id": "T017",
+          "pergunta": "Biblioteca",
+          "ok": false,
+          "status": 0,
+          "s": 300.012,
+          "fora": null,
+          "resposta": "ERRO: The operation was aborted due to timeout"
+        }
+      ]
+    }
+  ]
+}

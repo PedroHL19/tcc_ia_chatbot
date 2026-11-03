@@ -1,0 +1,708 @@
+{
+  "rotulo": "pc_v2",
+  "url": "http://localhost:3000/agente",
+  "curso": "BSI",
+  "ano": "2025",
+  "inicio": "2026-11-03T04:05:31.078Z",
+  "niveis": [
+    {
+      "simultaneas": 5,
+      "totalS": 6.171,
+      "respostas": [
+        {
+          "id": "T001",
+          "pergunta": "Estágio",
+          "ok": true,
+          "status": 200,
+          "s": 5.585,
+          "fora": false,
+          "resposta": "Para realizar o estágio no curso de Bacharelado em Sistemas de Informação (BSI), você precisa atender às exigências estabelecidas pela Instituição. Além de estar com matrícula e frequência regulares, "
+        },
+        {
+          "id": "T002",
+          "pergunta": "Como faço para iniciar um estágio no IFMG Campus Sabará?",
+          "ok": true,
+          "status": 200,
+          "s": 5.356,
+          "fora": false,
+          "resposta": "Para iniciar um estágio no IFMG Campus Sabará, você precisa convidar um(a) docente da área para a função de orientador(a) e preencher a Ficha Cadastral com, ao menos, 7 dias úteis de antecedência em r"
+        },
+        {
+          "id": "T003",
+          "pergunta": "Quais documentos preciso entregar antes de começar o estágio?",
+          "ok": true,
+          "status": 200,
+          "s": 4.77,
+          "fora": false,
+          "resposta": "Para iniciar um estágio, você precisará convidar um(a) docente da área para a função de orientador(a) e também preencher a Ficha Cadastral (https://www.ifmg.edu.br/sabara/ensino-pesquisa-e-extensao/es"
+        },
+        {
+          "id": "T004",
+          "pergunta": "Posso começar a estagiar antes de assinar o termo de compromisso?",
+          "ok": true,
+          "status": 200,
+          "s": 6.169,
+          "fora": false,
+          "resposta": "Não. Para que se formalize um estágio, a documentação deve estar assinada pelos seguintes partícipes: representante da parte concedente; supervisor na parte concedente, estudante, professor(a) orienta"
+        },
+        {
+          "id": "T005",
+          "pergunta": "Qual é a diferença entre estágio obrigatório e não obrigatório?",
+          "ok": true,
+          "status": 200,
+          "s": 5.356,
+          "fora": false,
+          "resposta": "O Estágio Obrigatório é aquele definido como tal no Projeto Pedagógico do Curso (PPC). Trata-se de um componente curricular obrigatório, cuja carga horária é requisito para aprovação e obtenção de dip"
+        }
+      ]
+    },
+    {
+      "simultaneas": 10,
+      "totalS": 10.103,
+      "respostas": [
+        {
+          "id": "T006",
+          "pergunta": "Como descubro se meu curso exige estágio obrigatório?",
+          "ok": true,
+          "status": 200,
+          "s": 6.237,
+          "fora": false,
+          "resposta": "Para saber se o seu curso exige estágio obrigatório, você precisa verificar o Projeto Pedagógico do Curso (PPC). No IFMG Campus Sabará, todos os cursos permitem a realização de Estágio Não Obrigatório"
+        },
+        {
+          "id": "T007",
+          "pergunta": "Qual é a carga horária máxima diária permitida para um estagiário?",
+          "ok": true,
+          "status": 200,
+          "s": 2.453,
+          "fora": false,
+          "resposta": "De acordo com a Lei do Estágio, a carga horária máxima diária permitida para um estagiário é de 6 horas diárias."
+        },
+        {
+          "id": "T008",
+          "pergunta": "Preciso de um professor orientador para realizar o estágio?",
+          "ok": true,
+          "status": 200,
+          "s": 5.774,
+          "fora": false,
+          "resposta": "Você precisa convidar um(a) docente da área para a função de orientador(a) para realizar o estágio. Para isso, você precisará preencher a Ficha Cadastral com, ao menos, 7 dias úteis de antecedência em"
+        },
+        {
+          "id": "T009",
+          "pergunta": "Como faço para cadastrar uma empresa como concedente de estágio?",
+          "ok": true,
+          "status": 200,
+          "s": 4.542,
+          "fora": false,
+          "resposta": "Para cadastrar uma empresa como concedente de estágio, você deve procurar a Seção de Estágios do Campus. Ela está disponível para sanar suas dúvidas e receber mais orientações. Você pode entrar em con"
+        },
+        {
+          "id": "T010",
+          "pergunta": "O que devo fazer se a empresa quiser alterar minha carga horária?",
+          "ok": true,
+          "status": 200,
+          "s": 3.425,
+          "fora": false,
+          "resposta": "Se a empresa quiser alterar sua carga horária, você deve formalizar a alteração por meio de um Termo Aditivo. Procure a Seção de Estágios para sanar suas dúvidas e receber mais orientações: estagio.sa"
+        },
+        {
+          "id": "T011",
+          "pergunta": "Como faço para prorrogar meu estágio?",
+          "ok": true,
+          "status": 200,
+          "s": 8.626,
+          "fora": false,
+          "resposta": "Para prorrogar a vigência do seu estágio, você precisará entregar um Termo Aditivo com, no mínimo, 7 dias úteis antes do vencimento do Termo de Compromisso de Estágio - TCE. Além disso, é importante v"
+        },
+        {
+          "id": "T012",
+          "pergunta": "Como encerro o estágio antes da data prevista?",
+          "ok": true,
+          "status": 200,
+          "s": 10.101,
+          "fora": false,
+          "resposta": "Para encerrar o estágio antes da data prevista, você precisará convidar um(a) docente da área para a função de orientador(a) e também preencher a Ficha Cadastral (https://www.ifmg.edu.br/sabara/ensino"
+        },
+        {
+          "id": "T013",
+          "pergunta": "Preciso entregar algum relatório durante ou após o estágio?",
+          "ok": true,
+          "status": 200,
+          "s": 9.721,
+          "fora": false,
+          "resposta": "Você precisa entregar o Relatório de Atividades (Semestral) no SUAP? Para isso, você deve acessar o sistema SUAP e tomar ciência do Relatório preenchido pelo Supervisor. Em seguida, você deve baixar e"
+        },
+        {
+          "id": "T014",
+          "pergunta": "Onde encontro os formulários de estágio?",
+          "ok": true,
+          "status": 200,
+          "s": 8.553,
+          "fora": false,
+          "resposta": "Para obter modelos de documentos de estágio e mais informações sobre o assunto no IFMG, acesse o site do campus e, no menu, busque por “Ensino, Pesquisa e Extensão” > “Estágios” (https://www.ifmg.edu."
+        },
+        {
+          "id": "T015",
+          "pergunta": "Com quem devo entrar em contato se tiver dúvidas sobre meus documentos?",
+          "ok": true,
+          "status": 200,
+          "s": 6.805,
+          "fora": false,
+          "resposta": "Entre em contato com a Seção de Estágios pelo e-mail estagio.sabara@ifmg.edu.br."
+        }
+      ]
+    },
+    {
+      "simultaneas": 20,
+      "totalS": 14.017,
+      "respostas": [
+        {
+          "id": "T016",
+          "pergunta": "A escola pode assinar meus documentos de estágio depois que eu já tiver começado?",
+          "ok": true,
+          "status": 200,
+          "s": 4.436,
+          "fora": false,
+          "resposta": "Não. Para que se formalize um estágio, a documentação deve estar assinada pelos seguintes partícipes: representante da parte concedente; supervisor na parte concedente, estudante, professor(a) orienta"
+        },
+        {
+          "id": "T017",
+          "pergunta": "Biblioteca",
+          "ok": true,
+          "status": 200,
+          "s": 3.347,
+          "fora": false,
+          "resposta": "Você pode entrar em contato com a equipe da biblioteca pelo telefone (31) 2102-9374, pelo e-mail biblioteca.sabara@ifmg.edu.br ou presencialmente, durante o horário de atendimento. As informações tamb"
+        },
+        {
+          "id": "T018",
+          "pergunta": "Qual é o horário de funcionamento da biblioteca?",
+          "ok": true,
+          "status": 200,
+          "s": 2.788,
+          "fora": false,
+          "resposta": "O horário de funcionamento da Biblioteca do IFMG Campus Sabará é de segunda a sexta-feira, das 9h às 21h."
+        },
+        {
+          "id": "T019",
+          "pergunta": "Como faço para pegar um livro emprestado?",
+          "ok": true,
+          "status": 200,
+          "s": 4.114,
+          "fora": false,
+          "resposta": "Para saber se um livro está disponível para empréstimo, você deve abrir o registro da obra no Pergamum e consultar a situação dos exemplares de Sabará. Verifique se há exemplar disponível e se ele pod"
+        },
+        {
+          "id": "T020",
+          "pergunta": "Quantos livros posso retirar de uma vez?",
+          "ok": true,
+          "status": 200,
+          "s": 5.49,
+          "fora": true,
+          "resposta": "Não consegui encontrar informações específicas sobre a quantidade máxima de livros que você pode pegar emprestado na biblioteca. Para saber o limite, é recomendável procurar a Biblioteca: biblioteca.s"
+        },
+        {
+          "id": "T021",
+          "pergunta": "Por quantos dias posso ficar com um livro emprestado?",
+          "ok": true,
+          "status": 200,
+          "s": 3.331,
+          "fora": false,
+          "resposta": "Você pode ficar com um livro emprestado por 7 dias corridos."
+        },
+        {
+          "id": "T022",
+          "pergunta": "Posso renovar um empréstimo? Como?",
+          "ok": true,
+          "status": 200,
+          "s": 4.913,
+          "fora": false,
+          "resposta": "Você pode renovar um empréstimo diretamente pelo SUAP ou pelo Pergamum, ou no balcão da biblioteca."
+        },
+        {
+          "id": "T023",
+          "pergunta": "Como faço para reservar um livro que está emprestado?",
+          "ok": true,
+          "status": 200,
+          "s": 7.604,
+          "fora": false,
+          "resposta": "Para reservar um livro que está emprestado, você pode verificar se há exemplar disponível e se ele pode ser emprestado no Pergamum. Abra o registro da obra e consulte a situação dos exemplares de Saba"
+        },
+        {
+          "id": "T024",
+          "pergunta": "Onde consulto se um livro está disponível?",
+          "ok": true,
+          "status": 200,
+          "s": 6.315,
+          "fora": false,
+          "resposta": "Abra o registro da obra no Pergamum e consulte a situação dos exemplares de Sabará. Verifique se há exemplar disponível e se ele pode ser emprestado. Se a informação gerar dúvida, confirme no balcão d"
+        },
+        {
+          "id": "T025",
+          "pergunta": "O que acontece se eu atrasar a devolução?",
+          "ok": true,
+          "status": 200,
+          "s": 9.164,
+          "fora": false,
+          "resposta": "Se você atrasar a devolução, a pendência na biblioteca será registrada. Isso pode impedir novos empréstimos, trancamento de matrícula, diploma e renovação de matrícula. Para resolver a pendência, entr"
+        },
+        {
+          "id": "T026",
+          "pergunta": "Posso pegar livros emprestados estando com uma devolução atrasada?",
+          "ok": true,
+          "status": 200,
+          "s": 10.174,
+          "fora": false,
+          "resposta": "Se você tiver uma devolução atrasada, não poderá pegar livros emprestados. Isso é porque pendências na biblioteca, como empréstimos em atraso, impedem novos empréstimos. Para regularizar a pendência, "
+        },
+        {
+          "id": "T027",
+          "pergunta": "O que devo fazer se perder ou danificar um livro?",
+          "ok": true,
+          "status": 200,
+          "s": 12.088,
+          "fora": false,
+          "resposta": "Se você perder ou danificar um livro, você deve entrar em contato com a equipe da Biblioteca para verificar qual é a pendência e como regularizá-la. O aluno deve entrar em contato com a equipe da Bibl"
+        },
+        {
+          "id": "T028",
+          "pergunta": "Alunos de todos os cursos podem usar a biblioteca?",
+          "ok": true,
+          "status": 200,
+          "s": 8.216,
+          "fora": false,
+          "resposta": "Sim. Qualquer membro da comunidade externa pode utilizar a biblioteca para estudar e consultar o acervo no local. O empréstimo domiciliar exige vínculo formal com o IFMG. Para saber mais, consulte a I"
+        },
+        {
+          "id": "T029",
+          "pergunta": "Pessoas que não estudam no IFMG podem consultar o acervo?",
+          "ok": true,
+          "status": 200,
+          "s": 6.04,
+          "fora": false,
+          "resposta": "Sim. Qualquer membro da comunidade externa pode utilizar a biblioteca para estudar e consultar o acervo no local. O empréstimo domiciliar exige vínculo formal com o IFMG. Para saber mais, consulte a I"
+        },
+        {
+          "id": "T030",
+          "pergunta": "Como acesso o catálogo on-line da biblioteca?",
+          "ok": true,
+          "status": 200,
+          "s": 12.523,
+          "fora": false,
+          "resposta": "Você pode acessar o catálogo on-line da biblioteca pelo Pergamum. Existem três formas de acessá-lo:\n\n1. Diretamente pelo link https://pergamum.ifmg.edu.br/\n2. Pelo SUAP: na barra de menu à esquerda, c"
+        },
+        {
+          "id": "T031",
+          "pergunta": "A biblioteca possui acesso a livros digitais ou bases de artigos?",
+          "ok": true,
+          "status": 200,
+          "s": 14.014,
+          "fora": false,
+          "resposta": "Sim, a biblioteca do IFMG Campus Sabará oferece acesso a livros digitais e bases de artigos. Você pode acessar esses recursos através do Pergamum, que é o catálogo da biblioteca. O Pergamum está dispo"
+        },
+        {
+          "id": "T032",
+          "pergunta": "Como entro em contato com a biblioteca?",
+          "ok": true,
+          "status": 200,
+          "s": 13.161,
+          "fora": false,
+          "resposta": "Você pode entrar em contato com a equipe da biblioteca pelo telefone (31) 2102-9374, pelo e-mail biblioteca.sabara@ifmg.edu.br ou presencialmente, durante o horário de atendimento. As informações tamb"
+        },
+        {
+          "id": "T033",
+          "pergunta": "Controle e Registro Acadêmico",
+          "ok": true,
+          "status": 200,
+          "s": 11.103,
+          "fora": false,
+          "resposta": "Se você precisar de informações sobre o seu histórico escolar ou declaração de matrícula, o CRA é responsável pela expedição desses documentos. Você pode entrar em contato com o setor de Controle e Re"
+        },
+        {
+          "id": "T034",
+          "pergunta": "Como solicito uma declaração de matrícula?",
+          "ok": true,
+          "status": 200,
+          "s": 13.914,
+          "fora": false,
+          "resposta": "Você pode emitir documentos como declaração de matrícula diretamente pelo SUAP. Basta acessar o sistema e seguir as orientações disponíveis no vídeo: https://www.youtube.com/watch?v=tkwjdIRMytc."
+        },
+        {
+          "id": "T035",
+          "pergunta": "Onde posso consultar meu histórico escolar?",
+          "ok": true,
+          "status": 200,
+          "s": 13.833,
+          "fora": false,
+          "resposta": "Para consultar seu histórico escolar, acesse o SUAP com sua matrícula e senha, vá em \"Meus Dados\" e clique na aba \"Histórico\"."
+        }
+      ]
+    },
+    {
+      "simultaneas": 40,
+      "totalS": 38.768,
+      "respostas": [
+        {
+          "id": "T036",
+          "pergunta": "Como faço para obter meu comprovante de matrícula?",
+          "ok": true,
+          "status": 200,
+          "s": 3.971,
+          "fora": false,
+          "resposta": "Você pode emitir documentos como declaração de matrícula diretamente pelo SUAP. Basta acessar o ambiente virtual do SUAP com sua matrícula e senha, localizar a opção de requerimento/solicitação de doc"
+        },
+        {
+          "id": "T037",
+          "pergunta": "Como solicito o trancamento de matrícula?",
+          "ok": true,
+          "status": 200,
+          "s": 7.808,
+          "fora": false,
+          "resposta": "Para solicitar o trancamento de matrícula, você deve acessar o ambiente virtual do SUAP durante o período aberto pelo calendário acadêmico. Siga os passos abaixo:\n\n1. Acesse o SUAP com sua matrícula e"
+        },
+        {
+          "id": "T038",
+          "pergunta": "Existe prazo para solicitar o trancamento?",
+          "ok": true,
+          "status": 200,
+          "s": 6.026,
+          "fora": false,
+          "resposta": "O prazo para solicitar o trancamento de matrícula é durante o período estipulado no Calendário Acadêmico vigente do campus, que você pode acessar aqui: https://www.ifmg.edu.br/sabara/ensino-pesquisa-e"
+        },
+        {
+          "id": "T039",
+          "pergunta": "Posso trancar apenas uma disciplina?",
+          "ok": true,
+          "status": 200,
+          "s": 5.214,
+          "fora": false,
+          "resposta": "Você pode trancar apenas uma disciplina. O trancamento parcial (disciplinas) suspende parcialmente as atividades acadêmicas, permitindo que você continue cursando as demais disciplinas do semestre. Pa"
+        },
+        {
+          "id": "T040",
+          "pergunta": "Como faço para cancelar minha matrícula?",
+          "ok": true,
+          "status": 200,
+          "s": 9.22,
+          "fora": false,
+          "resposta": "Para cancelar sua matrícula, você deve solicitar o desligamento do curso. A solicitação deve ser encaminhada para o e-mail cursos.sabara@ifmg.edu.br, conforme as orientações em https://www.ifmg.edu.br"
+        },
+        {
+          "id": "T041",
+          "pergunta": "Como solicito aproveitamento de disciplinas que já cursei?",
+          "ok": true,
+          "status": 200,
+          "s": 12.902,
+          "fora": false,
+          "resposta": "Para solicitar aproveitamento de disciplinas que já cursei, você deve seguir o processo de Aproveitamento de Estudos (AE). O AE é o processo pelo qual o discente pode aproveitar em seu curso atual dis"
+        },
+        {
+          "id": "T042",
+          "pergunta": "Como peço revisão de uma nota?",
+          "ok": true,
+          "status": 200,
+          "s": 14.936,
+          "fora": false,
+          "resposta": "Para solicitar a revisão de uma nota, você deve enviar um e-mail formal para a Coordenação do seu Curso, contendo as informações necessárias. Segundo as orientações do link, a solicitação de revisão d"
+        },
+        {
+          "id": "T043",
+          "pergunta": "Como atualizo meus dados cadastrais?",
+          "ok": true,
+          "status": 200,
+          "s": 8.282,
+          "fora": false,
+          "resposta": "Para atualizar seus dados cadastrais, você pode realizar o cadastro na biblioteca e atualizar seus dados pessoais. De acordo com a IN 09/2020 da Pró-Reitoria de Ensino, basta comparecer à biblioteca c"
+        },
+        {
+          "id": "T044",
+          "pergunta": "Como faço para solicitar transferência para outro campus?",
+          "ok": true,
+          "status": 200,
+          "s": 15.942,
+          "fora": false,
+          "resposta": "Você pode solicitar transferência para outro campus através do ambiente virtual do SUAP. Acesse o SUAP com sua matrícula e senha, localize a opção de requerimento/solicitação de transferência de campu"
+        },
+        {
+          "id": "T045",
+          "pergunta": "Como solicito transferência de outra instituição para o IFMG?",
+          "ok": true,
+          "status": 200,
+          "s": 12.176,
+          "fora": false,
+          "resposta": "Você precisa convidar um(a) docente da área para a função de orientador(a) e também preencher a Ficha Cadastral (https://www.ifmg.edu.br/sabara/ensino-pesquisa-e-extensao/estagios-1) com, ao menos, 7 "
+        },
+        {
+          "id": "T046",
+          "pergunta": "Como faço para retornar ao curso após um período de trancamento?",
+          "ok": true,
+          "status": 200,
+          "s": 22.144,
+          "fora": false,
+          "resposta": "Você pode retornar ao curso após um período de trancamento, desde que atenda às condições e regras obrigatórias para solicitação de trancamento. No entanto, como você ingressou no curso de BSI em 2025"
+        },
+        {
+          "id": "T047",
+          "pergunta": "Onde encontro o calendário acadêmico?",
+          "ok": true,
+          "status": 200,
+          "s": 6.009,
+          "fora": false,
+          "resposta": "O calendário acadêmico é um documento oficial do campus que organiza e divulga as datas e os prazos das principais atividades acadêmicas ao longo de um semestre ou ano letivo. Você pode encontrar o ca"
+        },
+        {
+          "id": "T048",
+          "pergunta": "Como entro em contato com o Controle e Registro Acadêmico?",
+          "ok": true,
+          "status": 200,
+          "s": 20.537,
+          "fora": false,
+          "resposta": "Para entrar em contato com o Controle e Registro Acadêmico (CRA), você pode enviar um e-mail para cursos.sabara@ifmg.edu.br ou ligar para (31) 2102-9376. Além disso, o CRA também tem horários de atend"
+        },
+        {
+          "id": "T049",
+          "pergunta": "Preciso de um documento que comprove que estou estudando no IFMG. Como consigo?",
+          "ok": true,
+          "status": 200,
+          "s": 24.042,
+          "fora": false,
+          "resposta": "Para obter um documento que comprove que você está estudando no IFMG, você pode solicitar a sua Declaração de Matrícula no Sistema de Controle e Registro Acadêmico (CRA). Para isso, acesse o site do I"
+        },
+        {
+          "id": "T050",
+          "pergunta": "Encontrei uma vaga em uma empresa. O que preciso fazer antes de começar?",
+          "ok": true,
+          "status": 200,
+          "s": 23.564,
+          "fora": false,
+          "resposta": "Você precisará convidar um(a) docente da área para a função de orientador(a) e também preencher a Ficha Cadastral (https://www.ifmg.edu.br/sabara/ensino-pesquisa-e-extensao/estagios-1) com, ao menos, "
+        },
+        {
+          "id": "T051",
+          "pergunta": "Estou com um livro atrasado. Como resolvo isso?",
+          "ok": true,
+          "status": 200,
+          "s": 17.961,
+          "fora": false,
+          "resposta": "Para resolver a pendência do livro atrasado, você precisa entrar em contato com a equipe da Biblioteca. Ela pode verificar qual é a pendência e como regularizá-la. Você pode entrar em contato com a Bi"
+        },
+        {
+          "id": "T052",
+          "pergunta": "Quero aproveitar uma matéria que fiz em outra faculdade. O que faço?",
+          "ok": true,
+          "status": 200,
+          "s": 28.503,
+          "fora": false,
+          "resposta": "Para aproveitar uma disciplina cursada em outra faculdade, você precisa solicitar o Aproveitamento de Estudos (AE). O processo é cumulativo com o Aproveitamento de Conhecimentos e Experiências Anterio"
+        },
+        {
+          "id": "T053",
+          "pergunta": "Minha empresa quer que eu trabalhe mais horas do que estava previsto no contrato. Como devo proceder?",
+          "ok": true,
+          "status": 200,
+          "s": 19.322,
+          "fora": false,
+          "resposta": "Você pode realizar mais de um estágio ao mesmo tempo, desde que a soma das jornadas diárias dos estágios seja igual ou inferior a 6 horas diárias e a soma das jornadas semanais seja inferior ou igual "
+        },
+        {
+          "id": "T054",
+          "pergunta": "Preciso consultar um livro para um trabalho, mas não sei se ele existe no campus.",
+          "ok": true,
+          "status": 200,
+          "s": 25.835,
+          "fora": false,
+          "resposta": "Para consultar os livros da biblioteca, você pode acessar o catálogo Pergamum. Há três formas de acessá-lo: diretamente pelo link https://pergamum.ifmg.edu.br/, pelo SUAP ou pelo aplicativo móvel. Abr"
+        },
+        {
+          "id": "T055",
+          "pergunta": "Vou ficar um semestre sem estudar. Quais opções tenho?",
+          "ok": true,
+          "status": 200,
+          "s": 22.902,
+          "fora": false,
+          "resposta": "Você pode solicitar o Regime Excepcional de Estudos. Este regime é destinado a estudantes que se encontrem temporariamente impossibilitados de comparecer fisicamente às aulas presenciais, desde que am"
+        },
+        {
+          "id": "T056",
+          "pergunta": "Quem pode assinar a documentação necessária para o meu estágio?",
+          "ok": true,
+          "status": 200,
+          "s": 26.538,
+          "fora": false,
+          "resposta": "Para iniciar um estágio, são exigidos: Ficha Cadastral (do IFMG), Termo de Compromisso de Estágio e Plano de Atividades (emitidos pelo IFMG), além do Certificado Individual de Seguro contratado em fav"
+        },
+        {
+          "id": "T057",
+          "pergunta": "Preciso de um documento com todas as matérias e notas que já cursei.",
+          "ok": true,
+          "status": 200,
+          "s": 27.394,
+          "fora": false,
+          "resposta": "Você pode emitir documentos como declaração de matrícula, histórico parcial e outros diretamente pelo SUAP. Além disso, você também pode acessar o histórico escolar e as declarações no sistema SUAP."
+        },
+        {
+          "id": "T058",
+          "pergunta": "Perdi um livro que peguei emprestado. Com quem devo falar?",
+          "ok": true,
+          "status": 200,
+          "s": 25.352,
+          "fora": false,
+          "resposta": "Se você perdeu um livro que pegou emprestado, é recomendável procurar a Biblioteca. Eles podem ajudá-lo a localizar o livro e resolver o problema. Você pode entrar em contato com a Biblioteca pelo e-m"
+        },
+        {
+          "id": "T001",
+          "pergunta": "Estágio",
+          "ok": true,
+          "status": 200,
+          "s": 28.672,
+          "fora": false,
+          "resposta": "Você precisa realizar 120 horas de estágio obrigatório para cumprir o estágio curricular no curso de Bacharelado em Sistemas de Informação (BSI). O estágio pode ser realizado em qualquer período do cu"
+        },
+        {
+          "id": "T002",
+          "pergunta": "Como faço para iniciar um estágio no IFMG Campus Sabará?",
+          "ok": true,
+          "status": 200,
+          "s": 17.988,
+          "fora": false,
+          "resposta": "Para iniciar um estágio no IFMG Campus Sabará, você precisa convidar um(a) docente da área para a função de orientador(a) e preencher a Ficha Cadastral (https://www.ifmg.edu.br/sabara/ensino-pesquisa-"
+        },
+        {
+          "id": "T003",
+          "pergunta": "Quais documentos preciso entregar antes de começar o estágio?",
+          "ok": true,
+          "status": 200,
+          "s": 13.041,
+          "fora": false,
+          "resposta": "Para iniciar um estágio, você precisará convidar um(a) docente da área para a função de orientador(a) e também preencher a Ficha Cadastral com, ao menos, 7 dias úteis de antecedência em relação ao iní"
+        },
+        {
+          "id": "T004",
+          "pergunta": "Posso começar a estagiar antes de assinar o termo de compromisso?",
+          "ok": true,
+          "status": 200,
+          "s": 14.647,
+          "fora": false,
+          "resposta": "Não. Para que se formalize um estágio, a documentação deve estar assinada pelos seguintes partícipes: representante da parte concedente; supervisor na parte concedente, estudante, professor(a) orienta"
+        },
+        {
+          "id": "T005",
+          "pergunta": "Qual é a diferença entre estágio obrigatório e não obrigatório?",
+          "ok": true,
+          "status": 200,
+          "s": 32.481,
+          "fora": false,
+          "resposta": "O Estágio Obrigatório é aquele definido como tal no Projeto Pedagógico do Curso (PPC). Trata-se de um componente curricular obrigatório, cuja carga horária é requisito para aprovação e obtenção de dip"
+        },
+        {
+          "id": "T006",
+          "pergunta": "Como descubro se meu curso exige estágio obrigatório?",
+          "ok": true,
+          "status": 200,
+          "s": 31.604,
+          "fora": false,
+          "resposta": "Você precisa saber se há algum pré-requisito específico para o seu curso consultando o Projeto Pedagógico do Curso (PPC). No IFMG Campus Sabará, todos os cursos permitem a realização de Estágio Não Ob"
+        },
+        {
+          "id": "T007",
+          "pergunta": "Qual é a carga horária máxima diária permitida para um estagiário?",
+          "ok": true,
+          "status": 200,
+          "s": 27.845,
+          "fora": false,
+          "resposta": "De acordo com a Lei do Estágio, a carga horária máxima diária permitida para um estagiário é de 6 horas diárias."
+        },
+        {
+          "id": "T008",
+          "pergunta": "Preciso de um professor orientador para realizar o estágio?",
+          "ok": true,
+          "status": 200,
+          "s": 30.745,
+          "fora": false,
+          "resposta": "Você precisa convidar um(a) docente da área para a função de orientador(a) para realizar o estágio. Para isso, basta procurar a Seção de Estágios do Campus para sanar suas dúvidas e receber mais orien"
+        },
+        {
+          "id": "T009",
+          "pergunta": "Como faço para cadastrar uma empresa como concedente de estágio?",
+          "ok": true,
+          "status": 200,
+          "s": 34.923,
+          "fora": false,
+          "resposta": "Para cadastrar uma empresa como concedente de estágio, você precisará convidar um(a) docente da área para a função de orientador(a) e também preencher a Ficha Cadastral (https://www.ifmg.edu.br/sabara"
+        },
+        {
+          "id": "T010",
+          "pergunta": "O que devo fazer se a empresa quiser alterar minha carga horária?",
+          "ok": true,
+          "status": 200,
+          "s": 33.435,
+          "fora": false,
+          "resposta": "Se a empresa quiser alterar sua carga horária, você deve formalizar a alteração por meio de um Termo Aditivo. Procure a Seção de Estágios para sanar suas dúvidas e receber mais orientações: estagio.sa"
+        },
+        {
+          "id": "T011",
+          "pergunta": "Como faço para prorrogar meu estágio?",
+          "ok": true,
+          "status": 200,
+          "s": 38.28,
+          "fora": false,
+          "resposta": "Para prorrogar seu estágio, você precisa entregar um Termo Aditivo com, no mínimo, 7 dias úteis antes do vencimento do Termo de Compromisso de Estágio - TCE. Além disso, é necessário verificar se você"
+        },
+        {
+          "id": "T012",
+          "pergunta": "Como encerro o estágio antes da data prevista?",
+          "ok": true,
+          "status": 200,
+          "s": 38.427,
+          "fora": false,
+          "resposta": "Para encerrar o estágio antes da data prevista, você precisará preencher o Termo de Rescisão do Estágio, que pode ser encontrado no site do IFMG Campus Sabará. Após preenchê-lo, envie-o para a Seção d"
+        },
+        {
+          "id": "T013",
+          "pergunta": "Preciso entregar algum relatório durante ou após o estágio?",
+          "ok": true,
+          "status": 200,
+          "s": 38.762,
+          "fora": false,
+          "resposta": "Você precisa entregar alguns relatórios durante ou após o estágio. De acordo com as Perguntas Frequentes da Seção de Estágios, são exigidos dois Relatórios de Atividades: Relatório de Atividades do Es"
+        },
+        {
+          "id": "T014",
+          "pergunta": "Onde encontro os formulários de estágio?",
+          "ok": true,
+          "status": 200,
+          "s": 33.434,
+          "fora": false,
+          "resposta": "Você pode acessar os modelos de documentos de estágio e mais informações sobre o assunto no site do campus, no menu, buscando por “Ensino, Pesquisa e Extensão” > “Estágios” (https://www.ifmg.edu.br/sa"
+        },
+        {
+          "id": "T015",
+          "pergunta": "Com quem devo entrar em contato se tiver dúvidas sobre meus documentos?",
+          "ok": true,
+          "status": 200,
+          "s": 35.613,
+          "fora": false,
+          "resposta": "Entre em contato com a Seção de Estágios pelo e-mail estagio.sabara@ifmg.edu.br."
+        },
+        {
+          "id": "T016",
+          "pergunta": "A escola pode assinar meus documentos de estágio depois que eu já tiver começado?",
+          "ok": true,
+          "status": 200,
+          "s": 37.217,
+          "fora": false,
+          "resposta": "Não. Para que se formalize um estágio, a documentação deve estar assinada pelos seguintes partícipes: representante da parte concedente; supervisor na parte concedente, estudante, professor(a) orienta"
+        },
+        {
+          "id": "T017",
+          "pergunta": "Biblioteca",
+          "ok": true,
+          "status": 200,
+          "s": 38.398,
+          "fora": false,
+          "resposta": "Você pode entrar em contato com a equipe da biblioteca pelo telefone (31) 2102-9374, pelo e-mail biblioteca.sabara@ifmg.edu.br ou presencialmente, durante o horário de atendimento. As informações tamb"
+        }
+      ]
+    }
+  ]
+}

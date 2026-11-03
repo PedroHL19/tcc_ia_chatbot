@@ -7,7 +7,7 @@ embeddings `bge-m3` e LLM Llama via **Ollama**, busca vetorial no **Qdrant** e i
 
 - Node.js 18+
 - Ollama com os modelos `bge-m3` e o LLM configurado (`ollama pull bge-m3`, `ollama pull llama3.1:8b`)
-- Qdrant rodando (ex.: `docker run -p 6333:6333 qdrant/qdrant`)
+- Qdrant: executável em `%USERPROFILE%\qdrant\qdrant.exe` (não precisa de Docker)
 
 ## Configuração
 
@@ -18,9 +18,17 @@ cp .env.example .env   # preencha API_KEY com uma chave aleatória
 
 ## Uso
 
+Para subir tudo de uma vez (Qdrant, Ollama com 4 respostas em paralelo e API; `-Ngrok` publica a API para o Blip):
+
+```bash
+powershell -ExecutionPolicy Bypass -File start.ps1 -Ngrok
+```
+
+Outros comandos:
+
 ```bash
 npm run ingest     # indexa docs/base_conhecimento no Qdrant
-npm start          # sobe a API na porta PORT
+npm start          # sobe só a API na porta PORT
 npm run test:bot   # roda a bateria de 20 perguntas e salva em benchmark_runs.json
 ```
 

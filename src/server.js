@@ -385,6 +385,9 @@ app.post("/agente", authMiddleware, async (req, res) => {
     resposta = resposta
       .replace(/\b(?:de\s+acordo\s+com|conforme|segundo|no|na)\s+(?:o|a|os|as)?\s*faq\s*\d+[,:\s—–-]*/gi, "")
       .replace(/\bfaq\s*\d+[,:\s—–-]*/gi, "")
+      // O aluno não sabe o que é "contexto": "Não há informações sobre X no contexto fornecido." vira "Não há informações sobre X."
+      .replace(/\bo\s+contexto(?:\s+fornecido)?\s+n[aã]o\s+(?:fornece|cont[eé]m|traz|tem|possui)\s+(?=informa)/gi, "não tenho ")
+      .replace(/\s+n[oa]s?\s+(?:contexto\s+fornecido|trechos?\s+fornecidos?|contexto(?=\s*(?:[.,;:!?]|$|sobre\b)))/gi, "")
       .trim();
 
     // Remove repetição robótica de perfil no início da resposta (ex.: "Você está cursando o BSI no ano de ingresso 2023...")
@@ -411,7 +414,7 @@ app.post("/agente", authMiddleware, async (req, res) => {
     const respostaNorm = resposta.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
     const isForaDeEscopo =
       contextChunks.length === 0 ||
-      /nao\s+consegui\s+identificar\s+uma\s+duvida/.test(respostaNorm);
+      /nao\s+consegui\s+identificar\s+uma\s+duvida|^nao\s+consegui\s+encontrar/.test(respostaNorm);
 
     const encontrouResposta = !isForaDeEscopo;
     if (datas && encontrouResposta) resposta = comLinkCalendario(resposta);

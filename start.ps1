@@ -42,10 +42,15 @@ if (Test-Url "http://127.0.0.1:11434/api/version") {
   Wait-Url "http://127.0.0.1:11434/api/version" "Ollama"
 }
 
-if ($Ngrok) {
+if ($Ngrok -and (Get-Process -Name ngrok -ErrorAction SilentlyContinue)) {
+  Write-Host "[ok] ngrok ja estava no ar"
+} elseif ($Ngrok) {
   Start-Process -FilePath "ngrok" -ArgumentList "http 3000 --url=$NgrokUrl --log=stdout" -WindowStyle Hidden `
     -RedirectStandardOutput "logs\ngrok.log" -RedirectStandardError "logs\ngrok_err.log"
   Write-Host "[ok] ngrok: $NgrokUrl"
 }
 
-node src/server.js
+# As mensagens dos alunos e as respostas ficam em logs/ (fora do git). O cmd grava os bytes como vieram, em UTF-8
+$log = "logs\api_$(Get-Date -Format yyyyMMdd_HHmmss).log"
+Write-Host "[ok] API em http://localhost:3000 | log: $log"
+cmd /c "node src\server.js >> $log 2>&1"

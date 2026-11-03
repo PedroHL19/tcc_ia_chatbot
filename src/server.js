@@ -1,9 +1,9 @@
 import express from "express";
 import dotenv from "dotenv";
 import crypto from "crypto";
-import { SYSTEM_PROMPT, buildUserPromptWithContext } from "./prompt.js";
-import { generateEmbedding, generateChat, warmUpModels, LLM_MODEL, EMBEDDING_MODEL, OLLAMA_CONFIG } from "./ollamaClient.js";
-import { searchSimilar, buildCourseYearFilter, normalizeCurso, COLLECTION_NAME } from "./qdrantClient.js";
+import { SYSTEM_PROMPT, buildUserPromptWithContext, limitarContexto } from "./prompt.js";
+import { ollama, generateEmbedding, generateChat, warmUpModels, LLM_MODEL, EMBEDDING_MODEL, OLLAMA_CONFIG, MAX_CONTEXT_CHARS } from "./ollamaClient.js";
+import { qdrant, searchSimilar, buildCourseYearFilter, normalizeCurso, COLLECTION_NAME } from "./qdrantClient.js";
 import { resolverDatas } from "./datas.js";
 
 dotenv.config();
@@ -29,6 +29,18 @@ const NOMES_CURSOS = {
 const LINK_CALENDARIO = "https://www.ifmg.edu.br/sabara/ensino-pesquisa-e-extensao/controle-e-registro-academico/calendario-academico";
 const comLinkCalendario = (texto) =>
   texto.includes(LINK_CALENDARIO) ? texto : `${texto}\n\nCalendário acadêmico: ${LINK_CALENDARIO}`;
+
+// Limite da mensagem do aluno: acima disso o prompt não caberia no contexto do modelo
+const MAX_MENSAGEM_CHARS = 2000;
+
+// Tempo por etapa de cada requisição; console.time não serve aqui porque o rótulo é global e requisições simultâneas se misturam
+const logTempo = (rotulo, inicio) => console.log(`[Tempo] ${rotulo}: ${(performance.now() - inicio).toFixed(3)}ms`);
+
+// Falha em vez de deixar o /health preso se um serviço não responder
+const comTimeout = (promessa, ms = 3000) => Promise.race([
+  promessa,
+  new Promise((_, rejeitar) => setTimeout(() => rejeitar(new Error("timeout")), ms))
+]);
 
 const app = express();
 app.use(express.json());
@@ -58,11 +70,18 @@ const authMiddleware = (req, res, next) => {
 };
 
 // Endpoint de verificação de saúde da API
-app.get("/health", (req, res) => {
-  return res.status(200).json({
-    sucesso: true,
-    status: "ok",
-    mensagem: "API RAG (IFMG Sabará) ativa e operando",
+app.get("/health", async (req, res) => {
+  const [ollamaOk, qdrantOk] = (await Promise.allSettled([
+    comTimeout(ollama.list()),
+    comTimeout(qdrant.getCollection(COLLECTION_NAME))
+  ])).map((r) => r.status === "fulfilled");
+  const tudoOk = ollamaOk && qdrantOk;
+
+  return res.status(tudoOk ? 200 : 503).json({
+    sucesso: tudoOk,
+    status: tudoOk ? "ok" : "indisponivel",
+    mensagem: tudoOk ? "API RAG (IFMG Sabará) ativa e operando" : "API ativa, mas um serviço necessário não está respondendo",
+    servicos: { ollama: ollamaOk, qdrant: qdrantOk },
     config: {
       llm: LLM_MODEL,
       embeddings: EMBEDDING_MODEL,
@@ -73,9 +92,11 @@ app.get("/health", (req, res) => {
 
 // Endpoint principal consultado pelo Blip ou frontend
 app.post("/agente", authMiddleware, async (req, res) => {
+  const inicioRequisicao = performance.now();
   // Registra a resposta enviada em todos os caminhos (prontas, calendário, recusa e LLM) para avaliar os testes com usuários
   const enviarJson = res.json.bind(res);
   res.json = (corpo) => {
+    logTempo("Total", inicioRequisicao);
     console.log(`[Resposta] (fora_de_escopo=${corpo?.fora_de_escopo}) ${(corpo?.resposta || corpo?.erro || "").replace(/\s*\n\s*/g, " ")}`);
     return enviarJson(corpo);
   };
@@ -114,6 +135,17 @@ app.post("/agente", authMiddleware, async (req, res) => {
     // a busca cobre toda a base e o modelo não recebe a regra de aplicar um único curso/ano
     if (curso === "TODOS" || curso === "INVALIDO") curso = null;
     if (ano && /^(todos|invalido)$/i.test(ano)) ano = null;
+
+    if (pergunta.length > MAX_MENSAGEM_CHARS) {
+      console.log(`[Escopo] Mensagem muito longa (${pergunta.length} caracteres)`);
+      return res.json({
+        sucesso: true,
+        encontrou_resposta: false,
+        fora_de_escopo: true,
+        resposta: "Sua mensagem ficou muito longa. Pode resumir sua dúvida em poucas frases?",
+        perfil: { curso, ano }
+      });
+    }
 
     const perfilLog = [
       curso ? `Curso: ${curso}` : null,
@@ -258,7 +290,7 @@ app.post("/agente", authMiddleware, async (req, res) => {
       });
     }
 
-    console.time("[Tempo] 1. Embedding");
+    const inicioEmbedding = performance.now();
     // 1. Gera embedding da pergunta com o BGE-M3 (1024 dimensões).
     // Quando o curso é conhecido, gera também um embedding da pergunta com o nome do curso: assim trechos gerais
     // (válidos para todos os cursos, como o FAQ de estágios) são encontrados pela seção do curso certo
@@ -268,12 +300,12 @@ app.post("/agente", authMiddleware, async (req, res) => {
     const queryVectorCurso = curso && NOMES_CURSOS[curso] && !datas
       ? await generateEmbedding(`${pergunta.trim()}\nCurso: ${NOMES_CURSOS[curso]}`)
       : null;
-    console.timeEnd("[Tempo] 1. Embedding");
+    logTempo("1. Embedding", inicioEmbedding);
 
     // Monta filtro por metadados no Qdrant se curso ou ano foram informados
     const filter = buildCourseYearFilter(curso, ano);
 
-    console.time("[Tempo] 2. Qdrant Search");
+    const inicioBusca = performance.now();
     // 2. Busca os Top-3 chunks mais relevantes pela pergunta e acrescenta até 2 trechos inéditos da busca com o curso.
     // Sem fallback para busca sem filtro: o filtro já inclui os documentos gerais (TODOS / 0–9999),
     // e buscar sem ele traria regras de outros cursos ou matrizes de outro ano de ingresso.
@@ -296,11 +328,11 @@ app.post("/agente", authMiddleware, async (req, res) => {
         searchResults.push(...extras.filter((r) => (semCurso.get(r.id) ?? 0) >= MIN_SCORE_EXTRA_SEM_CURSO));
       }
     }
-    console.timeEnd("[Tempo] 2. Qdrant Search");
+    logTempo("2. Qdrant Search", inicioBusca);
 
     const relevantResults = searchResults.filter((r) => r.score >= MIN_RELEVANCE_SCORE);
 
-    const contextChunks = relevantResults.map((result) => ({
+    const contextChunks = limitarContexto(relevantResults.map((result) => ({
       text:       result.payload?.text       || "",
       source:     result.payload?.source     || "Oficial",
       curso:      result.payload?.curso      || "TODOS",
@@ -309,7 +341,10 @@ app.post("/agente", authMiddleware, async (req, res) => {
       ano_min:    result.payload?.ano_min    ?? 0,
       ano_max:    result.payload?.ano_max    ?? 9999,
       score:      result.score
-    }));
+    })), MAX_CONTEXT_CHARS);
+    if (contextChunks.length < relevantResults.length) {
+      console.log(`[Contexto] ${relevantResults.length - contextChunks.length} trecho(s) fora do prompt para caber no num_ctx`);
+    }
 
     console.log(`Recuperados ${searchResults.length} trechos do Qdrant (${contextChunks.length} acima do score mínimo de ${(MIN_RELEVANCE_SCORE * 100)}%):`);
     searchResults.forEach((c, idx) => {
@@ -334,9 +369,9 @@ app.post("/agente", authMiddleware, async (req, res) => {
     if (contextChunks.length === 0) {
       resposta = "Não consegui identificar uma dúvida relacionada aos serviços acadêmicos do IFMG Campus Sabará (como estágios, matrícula, CRA, dispensas ou biblioteca).";
     } else {
-      console.time("[Tempo] 3. LLM Generate");
+      const inicioLLM = performance.now();
       resposta = await generateChat(messages);
-      console.timeEnd("[Tempo] 3. LLM Generate");
+      logTempo("3. LLM Generate", inicioLLM);
     }
 
     // Higienização: remove cabeçalhos residuais como "**Resposta:**" ou "Resposta oficial preparada para IA:".
@@ -408,7 +443,7 @@ app.listen(PORT, () => {
   console.log(`Servidor RAG rodando na porta ${PORT}`);
   console.log(`Coleção Qdrant: ${COLLECTION_NAME}`);
   console.log(`Modelo LLM: ${LLM_MODEL} | Embeddings: ${EMBEDDING_MODEL}${OLLAMA_CONFIG.embeddingOnCpu ? " (CPU)" : ""}`);
-  console.log(`Keep-alive: ${OLLAMA_CONFIG.keepAlive} | Máx. tokens por resposta: ${OLLAMA_CONFIG.numPredict}`);
+  console.log(`Keep-alive: ${OLLAMA_CONFIG.keepAlive} | Máx. tokens por resposta: ${OLLAMA_CONFIG.numPredict} | num_ctx: ${OLLAMA_CONFIG.numCtx}`);
   console.log(`======================================================\n`);
 
   // Carrega os modelos já na subida para a primeira pergunta não sofrer cold start

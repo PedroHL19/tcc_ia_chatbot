@@ -11,8 +11,7 @@
     "@qdrant/js-client-rest": "^1.19.0",
     "dotenv": "^16.6.1",
     "express": "^4.22.2",
-    "ollama": "^0.6.3",
-    "pdf-parse": "^2.4.5"
+    "ollama": "^0.6.3"
   },
   "name": "agent-ia",
   "version": "1.0.0",

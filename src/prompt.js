@@ -68,6 +68,22 @@ function guiaFaixaAno(ano) {
   return `(COMO ESCOLHER A REGRA POR ANO: o aluno ingressou em ${n}. Uma regra "a partir de AAAA" só vale se ${n} for maior ou igual a AAAA; uma regra "até AAAA", "anterior a AAAA" ou "de XXXX a AAAA" só vale se ${n} estiver dentro dessa faixa. Ex.: "a partir de 2023" ${n >= 2023 ? "VALE" : "NÃO VALE"} para este aluno. Faça essa comparação só internamente: NÃO a mencione na resposta e fale diretamente com o aluno ("você").)\n`;
 }
 
+/**
+ * Limita o total de texto dos trechos para o prompt caber no contexto do modelo.
+ * Os trechos chegam em ordem de relevância: o primeiro sempre fica e os seguintes só entram se couberem.
+ * @param {Array<{text: string}>} chunks
+ * @param {number} maxChars
+ * @returns {Array<{text: string}>}
+ */
+export function limitarContexto(chunks, maxChars) {
+  let total = 0;
+  return chunks.filter((chunk, i) => {
+    if (i > 0 && total + chunk.text.length > maxChars) return false;
+    total += chunk.text.length;
+    return true;
+  });
+}
+
 export function buildUserPromptWithContext(contextChunks, userQuestion, studentProfile = {}, datasDaMensagem = null) {
   let contextSection = "Nenhum documento relevante encontrado.";
 

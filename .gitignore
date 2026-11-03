@@ -11,3 +11,5 @@ tcc/
 
 # Logs da API (mensagens dos usuarios)
 logs/
+
+.claude/settings.local.json

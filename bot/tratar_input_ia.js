@@ -1,20 +1,15 @@
-// Script do Blip (ação "Executar script") que monta o corpo da requisição para a API.
-// O texto do aluno ia direto para dentro do JSON ("{{input.content}}"), então uma mensagem com
-// quebra de linha ou aspas gerava JSON inválido e o aluno ficava sem resposta.
-// Variáveis de entrada: input.content, cursoApi, anoApi | Variável de saída: corpoIa
-// No bloco "IA request", esta ação vem antes da Requisição HTTP, cujo corpo passa a ser {{corpoIa}}.
-function run(mensagem, curso, ano) {
+// Script do Blip (ação "Executar script") que limpa a mensagem do aluno antes de ela entrar no JSON da requisição.
+// O texto ia direto para dentro do JSON ("{{input.content}}"), então uma mensagem com quebra de linha ou
+// aspas gerava JSON inválido e o aluno ficava sem resposta.
+// Variável de entrada: input.content | Variável de saída: inputIaClean
+// Na Requisição HTTP, o corpo continua com aspas em volta: "mensagem": "{{inputIaClean}}"
+function run(mensagem) {
     var LIMITE = 2000; // mesmo limite de caracteres da API
 
-    function texto(valor) {
-        if (valor === null || valor === undefined) {
-            return "";
-        }
-        return String(valor);
-    }
+    var limpa = (mensagem === null || mensagem === undefined) ? "" : String(mensagem);
 
     // Quebras de linha, tabs e outros caracteres de controle viram espaço
-    var limpa = texto(mensagem)
+    limpa = limpa
         .replace(/[\u0000-\u001F\u007F]+/g, " ")
         .replace(/\s+/g, " ")
         .replace(/^\s+|\s+$/g, "");
@@ -23,10 +18,7 @@ function run(mensagem, curso, ano) {
         limpa = limpa.substring(0, LIMITE);
     }
 
-    // JSON.stringify escapa aspas e barras, então o corpo é sempre um JSON válido
-    return JSON.stringify({
-        mensagem: limpa,
-        curso: texto(curso),
-        ano: texto(ano)
-    });
+    // JSON.stringify escapa aspas e barras; tira as aspas das pontas porque o corpo já as tem
+    var escapada = JSON.stringify(limpa);
+    return escapada.substring(1, escapada.length - 1);
 }
